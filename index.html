@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Barça UEFC — The Greatest Club in UE1 History</title>
-<meta name="description" content="Barça UEFC (formerly Rubypool) — the greatest club in UE1 history. Squad stats, trophy cabinet, individual honours, season rosters and the official five-era club history.">
+<meta name="description" content="Barça UEFC (formerly Rubypool) — the greatest club in UE1 history. Squad stats, trophy cabinet, individual honours and the official five-era club history.">
 <link rel="icon" href="https://cdn.discordapp.com/emojis/1439732162365493288.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -305,6 +305,8 @@
   .badge.runner{background:#2a2a3e;color:#d8d8e8}
   .badge.third{background:#3a2416;color:#e8a76a}
   .ach h3{font-family:'Oswald',sans-serif;font-size:1.16rem;letter-spacing:.6px;line-height:1.25}
+  .season-open{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(240,180,41,.35);transition:color .2s,border-color .2s}
+  .season-open:hover{color:var(--gold);border-color:var(--gold)}
   .ach-note{color:var(--muted-2);font-size:.78rem;margin-top:4px;font-style:italic}
   .awards{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
   .aw{
@@ -596,6 +598,12 @@
     padding:2px 9px;text-transform:none;
   }
   .pa-list{display:flex;flex-direction:column;gap:8px}
+  .season-result{margin:0 0 16px;padding:14px 16px;background:rgba(240,180,41,.07);border:1px solid rgba(240,180,41,.24);border-radius:12px;color:#e2d3a8}
+  .season-result b{color:#ffe6a8}
+  .season-squad{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+  .season-player{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;font-size:.82rem}
+  .season-player .career{color:var(--muted-2);font-size:.7rem;white-space:nowrap}
+  .season-player .player-link{font-weight:600}
   .pa-row{
     display:flex;align-items:center;gap:12px;
     background:var(--panel-2);border:1px solid var(--line);
@@ -651,8 +659,7 @@
       <a href="#squad">Squad</a>
       <a href="#cabinet">Cabinet</a>
       <a href="#honours">Honours</a>
-      <a href="#rosters">Rosters</a>
-      <a href="#history">History</a>
+          <a href="#history">History</a>
     </nav>
   </div>
 </header>
@@ -711,7 +718,6 @@
         </table>
       </div>
     </div>
-    <p class="footnote">Totals recalculated from raw goals, assists and saves using the official formula. Corrected totals: Legit (141), Anakin (118), Hyper (72). The Rank column always shows the overall points ranking.</p>
   </section>
 
   <section id="cabinet" class="reveal-target">
@@ -733,28 +739,6 @@
       <span class="note" id="honours-note">All-time award leaderboards</span>
     </div>
     <div class="honours" id="honours-grid"></div>
-  </section>
-
-  <section id="rosters" class="reveal-target">
-    <div class="sec-head">
-      <h2>Season Rosters</h2>
-      <div class="line"></div>
-      <span class="note" id="rosters-status">Loading…</span>
-    </div>
-
-    <div class="roster-toolbar">
-      <div class="roster-tabs" role="tablist">
-        <button class="tab active" data-view="season" role="tab" aria-selected="true">By Season</button>
-        <button class="tab" data-view="player" role="tab" aria-selected="false">By Player</button>
-      </div>
-    </div>
-
-    <p class="muted" style="margin-bottom:14px;font-size:.82rem">
-      The official squad list for every season. Click any player name to open their full profile.
-    </p>
-
-    <div class="roster-view" id="roster-view-season"></div>
-    <div class="roster-view" id="roster-view-player" hidden></div>
   </section>
 
   <section id="history" class="reveal-target">
@@ -986,7 +970,7 @@
   <div style="margin-top:4px">The Greatest Club in UE1 History · Manager: Dragonovedtv · Assistant: Shikai</div>
 </footer>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Player profile">
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Club and player details">
   <div class="modal-panel">
     <button class="modal-close" id="modal-close" aria-label="Close profile">×</button>
     <div id="modal-content"></div>
@@ -1399,7 +1383,7 @@ function renderCabinet(){
             <span class="badge ${ach.tag}">${escapeHtml(ach.placement)}</span>
           </div>
           ${ach.featured ? `<div class="world-tag">🌍 World Title</div>` : ""}
-          <h3>${escapeHtml(ach.title)}</h3>
+          <h3><a class="season-open" href="#season/${ach.n}" aria-label="Open ${escapeHtml(ach.title)} season details">${escapeHtml(ach.title)}</a></h3>
           ${ach.note ? `<div class="ach-note">${escapeHtml(ach.note)}</div>` : ""}
           ${chips ? `<div class="awards">${chips}</div>` : `<div class="ach-note">No individual awards recorded.</div>`}
         </article>
@@ -1464,98 +1448,6 @@ function renderHonours(){
 }
 
 /* =========================================================
-   SEASON ROSTERS
-   ========================================================= */
-
-let currentRosterView = "season";
-
-function updateRostersStatus(){
-  const total = Object.values(ROSTERS).reduce((s, arr) => s + arr.length, 0);
-  const el = document.getElementById("rosters-status");
-  if (el) el.textContent = `${total} player-season entries · ${Object.keys(ROSTERS).length} seasons`;
-}
-
-function renderSeasonRosters(){
-  const container = document.getElementById("roster-view-season");
-  container.innerHTML = ACHIEVEMENTS.map(ach => {
-    const roster = (ROSTERS[ach.n] || []).slice().sort((a, b) => {
-      const pa = playerByName[a], pb = playerByName[b];
-      if (!pa || !pb) return a.localeCompare(b);
-      return pb.pts - pa.pts;
-    });
-    const tags = roster.length
-      ? roster.map(name => `<span class="roster-tag">${playerLink(name)}</span>`).join("")
-      : `<span class="roster-tag empty">No players recorded</span>`;
-    return `
-      <div class="season-card">
-        <div class="season-card-head">
-          <div class="season-card-num">#${ach.n} · ${escapeHtml(ach.placement)} · ${roster.length} players</div>
-          <div class="season-card-title">${escapeHtml(ach.title)}</div>
-        </div>
-        <div class="roster-preview">${tags}</div>
-      </div>
-    `;
-  }).join("");
-}
-
-function renderPlayerRosters(){
-  const container = document.getElementById("roster-view-player");
-  const map = {};
-  ACHIEVEMENTS.forEach(ach => {
-    (ROSTERS[ach.n] || []).forEach(name => {
-      if (!map[name]) map[name] = [];
-      map[name].push(ach);
-    });
-  });
-
-  const entries = Object.entries(map).sort((a, b) => {
-    if (b[1].length !== a[1].length) return b[1].length - a[1].length;
-    const pa = playerByName[a[0]], pb = playerByName[b[0]];
-    if (pa && pb && pa.pts !== pb.pts) return pb.pts - pa.pts;
-    return a[0].localeCompare(b[0]);
-  });
-
-  if (!entries.length){
-    container.innerHTML = `<p class="muted">No rosters recorded yet.</p>`;
-    return;
-  }
-
-  container.innerHTML = entries.map(([name, achs]) => {
-    const sorted = achs.slice().sort((a, b) => a.n - b.n);
-    const seasons = sorted.map(a =>
-      `<span class="season-pill ${a.tag}">#${a.n} ${escapeHtml(shortTitle(a.title))}</span>`
-    ).join("");
-    const p = playerByName[name];
-    return `
-      <div class="player-roster-card">
-        <div class="player-roster-top">
-          <div class="player-roster-name"><a href="#player/${p ? p.slug : slugify(name)}">${escapeHtml(name)}</a></div>
-          <span class="player-roster-count">${achs.length} season${achs.length > 1 ? "s" : ""}</span>
-        </div>
-        <div class="player-roster-seasons">${seasons}</div>
-      </div>
-    `;
-  }).join("");
-}
-
-function bindRosterTabs(){
-  document.querySelectorAll(".roster-tabs .tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      const view = tab.dataset.view;
-      if (view === currentRosterView) return;
-      currentRosterView = view;
-      document.querySelectorAll(".roster-tabs .tab").forEach(t => {
-        const active = t.dataset.view === view;
-        t.classList.toggle("active", active);
-        t.setAttribute("aria-selected", active ? "true" : "false");
-      });
-      document.getElementById("roster-view-season").hidden = view !== "season";
-      document.getElementById("roster-view-player").hidden = view !== "player";
-    });
-  });
-}
-
-/* =========================================================
    PLAYER PROFILE MODAL
    ========================================================= */
 
@@ -1607,7 +1499,7 @@ function openPlayer(slug){
 
   const seasonsBlock = seasonsPlayed.length
     ? `<div class="player-roster-seasons">
-        ${seasonsPlayed.map(a => `<span class="season-pill ${a.tag}">#${a.n} ${escapeHtml(shortTitle(a.title))}</span>`).join("")}
+        ${seasonsPlayed.map(a => `<a class="season-pill ${a.tag} season-open" href="#season/${a.n}">#${a.n} ${escapeHtml(shortTitle(a.title))}</a>`).join("")}
       </div>`
     : `<p class="muted">Not added to any season roster yet.</p>`;
 
@@ -1659,10 +1551,69 @@ function openPlayer(slug){
   });
 }
 
+function openSeason(seasonNumber){
+  const ach = ACHIEVEMENTS.find(a => a.n === seasonNumber);
+  if (!ach){ closeModal(false); return; }
+
+  const roster = (ROSTERS[ach.n] || []).slice().sort((a,b) => {
+    const pa = playerByName[a], pb = playerByName[b];
+    if (!pa || !pb) return a.localeCompare(b);
+    return pb.pts - pa.pts;
+  });
+
+  const awardRows = AWARD_ORDER.filter(key => ach.awards[key]).map(key => {
+    const value = ach.awards[key];
+    const winners = key === "bestDuo"
+      ? value.split("&").map(name => playerLink(name.trim())).join(" &amp; ")
+      : playerLink(value);
+    return `
+      <div class="pa-row">
+        ${awardIcon(key)}
+        <div>
+          <div class="pa-name">${AWARDS[key].label}</div>
+          <div class="pa-ctx">${winners}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  const squadRows = roster.length ? roster.map(name => {
+    const p = playerByName[name];
+    const stats = p
+      ? `<span class="career">Career: ${p.g}G · ${p.a}A · ${p.s} saves</span>`
+      : `<span class="career">Profile not available</span>`;
+    return `<div class="season-player"><span>${playerLink(name)}</span>${stats}</div>`;
+  }).join("") : `<p class="muted">No squad members recorded for this season.</p>`;
+
+  modalContent.innerHTML = `
+    <div class="p-head">
+      <div class="p-rank">#${ach.n}</div>
+      <div>
+        <h3>${escapeHtml(ach.title)}</h3>
+        <div class="muted">${escapeHtml(ach.placement)}</div>
+      </div>
+    </div>
+    <div class="season-result">
+      <b>Season result:</b> ${escapeHtml(ach.placement)}
+      ${ach.featured ? " · 🌍 World Title" : ""}
+      ${ach.note ? `<div style="margin-top:5px">${escapeHtml(ach.note)}</div>` : ""}
+    </div>
+    <h4 class="p-sec">Season Awards <span class="count">${Object.keys(ach.awards).length}</span></h4>
+    ${awardRows ? `<div class="pa-list">${awardRows}</div>` : `<p class="muted">No individual awards recorded for this season.</p>`}
+    <h4 class="p-sec">Season Squad <span class="count">${roster.length} players</span></h4>
+    <div class="season-squad">${squadRows}</div>
+  `;
+
+  modalType = "season";
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+  modalPanel.scrollTop = 0;
+}
+
 function closeModal(updateHash = true){
   modal.classList.remove("open");
   document.body.style.overflow = "";
-  if (updateHash && modalType === "player" && location.hash.startsWith("#player/")){
+  if (updateHash && (location.hash.startsWith("#player/") || location.hash.startsWith("#season/"))){
     history.replaceState(null, "", location.pathname + location.search);
   }
   modalType = null;
@@ -1671,7 +1622,8 @@ function closeModal(updateHash = true){
 function route(){
   const hash = decodeURIComponent(location.hash || "");
   if (hash.startsWith("#player/")) openPlayer(hash.slice(8));
-  else if (modal.classList.contains("open") && modalType === "player") closeModal(false);
+  else if (hash.startsWith("#season/")) openSeason(Number(hash.slice(8)));
+  else if (modal.classList.contains("open")) closeModal(false);
 }
 
 document.getElementById("modal-close").addEventListener("click", () => closeModal());
@@ -1689,10 +1641,6 @@ renderSquad();
 bindSorting();
 renderCabinet();
 renderHonours();
-renderSeasonRosters();
-renderPlayerRosters();
-updateRostersStatus();
-bindRosterTabs();
 route();
 
 document.querySelectorAll(".reveal-target, .reveal").forEach(registerReveal);

@@ -458,59 +458,41 @@
   }
   .gif-label small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;color:#c8c8dc;letter-spacing:.2px;margin-top:1px}
 
-  /* ================= 3D HISTORY JOURNEY ================= */
-  .history-scroll-track{position:relative;height:620vh;margin-top:8px}
-  .timeline-stage{
-    position:sticky;top:76px;
-    height:min(820px,calc(100vh - 98px));
-    min-height:min(560px,calc(100vh - 98px));
-    display:flex;flex-direction:column;gap:12px;
-    perspective:1200px;perspective-origin:50% 46%;
-    transform-style:preserve-3d;
+  /* ================= SIDE-SLIDE SCROLL REVEALS ================= */
+  .timeline{display:flex;flex-direction:column;gap:clamp(18px,3vw,28px)}
+  .slide-in{
+    opacity:0;
+    transform:translate3d(var(--slide-x,-140px),0,0) rotate(var(--slide-r,-6deg)) scale(.86);
+    transition:opacity .75s cubic-bezier(.22,1,.36,1),
+               transform .85s cubic-bezier(.22,1,.36,1);
+    will-change:transform,opacity;
   }
-  .timeline-status,.timeline-footer{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    width:min(100%,940px);margin:0 auto;padding:0 4px;
+  .slide-in.from-right{--slide-x:140px;--slide-r:6deg}
+  .slide-in.in-view{opacity:1;transform:translate3d(0,0,0) rotate(0deg) scale(1)}
+  @keyframes slide-from-left{
+    from{opacity:0;transform:translateX(-140px) rotate(-6deg) scale(.86)}
+    to{opacity:1;transform:translateX(0) rotate(0deg) scale(1)}
   }
-  .timeline-kicker{
-    color:var(--muted-2);font-size:.66rem;font-weight:700;
-    text-transform:uppercase;letter-spacing:2px;
+  @keyframes slide-from-right{
+    from{opacity:0;transform:translateX(140px) rotate(6deg) scale(.86)}
+    to{opacity:1;transform:translateX(0) rotate(0deg) scale(1)}
   }
-  .timeline-current{
-    color:var(--gold);font-family:'Oswald',sans-serif;
-    font-size:.78rem;letter-spacing:1.3px;
+  @supports (animation-timeline:view()){
+    .slide-in{
+      transition:none;
+      animation-duration:1s;
+      animation-timing-function:linear;
+      animation-fill-mode:both;
+      animation-timeline:view();
+      animation-range:entry 10% entry 65%;
+    }
+    .slide-in.from-left{animation-name:slide-from-left}
+    .slide-in.from-right{animation-name:slide-from-right}
   }
-  .timeline{position:relative;display:block;flex:1;min-height:0;width:100%;transform-style:preserve-3d}
-  .timeline-stage .era{
-    position:absolute;top:50%;left:50%;
-    width:min(100%,940px);height:100%;max-height:100%;
-    margin:0;overflow-y:auto;overflow-x:hidden;
-    transform-style:preserve-3d;backface-visibility:hidden;
-    transform-origin:center center;will-change:transform,opacity;
-    transition:none;scrollbar-width:thin;scrollbar-color:#45455e transparent;
-  }
-  .timeline-stage .era::-webkit-scrollbar{width:6px}
-  .timeline-stage .era::-webkit-scrollbar-thumb{background:#45455e;border-radius:10px}
-  .timeline-stage .era:hover{box-shadow:0 24px 70px rgba(0,0,0,.55)}
-  .timeline-footer{color:var(--muted-2);font-size:.68rem;letter-spacing:.4px}
-  .timeline-progress{display:flex;align-items:center;gap:6px}
-  .timeline-progress span{
-    display:block;width:18px;height:3px;border-radius:99px;
-    background:#303047;transition:width .25s,background .25s,box-shadow .25s;
-  }
-  .timeline-progress span.active{
-    width:32px;background:var(--gold);box-shadow:0 0 12px rgba(240,180,41,.45);
-  }
-  .history-scroll-track.history-static{height:auto;margin-top:8px}
-  .history-static .timeline-stage{position:relative;top:auto;height:auto;min-height:0;max-height:none;display:block;perspective:none}
-  .history-static .timeline{display:flex;flex-direction:column;gap:16px}
-  .history-static .era{
-    position:relative;top:auto;left:auto;width:100%;height:auto;max-height:none;
-    overflow:visible;transform:none!important;opacity:1!important;pointer-events:auto!important;
-  }
-
-  /* Era timeline */
-  .timeline{display:flex;flex-direction:column;gap:16px}
+  .era.slide-in{width:min(940px,100%)}
+  .era.slide-in.from-left{margin-right:auto}
+  .era.slide-in.from-right{margin-left:auto}
+  .history-intro.slide-in{max-width:940px}
   .era{
     position:relative;
     background:linear-gradient(180deg,#12121c,#0d0d15);
@@ -655,6 +637,7 @@
   .season-player{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;font-size:.82rem}
   .season-player .career{color:var(--muted-2);font-size:.7rem;white-space:nowrap}
   .season-player .player-link{font-weight:600}
+  .legacy-note{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2);color:var(--muted);font-size:.84rem}
   .pa-row{
     display:flex;align-items:center;gap:12px;
     background:var(--panel-2);border:1px solid var(--line);
@@ -694,6 +677,7 @@
     html{scroll-behavior:auto}
     .particles,.aurora::before,.aurora::after{display:none}
     .reveal{opacity:1;transform:none}
+    .slide-in,.slide-in.from-left,.slide-in.from-right{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}
   }
 </style>
 </head>
@@ -746,7 +730,7 @@
       <span>Tap a column to rank by it:</span>
       <span class="pill" id="sort-pill">Sorted by <b>Points</b> ↓</span>
     </div>
-    <div class="table-wrap reveal">
+    <div class="table-wrap">
       <div class="table-scroll">
         <table>
           <thead>
@@ -799,25 +783,25 @@
       <span class="note">Five Eras</span>
     </div>
 
-    <div class="history-intro reveal">
+    <div class="history-intro slide-in from-left">
       <p>Barça UEFC's legacy spans <b>five distinct competitive eras</b> — marked by dynasty-building, heartbreaking collapses, miracle rebuilds, and unmatched global dominance.</p>
     </div>
 
     <!-- GIF MOMENTS -->
-    <div class="gif-strip reveal">
-      <div class="gif-card">
+    <div class="gif-strip">
+      <div class="gif-card slide-in from-left">
         <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Goal celebration" loading="lazy"
              onerror="this.parentElement.classList.add('gif-failed')">
         <div class="gif-fallback">⚽</div>
         <div class="gif-label">5 Goals in 3 Minutes<small>Yuzarf vs France · World Cup Semi</small></div>
       </div>
-      <div class="gif-card">
+      <div class="gif-card slide-in from-right">
         <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Trophy lift" loading="lazy"
              onerror="this.parentElement.classList.add('gif-failed')">
         <div class="gif-fallback">🏆</div>
         <div class="gif-label">The Treble<small>USL S1 · UEL S1 · Egoist Cup S1</small></div>
       </div>
-      <div class="gif-card">
+      <div class="gif-card slide-in from-left">
         <img src="https://media.giphy.com/media/26tPplGWjN0xLybiU/giphy.gif" alt="Fireworks" loading="lazy"
              onerror="this.parentElement.classList.add('gif-failed')">
         <div class="gif-fallback">🧤</div>
@@ -825,16 +809,10 @@
       </div>
     </div>
 
-    <div class="history-scroll-track" id="history-scroll-track">
-      <div class="timeline-stage" id="timeline-stage">
-        <div class="timeline-status">
-          <span class="timeline-kicker">The Barça UEFC timeline</span>
-          <span class="timeline-current" id="history-era-label" aria-live="polite">ERA I / V</span>
-        </div>
-        <div class="timeline" id="history-timeline" aria-label="Five eras of Barça UEFC history">
+    <div class="timeline" id="history-timeline" aria-label="Five eras of Barça UEFC history">
 
       <!-- ================= ERA I ================= -->
-      <article class="era reveal" style="--era-accent:#4a7fc9;--era-glow:rgba(74,127,201,.35)">
+      <article class="era slide-in from-left" style="--era-accent:#4a7fc9;--era-glow:rgba(74,127,201,.35)">
         <div class="era-head">
           <div class="era-node">I</div>
           <div class="era-titles">
@@ -867,7 +845,7 @@
       </article>
 
       <!-- ================= ERA II ================= -->
-      <article class="era reveal" style="--era-accent:#b9b9cc;--era-glow:rgba(185,185,204,.28)">
+      <article class="era slide-in from-right" style="--era-accent:#b9b9cc;--era-glow:rgba(185,185,204,.28)">
         <div class="era-head">
           <div class="era-node">II</div>
           <div class="era-titles">
@@ -899,7 +877,7 @@
       </article>
 
       <!-- ================= ERA III ================= -->
-      <article class="era reveal" style="--era-accent:#a06ad4;--era-glow:rgba(160,106,212,.30)">
+      <article class="era slide-in from-left" style="--era-accent:#a06ad4;--era-glow:rgba(160,106,212,.30)">
         <div class="era-head">
           <div class="era-node">III</div>
           <div class="era-titles">
@@ -932,7 +910,7 @@
       </article>
 
       <!-- ================= ERA IV ================= -->
-      <article class="era reveal" style="--era-accent:#f0b429;--era-glow:rgba(240,180,41,.35)">
+      <article class="era slide-in from-right" style="--era-accent:#f0b429;--era-glow:rgba(240,180,41,.35)">
         <div class="era-head">
           <div class="era-node">IV</div>
           <div class="era-titles">
@@ -980,7 +958,7 @@
       </article>
 
       <!-- ================= ERA V ================= -->
-      <article class="era reveal" style="--era-accent:#3ecf8e;--era-glow:rgba(62,207,142,.30)">
+      <article class="era slide-in from-left" style="--era-accent:#3ecf8e;--era-glow:rgba(62,207,142,.30)">
         <div class="era-head">
           <div class="era-node">V</div>
           <div class="era-titles">
@@ -1016,14 +994,6 @@
         </div>
       </article>
 
-        </div>
-        <div class="timeline-footer">
-          <span>Scroll to travel through the five eras</span>
-          <div class="timeline-progress" id="history-progress" aria-hidden="true">
-            <span class="active"></span><span></span><span></span><span></span><span></span>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1174,10 +1144,21 @@ players.sort((x,y) => y.pts - x.pts);
 const playerByName = {};
 players.forEach(p => { playerByName[p.name] = p; });
 
+const KNOWN_PLAYER_NAMES = Array.from(new Set([
+  ...RAW_PLAYERS.map(row => row[0]),
+  ...Object.values(ROSTERS).flat(),
+  ...ACHIEVEMENTS.flatMap(ach => Object.entries(ach.awards).flatMap(([key,value]) =>
+    key === "bestDuo" ? value.split("&").map(name => name.trim()) : [value]
+  ))
+])).sort((a,b) => b.length - a.length);
+
+const playerNameBySlug = {};
+KNOWN_PLAYER_NAMES.forEach(name => { playerNameBySlug[slugify(name)] = name; });
+
 function playerLink(name){
-  const p = playerByName[name];
-  if (!p) return escapeHtml(name);
-  return `<a class="player-link" href="#player/${p.slug}">${escapeHtml(name)}</a>`;
+  const canonical = KNOWN_PLAYER_NAMES.find(item => item.toLowerCase() === String(name).toLowerCase());
+  if (!canonical) return escapeHtml(name);
+  return `<a class="player-link" href="#player/${slugify(canonical)}">${escapeHtml(name)}</a>`;
 }
 function awardIcon(key){
   const m = AWARDS[key];
@@ -1338,17 +1319,17 @@ function renderMiniCards(){
     ["Top Points",   topPoints,  "pts", 2, null]
   ];
 
-  el.innerHTML = items.map(([label,p,key,dec,icon], i) => `
-    <div class="mini reveal" style="--delay:${i * 0.03}s">
-      <span class="mini-k">${icon ? `<img class="mini-icon" src="${icon}" alt="">` : ""}${label}</span>
-      <span class="mini-v"><a class="player-link" href="#player/${p.slug}">${escapeHtml(p.name)}</a> · <span data-count="${p[key]}" data-decimals="${dec}">0</span></span>
-    </div>
-  `).join("");
-
-  el.querySelectorAll(".reveal").forEach(r => registerReveal(r));
-  el.querySelectorAll("[data-count]").forEach(registerCounter);
+  el.innerHTML = items.map(([label,p,key,dec,icon], i) => {
+    const value = dec ? Number(p[key]).toFixed(dec) : p[key].toLocaleString();
+    const direction = i % 2 === 0 ? "from-left" : "from-right";
+    return `
+      <div class="mini slide-in ${direction}">
+        <span class="mini-k">${icon ? `<img class="mini-icon" src="${icon}" alt="">` : ""}${label}</span>
+        <span class="mini-v"><a class="player-link" href="#player/${p.slug}">${escapeHtml(p.name)}</a> · <span>${value}</span></span>
+      </div>
+    `;
+  }).join("");
 }
-
 const SORT_LABELS = { g:"Goals", a:"Assists", s:"Saves", pts:"Points" };
 let sortKey = "pts";
 let sortDir = "desc";
@@ -1441,7 +1422,7 @@ function renderCabinet(){
       .map(k => awardChip(k, ach.awards[k]))
       .join("");
     return `
-      <div class="reveal" style="--delay:${(i % 3) * 0.03}s">
+      <div class="slide-in ${i % 2 === 0 ? "from-left" : "from-right"}">
         <article class="ach ${ach.tag}${ach.featured ? " featured" : ""}" data-tilt>
           <div class="ach-top">
             <span class="ach-num">#${ach.n}</span>
@@ -1456,7 +1437,6 @@ function renderCabinet(){
     `;
   }).join("");
 
-  grid.querySelectorAll(".reveal").forEach(r => registerReveal(r));
   grid.querySelectorAll("[data-tilt]").forEach(el => attachTilt(el, 6));
 }
 
@@ -1505,9 +1485,8 @@ function renderHonours(){
   ];
   const grid = document.getElementById("honours-grid");
   grid.innerHTML = order.map((k,i) =>
-    `<div class="reveal" style="--delay:${i * 0.025}s">${honourCard(k)}</div>`
+    `<div class="slide-in ${i % 2 === 0 ? "from-left" : "from-right"}">${honourCard(k)}</div>`
   ).join("");
-  grid.querySelectorAll(".reveal").forEach(r => registerReveal(r));
   document.getElementById("honours-note").innerHTML =
     `<b style="color:#fff">${countHonours(false)}</b> honours · club Best Player excluded`;
 }
@@ -1535,10 +1514,11 @@ function awardsFor(playerName){
 
 function openPlayer(slug){
   const p = players.find(x => x.slug === slug);
-  if (!p){ closeModal(false); return; }
+  const profileName = p ? p.name : playerNameBySlug[slug];
+  if (!profileName){ closeModal(false); return; }
 
-  const rank = players.findIndex(x => x.slug === slug) + 1;
-  const awards = awardsFor(p.name);
+  const rank = p ? players.findIndex(x => x.slug === slug) + 1 : null;
+  const awards = awardsFor(profileName);
   const official = awards.filter(a => !AWARDS[a.key].club);
 
   const counts = {};
@@ -1553,54 +1533,41 @@ function openPlayer(slug){
           ${awardIcon(a.key)}
           <div>
             <div class="pa-name">${AWARDS[a.key].label}${AWARDS[a.key].club ? " <span style='color:#7a7a92;font-weight:400'>(club)</span>" : ""}</div>
-            <div class="pa-ctx">${escapeHtml(a.ach.title)} · ${escapeHtml(a.ach.placement)}</div>
+            <div class="pa-ctx"><a class="season-open" href="#season/${a.ach.n}">${escapeHtml(a.ach.title)}</a> · ${escapeHtml(a.ach.placement)}</div>
           </div>
         </div>
       `).join("")}</div>`
     : `<p class="muted">No individual honours recorded yet.</p>`;
 
-  const seasonsPlayed = ACHIEVEMENTS.filter(ach => (ROSTERS[ach.n] || []).includes(p.name))
-    .slice().sort((a, b) => a.n - b.n);
-
+  const seasonsPlayed = ACHIEVEMENTS.filter(ach => (ROSTERS[ach.n] || []).includes(profileName))
+    .slice().sort((a,b) => a.n - b.n);
   const seasonsBlock = seasonsPlayed.length
     ? `<div class="player-roster-seasons">
         ${seasonsPlayed.map(a => `<a class="season-pill ${a.tag} season-open" href="#season/${a.n}">#${a.n} ${escapeHtml(shortTitle(a.title))}</a>`).join("")}
       </div>`
-    : `<p class="muted">Not added to any season roster yet.</p>`;
+    : `<p class="muted">No season roster entries recorded.</p>`;
+
+  const statsBlock = p ? `
+    <div class="pstats">
+      <div class="pstat"><span class="v">${p.g}</span><span class="k"><img class="pstat-icon" src="${STAT_IMG.goals}" alt="">Goals</span></div>
+      <div class="pstat"><span class="v">${p.a}</span><span class="k"><img class="pstat-icon" src="${STAT_IMG.assists}" alt="">Assists</span></div>
+      <div class="pstat"><span class="v">${p.s}</span><span class="k"><img class="pstat-icon" src="${STAT_IMG.saves}" alt="">GK Saves</span></div>
+      <div class="pstat"><span class="v gold">${p.pts.toFixed(2)}</span><span class="k">Points</span></div>
+    </div>
+  ` : `
+    <div class="legacy-note">Archived squad member · Career totals are not included in the current player-stat table.</div>
+  `;
 
   modalContent.innerHTML = `
     <div class="p-head">
-      <div class="p-rank">#${rank}</div>
-      <h3>${escapeHtml(p.name)}</h3>
+      <div class="p-rank">${p ? "#" + rank : "ARCHIVE"}</div>
+      <h3>${escapeHtml(profileName)}</h3>
     </div>
-    <div class="pstats">
-      <div class="pstat">
-        <span class="v" data-count="${p.g}" data-force="1">0</span>
-        <span class="k"><img class="pstat-icon" src="${STAT_IMG.goals}" alt="">Goals</span>
-      </div>
-      <div class="pstat">
-        <span class="v" data-count="${p.a}" data-force="1">0</span>
-        <span class="k"><img class="pstat-icon" src="${STAT_IMG.assists}" alt="">Assists</span>
-      </div>
-      <div class="pstat">
-        <span class="v" data-count="${p.s}" data-force="1">0</span>
-        <span class="k"><img class="pstat-icon" src="${STAT_IMG.saves}" alt="">GK Saves</span>
-      </div>
-      <div class="pstat">
-        <span class="v gold" data-count="${p.pts}" data-decimals="2" data-force="1">0</span>
-        <span class="k">Points</span>
-      </div>
-    </div>
-
+    ${statsBlock}
     <h4 class="p-sec">Seasons Played <span class="count">${seasonsPlayed.length}</span></h4>
     ${seasonsBlock}
-
     ${countChips ? `<div class="awards" style="margin-top:18px">${countChips}</div>` : ""}
-
-    <h4 class="p-sec">
-      Individual Honours
-      <span class="count">${official.length} official${counts.bestPlayer ? ` + ${counts.bestPlayer} club` : ""}</span>
-    </h4>
+    <h4 class="p-sec">Individual Honours <span class="count">${official.length} official${counts.bestPlayer ? ` + ${counts.bestPlayer} club` : ""}</span></h4>
     ${detailed}
   `;
 
@@ -1608,14 +1575,7 @@ function openPlayer(slug){
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
   modalPanel.scrollTop = 0;
-
-  modalContent.querySelectorAll("[data-count]").forEach(el => {
-    const target = parseFloat(el.dataset.count);
-    const decimals = parseInt(el.dataset.decimals || "0", 10);
-    countUp(el, target, { decimals, duration: 500, force: true });
-  });
 }
-
 function openSeason(seasonNumber){
   const ach = ACHIEVEMENTS.find(a => a.n === seasonNumber);
   if (!ach){ closeModal(false); return; }
@@ -1646,7 +1606,7 @@ function openSeason(seasonNumber){
     const p = playerByName[name];
     const stats = p
       ? `<span class="career">Career: ${p.g}G · ${p.a}A · ${p.s} saves</span>`
-      : `<span class="career">Profile not available</span>`;
+      : `<span class="career">Archived profile</span>`;
     return `<div class="season-player"><span>${playerLink(name)}</span>${stats}</div>`;
   }).join("") : `<p class="muted">No squad members recorded for this season.</p>`;
 
@@ -1697,87 +1657,102 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal()
 window.addEventListener("hashchange", route);
 
 /* =========================================================
-   3D HISTORY JOURNEY
+   SIDE-SLIDE REVEALS + PLAYER NAME LINKS
    ========================================================= */
 
-function initHistoryJourney(){
-  const track = document.getElementById("history-scroll-track");
-  const stage = document.getElementById("timeline-stage");
-  const timeline = document.getElementById("history-timeline");
-  const label = document.getElementById("history-era-label");
-  const progressBar = document.getElementById("history-progress");
-  if (!track || !stage || !timeline) return;
+function initSlideIns(root = document){
+  const elements = Array.from(root.querySelectorAll(".slide-in"));
+  if (!elements.length) return;
 
-  const cards = Array.from(timeline.querySelectorAll(".era"));
-  const dots = progressBar ? Array.from(progressBar.children) : [];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const smallScreen = window.matchMedia("(max-width: 640px)").matches;
+  const nativeScrollDriven = window.CSS && CSS.supports &&
+    CSS.supports("animation-timeline: view()");
 
-  if (reducedMotion || smallScreen || cards.length < 2){
-    track.classList.add("history-static");
-    cards.forEach(card => {
-      card.style.opacity = "1";
-      card.style.transform = "none";
-      card.style.pointerEvents = "auto";
-      card.setAttribute("aria-hidden","false");
-    });
+  if (reducedMotion){
+    elements.forEach(el => el.classList.add("in-view"));
+    return;
+  }
+  if (nativeScrollDriven) return;
+
+  if (!("IntersectionObserver" in window)){
+    elements.forEach(el => el.classList.add("in-view"));
     return;
   }
 
-  const clamp = (value,min,max) => Math.min(max,Math.max(min,value));
-  let frame = 0;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("in-view");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold:0.18, rootMargin:"0px 0px -8% 0px" });
 
-  function render(){
-    frame = 0;
-    const trackTop = track.getBoundingClientRect().top + window.scrollY;
-    const scrollRange = Math.max(1,track.offsetHeight - stage.offsetHeight);
-    const progress = clamp((window.scrollY - trackTop) / scrollRange,0,1);
-    let activeIndex = 0;
-    let strongest = -1;
+  elements.forEach(el => observer.observe(el));
+}
 
-    cards.forEach((card,index) => {
-      const local = progress * cards.length - index + .5;
-      const bounded = clamp(local,0,1);
-      const fade = Math.sin(Math.PI * bounded);
-      const distance = Math.abs(.5 - bounded);
-      const x = (.5 - local) * window.innerWidth * 1.08;
-      const z = -distance * 620;
-      const rotationY = (local - .5) * -58;
-      const scale = .88 + (1 - distance * 2) * .12;
+function linkifyPlayerNames(root){
+  if (!root) return;
+  const names = KNOWN_PLAYER_NAMES;
+  const walker = document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+    acceptNode(node){
+      const parent = node.parentElement;
+      if (!parent || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if (parent.closest("a,script,style,button,textarea,input,select,option")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
 
-      card.style.transform = `translate3d(calc(-50% + ${x.toFixed(1)}px),-50%,${z.toFixed(1)}px) rotateY(${rotationY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-      card.style.opacity = fade.toFixed(3);
+  textNodes.forEach(node => {
+    const source = node.nodeValue;
+    const lower = source.toLowerCase();
+    const fragment = document.createDocumentFragment();
+    let cursor = 0, changed = false;
 
-      if (fade > strongest){
-        strongest = fade;
-        activeIndex = index;
+    while (cursor < source.length){
+      let best = null;
+      for (const name of names){
+        const needle = name.toLowerCase();
+        let position = lower.indexOf(needle,cursor);
+        while (position >= 0){
+          const before = position === 0 ? "" : source[position - 1];
+          const afterIndex = position + name.length;
+          const after = afterIndex >= source.length ? "" : source[afterIndex];
+          const leftBoundary = !before || !/[A-Za-z0-9_]/.test(before);
+          const rightBoundary = !after || !/[A-Za-z0-9_]/.test(after);
+          if (leftBoundary && rightBoundary) break;
+          position = lower.indexOf(needle,position + 1);
+        }
+        if (position >= 0 && (!best || position < best.position ||
+            (position === best.position && name.length > best.name.length))){
+          best = { position,name };
+        }
       }
-    });
+      if (!best) break;
 
-    cards.forEach((card,index) => {
-      const isActive = index === activeIndex;
-      card.style.pointerEvents = isActive && strongest > .18 ? "auto" : "none";
-      card.setAttribute("aria-hidden",isActive ? "false" : "true");
-    });
+      if (best.position > cursor){
+        fragment.appendChild(document.createTextNode(source.slice(cursor,best.position)));
+      }
+      const link = document.createElement("a");
+      link.className = "player-link";
+      link.href = "#player/" + slugify(best.name);
+      link.textContent = source.slice(best.position,best.position + best.name.length);
+      fragment.appendChild(link);
+      cursor = best.position + best.name.length;
+      changed = true;
+    }
 
-    if (label) label.textContent = `ERA ${["I","II","III","IV","V"][activeIndex] || activeIndex + 1} / V`;
-    dots.forEach((dot,index) => dot.classList.toggle("active",index === activeIndex));
-  }
-
-  function requestRender(){
-    if (!frame) frame = requestAnimationFrame(render);
-  }
-
-  render();
-  window.addEventListener("scroll",requestRender,{passive:true});
-  window.addEventListener("resize",requestRender,{passive:true});
+    if (changed){
+      if (cursor < source.length) fragment.appendChild(document.createTextNode(source.slice(cursor)));
+      node.parentNode.replaceChild(fragment,node);
+    }
+  });
 }
 
 /* =========================================================
    INIT
    ========================================================= */
-
-initHistoryJourney();
 
 renderHeroChips();
 renderMiniCards();
@@ -1787,17 +1762,11 @@ renderCabinet();
 renderHonours();
 route();
 
-document.querySelectorAll(".reveal-target, .reveal").forEach(registerReveal);
+linkifyPlayerNames(document.querySelector("main"));
+linkifyPlayerNames(document.querySelector("footer"));
+initSlideIns();
+document.querySelectorAll(".reveal-target").forEach(registerReveal);
 
-/* Safety fallback */
-setTimeout(() => {
-  document.querySelectorAll(".reveal:not(.revealed)").forEach(el => el.classList.add("revealed"));
-  document.querySelectorAll("[data-count]:not([data-counted='1'])").forEach(el => {
-    const target = parseFloat(el.dataset.count);
-    const decimals = parseInt(el.dataset.decimals || "0", 10);
-    countUp(el, target, { decimals, duration: 600 });
-  });
-}, 1800);
 </script>
 </body>
 </html>

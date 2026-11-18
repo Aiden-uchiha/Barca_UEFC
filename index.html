@@ -458,6 +458,57 @@
   }
   .gif-label small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;color:#c8c8dc;letter-spacing:.2px;margin-top:1px}
 
+  /* ================= 3D HISTORY JOURNEY ================= */
+  .history-scroll-track{position:relative;height:620vh;margin-top:8px}
+  .timeline-stage{
+    position:sticky;top:76px;
+    height:min(820px,calc(100vh - 98px));
+    min-height:min(560px,calc(100vh - 98px));
+    display:flex;flex-direction:column;gap:12px;
+    perspective:1200px;perspective-origin:50% 46%;
+    transform-style:preserve-3d;
+  }
+  .timeline-status,.timeline-footer{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    width:min(100%,940px);margin:0 auto;padding:0 4px;
+  }
+  .timeline-kicker{
+    color:var(--muted-2);font-size:.66rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:2px;
+  }
+  .timeline-current{
+    color:var(--gold);font-family:'Oswald',sans-serif;
+    font-size:.78rem;letter-spacing:1.3px;
+  }
+  .timeline{position:relative;display:block;flex:1;min-height:0;width:100%;transform-style:preserve-3d}
+  .timeline-stage .era{
+    position:absolute;top:50%;left:50%;
+    width:min(100%,940px);height:100%;max-height:100%;
+    margin:0;overflow-y:auto;overflow-x:hidden;
+    transform-style:preserve-3d;backface-visibility:hidden;
+    transform-origin:center center;will-change:transform,opacity;
+    transition:none;scrollbar-width:thin;scrollbar-color:#45455e transparent;
+  }
+  .timeline-stage .era::-webkit-scrollbar{width:6px}
+  .timeline-stage .era::-webkit-scrollbar-thumb{background:#45455e;border-radius:10px}
+  .timeline-stage .era:hover{box-shadow:0 24px 70px rgba(0,0,0,.55)}
+  .timeline-footer{color:var(--muted-2);font-size:.68rem;letter-spacing:.4px}
+  .timeline-progress{display:flex;align-items:center;gap:6px}
+  .timeline-progress span{
+    display:block;width:18px;height:3px;border-radius:99px;
+    background:#303047;transition:width .25s,background .25s,box-shadow .25s;
+  }
+  .timeline-progress span.active{
+    width:32px;background:var(--gold);box-shadow:0 0 12px rgba(240,180,41,.45);
+  }
+  .history-scroll-track.history-static{height:auto;margin-top:8px}
+  .history-static .timeline-stage{position:relative;top:auto;height:auto;min-height:0;max-height:none;display:block;perspective:none}
+  .history-static .timeline{display:flex;flex-direction:column;gap:16px}
+  .history-static .era{
+    position:relative;top:auto;left:auto;width:100%;height:auto;max-height:none;
+    overflow:visible;transform:none!important;opacity:1!important;pointer-events:auto!important;
+  }
+
   /* Era timeline */
   .timeline{display:flex;flex-direction:column;gap:16px}
   .era{
@@ -774,7 +825,13 @@
       </div>
     </div>
 
-    <div class="timeline">
+    <div class="history-scroll-track" id="history-scroll-track">
+      <div class="timeline-stage" id="timeline-stage">
+        <div class="timeline-status">
+          <span class="timeline-kicker">The Barça UEFC timeline</span>
+          <span class="timeline-current" id="history-era-label" aria-live="polite">ERA I / V</span>
+        </div>
+        <div class="timeline" id="history-timeline" aria-label="Five eras of Barça UEFC history">
 
       <!-- ================= ERA I ================= -->
       <article class="era reveal" style="--era-accent:#4a7fc9;--era-glow:rgba(74,127,201,.35)">
@@ -959,6 +1016,14 @@
         </div>
       </article>
 
+        </div>
+        <div class="timeline-footer">
+          <span>Scroll to travel through the five eras</span>
+          <div class="timeline-progress" id="history-progress" aria-hidden="true">
+            <span class="active"></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1632,8 +1697,87 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal()
 window.addEventListener("hashchange", route);
 
 /* =========================================================
+   3D HISTORY JOURNEY
+   ========================================================= */
+
+function initHistoryJourney(){
+  const track = document.getElementById("history-scroll-track");
+  const stage = document.getElementById("timeline-stage");
+  const timeline = document.getElementById("history-timeline");
+  const label = document.getElementById("history-era-label");
+  const progressBar = document.getElementById("history-progress");
+  if (!track || !stage || !timeline) return;
+
+  const cards = Array.from(timeline.querySelectorAll(".era"));
+  const dots = progressBar ? Array.from(progressBar.children) : [];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const smallScreen = window.matchMedia("(max-width: 640px)").matches;
+
+  if (reducedMotion || smallScreen || cards.length < 2){
+    track.classList.add("history-static");
+    cards.forEach(card => {
+      card.style.opacity = "1";
+      card.style.transform = "none";
+      card.style.pointerEvents = "auto";
+      card.setAttribute("aria-hidden","false");
+    });
+    return;
+  }
+
+  const clamp = (value,min,max) => Math.min(max,Math.max(min,value));
+  let frame = 0;
+
+  function render(){
+    frame = 0;
+    const trackTop = track.getBoundingClientRect().top + window.scrollY;
+    const scrollRange = Math.max(1,track.offsetHeight - stage.offsetHeight);
+    const progress = clamp((window.scrollY - trackTop) / scrollRange,0,1);
+    let activeIndex = 0;
+    let strongest = -1;
+
+    cards.forEach((card,index) => {
+      const local = progress * cards.length - index + .5;
+      const bounded = clamp(local,0,1);
+      const fade = Math.sin(Math.PI * bounded);
+      const distance = Math.abs(.5 - bounded);
+      const x = (.5 - local) * window.innerWidth * 1.08;
+      const z = -distance * 620;
+      const rotationY = (local - .5) * -58;
+      const scale = .88 + (1 - distance * 2) * .12;
+
+      card.style.transform = `translate3d(calc(-50% + ${x.toFixed(1)}px),-50%,${z.toFixed(1)}px) rotateY(${rotationY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+      card.style.opacity = fade.toFixed(3);
+
+      if (fade > strongest){
+        strongest = fade;
+        activeIndex = index;
+      }
+    });
+
+    cards.forEach((card,index) => {
+      const isActive = index === activeIndex;
+      card.style.pointerEvents = isActive && strongest > .18 ? "auto" : "none";
+      card.setAttribute("aria-hidden",isActive ? "false" : "true");
+    });
+
+    if (label) label.textContent = `ERA ${["I","II","III","IV","V"][activeIndex] || activeIndex + 1} / V`;
+    dots.forEach((dot,index) => dot.classList.toggle("active",index === activeIndex));
+  }
+
+  function requestRender(){
+    if (!frame) frame = requestAnimationFrame(render);
+  }
+
+  render();
+  window.addEventListener("scroll",requestRender,{passive:true});
+  window.addEventListener("resize",requestRender,{passive:true});
+}
+
+/* =========================================================
    INIT
    ========================================================= */
+
+initHistoryJourney();
 
 renderHeroChips();
 renderMiniCards();

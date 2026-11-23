@@ -408,6 +408,9 @@
   .player-roster-name a{color:#fff;text-decoration:none}
   .player-roster-name a:hover{color:var(--gold)}
   .player-roster-count{color:var(--gold);font-family:'Oswald',sans-serif;font-size:.82rem;white-space:nowrap}
+  .duo-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin:8px 0 16px}
+  .duo-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:#11111b;border:1px solid var(--line);border-radius:10px;font-size:.82rem}
+  .duo-medal{font-size:1.1rem;line-height:1}
   .player-roster-seasons{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
   .season-pill{
     background:#171722;border:1px solid var(--line);
@@ -593,6 +596,10 @@
   .moment .m-body{font-size:.86rem;color:#e2d3a8}
   .moment .m-body b{color:#ffe6a8}
 
+  .story-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0 4px}
+  .story-media figure{margin:0;overflow:hidden;background:#10101a;border:1px solid var(--line-2);border-radius:13px}
+  .story-media img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#090910}
+  .story-media figcaption{padding:9px 11px;color:#d7d7e5;font-size:.74rem;line-height:1.45}
   .era-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
   .era-tag{
     font-size:.68rem;font-weight:600;letter-spacing:.5px;
@@ -885,6 +892,7 @@
           <p>Taking a 7-man squad into the fiercely competitive <b>Brazilian Cup</b> (Legit, Real Z, Aiku, Dragonovedtv, Mikey | 303, TheRin and lorenzo.kx), Barça accepted the local challenge and dominated. <span class="pl">Legit</span> played like an unstoppable monster despite high ping, teaming up with <span class="pl">Real Z</span> on offense and <span class="pl">Aiku</span> in goal to secure the title.</p>
         </div>
 
+        <div class="story-media"><figure><img src="https://share.google/7mf3K1GHqakeZOaLi" data-fallbacks="https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif" alt="TheRin era tribute" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>TheRin and the first generation that gave the club its foundation</figcaption></figure><figure><img src="https://img.allfootballapp.com/www/M00/40/CF/720x-/-/-/CgAGVWRdGBCALo5rAAER0eCN-Nw867.jpg" alt="Early Barça generation" loading="lazy"><figcaption>Noob's loyalty became part of the club's identity</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag gold">🏆 Brazilian Pro League</span>
           <span class="era-tag">🥈 Nexus League</span>
@@ -918,6 +926,7 @@
           <div class="m-body"><b>The Exodus:</b> Following the heartbreak, egos and demands for playtime and individual awards fractured the locker room, causing the star-studded roster to leave for rival clubs.</div>
         </div>
 
+        <div class="story-media"><figure><img src="https://klipy.com/gifs/pep-man-city" data-fallbacks="https://media1.tenor.com/m/Oboy6FFZh6kAAAAd/pep-pep-guardiola.gif" alt="Pep Guardiola reaction" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>The reaction to the defining comeback moments of the Velterra era</figcaption></figure><figure><img src="https://klipy.com/gifs/luis-suarez-7" data-fallbacks="https://media1.tenor.com/m/OenOlHq4-hgAAAAd/luis-suarez-soccer.gif" alt="Luis Suárez" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>An era shaped by relentless number 9s and decisive finishing</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag">🥈 Velterra Cup</span>
           <span class="era-tag">The Unstoppable Duo: Bunny &amp; Legit</span>
@@ -950,6 +959,7 @@
           <div class="m-body"><b>The 50-Save Miracle:</b> Goalkeeper <span class="pl">arian</span> cemented his place in Barça history during an El Clásico clash against Re AL, recording <b>over 50 saves in a single leg</b> — one of the greatest defensive performances ever seen — propelling the New Gen squad to a 1st-place league title.</div>
         </div>
 
+        <div class="story-media"><figure><img src="https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif" alt="Pedri" loading="lazy"><figcaption>The new generation: midfield creativity and defensive work</figcaption></figure><figure><img src="https://media1.tenor.com/m/5tkvAwzoa4UAAAAd/lamine-yamal-lamine.gif" alt="Lamine Yamal" loading="lazy"><figcaption>Young attacking talent making an immediate impact</figcaption></figure><figure><img src="https://media1.tenor.com/m/tNqk2UbVa14AAAAd/raphinha-barcelona.gif" alt="Raphinha" loading="lazy"><figcaption>Direct attacking play and fast, decisive finishing</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag">🥈 Neo Champions Circuit</span>
           <span class="era-tag gold">🏆 Elite League</span>
@@ -998,6 +1008,7 @@
           <div class="m-body"><b>The Semifinal Miracle vs France:</b> Trailing <b>5–1</b> after the first leg with Yuzarf absent, Barça faced near-certain elimination. Arriving late for the second leg, <span class="pl">Yuzarf scored 5 goals in 3 minutes</span> to stun France in a legendary comeback — before Barça swept all four legs of the Finals to claim the World Cup.</div>
         </div>
 
+        <div class="story-media"><figure><img src="https://klipy.com/gifs/visca-barca-barcelona" data-fallbacks="https://media1.tenor.com/m/TWPO8SZWdS0AAAAd/fc-barcelona-ucl-final-2015.gif" alt="Barcelona celebration" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>A global title run and a moment for the whole squad</figcaption></figure><figure><img src="https://klipy.com/gifs/fcbarcelone" data-fallbacks="https://media1.tenor.com/m/j6HgGht4aoYAAAAd/champions-league-barcelona.gif" alt="Barcelona trophy celebration" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>Champions together: the World Cup and European campaigns</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag">🥉 Nexus</span>
           <span class="era-tag">🥈 UECL</span>
@@ -1031,6 +1042,7 @@
           <p>After a hard-fought <b>2nd-place finish</b> in a grueling USL Season 2 (hampered by device issues and Yuzarf's absence in the final), Yuzarf departed for a rival club. Barça reloaded by signing European star <span class="pl">Anakin</span> alongside <span class="pl">Hyper</span> (both playing in Asia alongside Asian star <span class="pl">Taski</span>). Operating as a relentless goal machine, Anakin joined forces with <span class="pl">Shikai</span> to sweep <b>UEL Season 2</b>, the <b>Uzbekistan Super Cup</b> and <b>Unmatched Egoist Cup Season 2</b> without dropping a beat.</p>
         </div>
 
+        <div class="story-media"><figure><img src="https://tenor.com/view/champions-league-barcelona-uef-achampions-gif-5619447" data-fallbacks="https://media1.tenor.com/m/TWPO8SZWdS0AAAAd/fc-barcelona-ucl-final-2015.gif" alt="Barcelona Champions League trophy" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>The treble era and the club's trophy-winning peak</figcaption></figure><figure><img src="https://klipy.com/gifs/visca-barca-barcelona" data-fallbacks="https://media1.tenor.com/m/j6HgGht4aoYAAAAd/champions-league-barcelona.gif" alt="Barcelona celebration" loading="lazy" onerror="handlePlayerImageError(this)"><figcaption>Domestic dominance and the celebrations that followed</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag gold">🏆 USL S1</span>
           <span class="era-tag gold">🏆 UEL S1</span>
@@ -1104,9 +1116,9 @@ const RAW_PLAYERS = [
   ["Real Z",33,17,0],["fenomas",20,21,0],["Genius",32,8,0],["arian",0,8,121],
   ["Isagi demon king",35,3,0],["Taski",17,20,0],["Cold Prince",19,17,0],
   ["Dragonovedtv",24,11,2],["RndmX",1,6,111],["Andrew",0,4,119],["Sarox",0,2,121],
-  ["Aiku",7,16,24],["Messi",14,15,0],["Xiv",24,4,0],["Error",18,6,0],["Noob",15,1,20],
-  ["Lostzin",2,9,34],["Shadow",8,11,0],["Dragon Lord",1,15,0],["Water",1,4,25],
-  ["Luca",5,4,0],["lorenzo.kx",4,1,12],["Mikey | 303",0,4,16],["Rin",1,2,13],
+  ["Aiku",7,16,24],["Messi",14,15,0],["Xiv",24,4,0],["Error",18,6,0],["Noob",24,23,20],
+  ["Lostzin",2,9,34],["Shadow",8,11,0],["Dragon Lord",1,15,0],["Water",1,4,44],
+  ["Luca",5,4,0],["lorenzo.kx",4,10,22],["Mikey | 303",0,4,26],["Rin",1,2,13],
   ["Akiif",1,5,0],["Carla",0,5,0],["Void",3,0,0],["Akashi",0,3,0],
   ["Destroyer",2,0,4],["@nagi05321",0,0,10]
 ];
@@ -1218,8 +1230,8 @@ const ROSTERS = {
   "7": ["Gencay","Shikai","Sarox","Yuzarf","Dragonovedtv"],
   "8": ["Dragonovedtv","Sarox","Shikai","Yuzarf"],
   "9": ["Yuzarf","Shikai","Dragonovedtv","Gencay","Tuna","Legit","Sarox"],
-  "10": ["Yuzarf","Hyper","Shikai","Legit","Dragonovedtv"],
-  "11": ["Yuzarf","Anakin","Shikai","Dragonovedtv","Hyper","Nobilus"],
+  "10": ["Yuzarf","Hyper","Shikai","Legit","Tuna","Dragonovedtv"],
+  "11": ["Yuzarf","Anakin","Shikai","Dragonovedtv","Hyper","Nobilus","Tuna"],
   "12": ["Yuzarf","Shikai","Hyper","Anakin","Dragonovedtv"],
   "13": ["Shikai","Rusue","Hyper","Yuzarf","Dragonovedtv"],
   "14": ["Anakin","Hyper","Shikai","Taski","Dragonovedtv","Akashi"],
@@ -1638,11 +1650,11 @@ function awardsFor(playerName){
 const PLAYER_MEDIA = {
   "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif",fallbacks:["https://share.google/nhCMX28FnxaL04tqr","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
   "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr",fallbacks:["https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif","https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/03/07/19/lionelmessi070320a.jpg"]},
-  "Legit": {src:"https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200",fallbacks:["https://www.fcbarcelona.com/photo-resources/2026/05/16/b84b8907-e0b2-412c-8c31-a2893a20eb31/3200x2000_lewy.jpg?height=750&width=1200"]},
+  "Legit": {src:"https://klipy.com/gifs/lewandowski-16",fallbacks:["https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif","https://www.fcbarcelona.com/photo-resources/2026/05/16/b84b8907-e0b2-412c-8c31-a2893a20eb31/3200x2000_lewy.jpg?height=750&width=1200"]},
   "Rusue": {src:"https://klipy.com/gifs/xavi-mirando",fallbacks:["https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
   "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallbacks:["https://media1.tenor.com/m/OenOlHq4-hgAAAAd/luis-suarez-soccer.gif"]},
   "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallbacks:["https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif","https://s2-ge.glbimg.com/VOEmMmVvX85ZFi4Wspdm5dM2s7k%3D/4211x0/filters%3Aformat%28jpeg%29/https%3A/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2024/D/M/6DTsH8Q4m7djsz71NGIA/2024-05-13t192622z-498861181-up1ek5d1hzw0r-rtrmadp-3-soccer-spain-fcb-soc-report.jpg","https://www.fcbarcelona.com/photo-resources/2026/07/21/52cf522f-f115-4e64-8b22-6979d3687fae/11-Raphinha-RED.jpg?height=750&width=1200"]},
-  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallbacks:["https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"]},
+  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallbacks:["https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif","https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"]},
   "Real Isagi": {src:"https://www.fcbarcelona.com/photo-resources/fcbarcelona/photo/2018/03/19/2630a7bd-fcd7-4907-9861-4e9ca7e2aa2e/4665030.jpg?height=750&width=1200",fallbacks:["https://commons.wikimedia.org/wiki/Special:Redirect/file/Samuel-Etoo-7-5-2006.jpg"]},
   "Genius": {src:"https://img.asmedia.epimg.net/resizer/v2/CLVV4CCHTRA3RLROCMP4XK4RGA.jpg?auth=38741217201346ce52dbe35180d95a4691c5dbc332e7efe55f3a64f542d17658&height=1200&smart=true&width=1200",fallbacks:["https://www.fcbarcelona.com/photo-resources/2026/07/21/323ae443-f58c-4e3d-bad5-e026d3175e81/10-Lamine-BLUE.jpg?height=750&width=1200"]},
   "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53",fallbacks:["https://imagenes.elpais.com/resizer/v2/QXQKWDZO34XGSJZEI7MMDZL3AU.jpg?auth=64eb053003e5d38100ddeae8ae09754443af9398372d63565325c4f9361d38ea&width=1960"]},
@@ -1659,7 +1671,23 @@ const PLAYER_MEDIA = {
   "Taski": {src:"https://www.sofoot.com/convert/aHR0cHM6Ly9zb2Zvb3QuczMuZXUtY2VudHJhbC0xLmFtYXpvbmF3cy5jb20vbGVnYWN5L0lNRy9zb2Zvb3RfYXJ0aWNsZXMvbG9nb181MjAzMDEuanBn/image/gavi-remporte-le-trophee-kopa-ballon-dor.jpg"},
   "Sarox": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bar%C3%A7a_-_Napoli_-_20140806_-_Claudio_Bravo.jpg"},
   "arian": {src:"https://estaticos-cdn.prensaiberica.es/clip/0b8d860a-4ddc-47dc-a07b-054edff62f37_mobile-sp-libre-aspect-ratio_default_0.jpg"},
-  "Noob": {src:"https://img.allfootballapp.com/www/M00/40/CF/720x-/-/-/CgAGVWRdGBCALo5rAAER0eCN-Nw867.jpg"}
+  "Noob": {src:"https://img.allfootballapp.com/www/M00/40/CF/720x-/-/-/CgAGVWRdGBCALo5rAAER0eCN-Nw867.jpg"},
+  "Isagi demon king": {src:"https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif"},
+  "Error": {src:"https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif"},
+  "Lostzin": {src:"https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif"},
+  "Shadow": {src:"https://media1.tenor.com/m/OenOlHq4-hgAAAAd/luis-suarez-soccer.gif"},
+  "Water": {src:"https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif"},
+  "Luca": {src:"https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif"},
+  "Mikey | 303": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/2012_2013_-_01_Victor_Vald%C3%A9s.jpg"},
+  "lorenzo.kx": {src:"https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif"},
+  "Dragon Lord": {src:"https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif"},
+  "Rin": {src:"https://media1.tenor.com/m/tNqk2UbVa14AAAAd/raphinha-barcelona.gif"},
+  "Akiif": {src:"https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"},
+  "Carla": {src:"https://media1.tenor.com/m/lBVQTXmB518AAAAd/msn-messi-neymar-suarez.gif"},
+  "Void": {src:"https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif"},
+  "Akashi": {src:"https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"},
+  "Destroyer": {src:"https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif"},
+  "@nagi05321": {src:"https://media1.tenor.com/m/5tkvAwzoa4UAAAAd/lamine-yamal-lamine.gif"}
 };
 const PLAYER_PARALLELS = {
   "Shikai":"Andrés Iniesta","Yuzarf":"Lionel Messi","Legit":"Robert Lewandowski","Rusue":"Xavi Hernández",
@@ -1670,49 +1698,83 @@ const PLAYER_PARALLELS = {
   "Nobilus":"Sergio Busquets","Cold Prince":"Javier Mascherano","Taski":"Gavi","Noob":"Bojan Krkić"
 };
 const PLAYER_ROLES = {
-  "Hyper":"Goalkeeper","Tuna":"Goalkeeper","Sarox":"Goalkeeper","arian":"Goalkeeper",
-  "RndmX":"Goalkeeper","Andrew":"Goalkeeper","Gencay":"Striker","Dragonovedtv":"Manager / player"
+ "Shikai":"Midfielder · all-position player · coach · manager","Yuzarf":"Striker · all-rounder","Legit":"Striker · all-position player",
+ "Rusue":"Midfielder","Anakin":"Striker","Gencay":"Striker","Bunny":"Striker","Hyper":"Goalkeeper","Real Isagi":"Striker",
+ "Tuna":"Goalkeeper","Nobilus":"All-rounder","TheRin":"Striker","Real Z":"Striker · midfielder","fenomas":"Midfielder",
+ "Genius":"Striker","Isagi demon king":"Striker","Taski":"Striker","Cold Prince":"Forward","Dragonovedtv":"Founder · manager",
+ "RndmX":"Goalkeeper","Andrew":"Goalkeeper","Sarox":"Goalkeeper","Aiku":"Defender · midfielder · goalkeeper","Messi":"Forward · dribbler",
+ "Xiv":"Midfielder","Error":"Forward","Noob":"Forward","Lostzin":"Goalkeeper","Shadow":"Striker","Water":"Goalkeeper",
+ "Luca":"Midfielder","Mikey | 303":"Goalkeeper","lorenzo.kx":"Defender"
 };
 const PLAYER_COMPARISON_NOTES = {
-  "Shikai":"The Iniesta comparison is about composure, close control and choosing the right moment for the final pass.",
-  "Yuzarf":"The Messi comparison reflects elite goal output, chance creation and the ability to change a match.",
-  "Legit":"The Lewandowski comparison focuses on penalty-box finishing and consistent attacking output.",
-  "Rusue":"The Xavi comparison reflects tempo control, distribution and creating chances from midfield.",
-  "Anakin":"The Suárez comparison is about relentless movement, pressing and clinical finishing.",
-  "Gencay":"The Raphinha comparison reflects direct wide attacking and decisive goal contributions.",
-  "TheRin":"The Maradona comparison recognises an early-era talisman whose influence helped establish the club.",
-  "Real Isagi":"The Eto'o comparison is based on a high-output forward who can score and combine with a star partner. Real Isagi's table records 42 goals and 25 assists.",
-  "Real Z":"The Neymar comparison reflects creativity, one-versus-one threat and combination play in attack.",
-  "Genius":"The Yamal comparison is about a young attacking profile with direct goal threat.",
-  "fenomas":"The Pedri comparison reflects an all-round midfielder who contributes to build-up and chance creation.",
-  "Xiv":"The Deco comparison reflects technical quality and tactical intelligence in midfield.",
-  "Messi":"The Pedro comparison reflects intelligent movement and supporting the main attacking threat.",
-  "Dragonovedtv":"The Guardiola comparison reflects the manager's role in building a consistent team structure.",
-  "Bunny":"The Villa comparison is based on direct movement and efficient finishing.",
-  "Aiku":"The Puyol comparison reflects defensive commitment and willingness to do the difficult work for the team.",
-  "Hyper":"The ter Stegen comparison is a goalkeeper reference, supported by Hyper's 264 recorded saves.",
-  "Tuna":"The Valdés comparison is a goalkeeper reference; Tuna's archive records 195 saves.",
-  "Sarox":"The Bravo comparison is a goalkeeper reference; Sarox's archive records 121 saves.",
-  "arian":"The Zubizarreta comparison is a goalkeeper reference; arian's archive records 121 saves.",
-  "Nobilus":"The Busquets comparison reflects positional discipline and connecting defence with attack.",
-  "Cold Prince":"The Mascherano comparison reflects defensive work and covering space for teammates.",
-  "Taski":"The Gavi comparison reflects energy and intensity in midfield.",
-  "Noob":"The Bojan comparison is a reference to a young attacking player in Barça's system."
+ "Shikai":"An Iniesta-style reference for midfield control, but Shikai's defining trait is his ability to perform at an elite level in almost every role.",
+ "Yuzarf":"A Messi-style reference for all-round influence, while his primary identity is a pure striker and UE1's best player.",
+ "Legit":"A Lewandowski-style number 9, with his own Phantom Shoot and unusually broad positional range.",
+ "Rusue":"A Xavi-style midfielder: understated, precise and capable of creating chances from deep or advanced positions.",
+ "Anakin":"A Suárez-style striker: relentless movement, dribbling and reliable finishing.",
+ "Gencay":"A Raphinha-style direct forward, defined by speed of release and long-range threat.",
+ "Bunny":"A David Villa-style finisher with extra emphasis on dribbling and shot adaptation.",
+ "Hyper":"A ter Stegen-style last line, but regarded by Barça as the greatest goalkeeper in UE.",
+ "Real Isagi":"A Samuel Eto'o-style striker, especially in his partnership with Yuzarf.",
+ "Tuna":"A Víctor Valdés-style keeper whose importance was clearest in major tournament campaigns.",
+ "Nobilus":"A Busquets-style reader of the game, with a wider all-round role including goalkeeping and assists.",
+ "TheRin":"A Maradona-style early talisman whose speed and shooting helped keep the club project alive.",
+ "Real Z":"A Neymar-style attacker with a distinctive emphasis on shooting accuracy and midfield contribution.",
+ "fenomas":"A Pedri-style new-generation midfielder who contributes in both directions.",
+ "Genius":"A Yamal-style new-generation talent, though Genius's primary role was a pure number 9.",
+ "Isagi demon king":"A high-impact striker whose unpredictable shooting and carrying role defined his Rubypool peak.",
+ "Taski":"A forward with a balance of sharp shooting and creative passing.",
+ "Cold Prince":"A modern technical attacker with elite dribbling and finishing.",
+ "Dragonovedtv":"A Guardiola-style manager: his legacy is tactical organisation, trust and motivation rather than individual statistics.",
+ "RndmX":"A top-level keeper whose reflexes and presence defined his era.",
+ "Andrew":"A commanding goalkeeper known for anticipation and intimidating strikers.",
+ "Sarox":"A clutch goalkeeper whose best trait was raising his level when the team needed him.",
+ "Aiku":"A Puyol-style defensive leader with the added ability to play midfield or goalkeeper.",
+ "Messi":"A technically gifted dribbler and big-match performer whose peak flashes were exceptional.",
+ "Xiv":"A Deco-style midfielder whose output was unusually high relative to his appearances.",
+ "Error":"An elite big-match contributor from the Rubypool era.",
+ "Noob":"A Bojan-style early Barça prospect, remembered especially for loyalty and the loan that helped Barça beat his parent team.",
+ "Lostzin":"A reliable big-game goalkeeper who made the most of opportunities behind Hyper.",
+ "Shadow":"A mobile, unselfish striker whose later career became even more distinguished.",
+ "Water":"A reflex-based goalkeeper whose surviving sample is small.",
+ "Luca":"A technically strong midfielder whose short Barça spell still left a good impression.",
+ "Mikey | 303":"A leadership-focused goalkeeper whose deleted match records leave an incomplete statistical picture.",
+ "lorenzo.kx":"A defender with a reputation for turning rare appearances into high-impact performances."
 };
 const PLAYER_PROFILE_NOTES = {
-  "Shikai":"Creative midfield control and decisive final passes",
-  "Yuzarf":"Elite scoring, chance creation and match-winning influence",
-  "Legit":"All-round forward play with goals, assists and defensive contribution",
-  "Rusue":"Playmaking, tempo control and chance creation",
-  "Anakin":"Clinical finishing and relentless attacking movement",
-  "Gencay":"Direct attacking threat and goal contributions",
-  "TheRin":"Historic attacking influence and a legendary scoring profile",
-  "fenomas":"Creative midfield work and all-round contribution",
-  "Genius":"High-output young attacking talent",
-  "Hyper":"Barça's top goalkeeper by recorded saves",
-  "Tuna":"Second in the club's recorded goalkeeper ranking",
-  "Sarox":"Third in the club's recorded goalkeeper ranking",
-  "arian":"Fourth in the club's recorded goalkeeper ranking"
+ "Shikai":"UE1's best midfielder and the team's natural organiser. A genuine all-position player who could switch into striker, goalkeeper or elite-defender roles, while also coaching and managing. His game intelligence, creativity and versatility made the whole team better.",
+ "Yuzarf":"A pure striker and Barça's best player in UE1. His finishing led the attack, but he was also an exceptional all-rounder who could pass, defend, make saves and influence every phase of a match.",
+ "Legit":"A prime number 9 with his signature Phantom Shoot, a technique goalkeepers struggled to read or stop. In the Velterra final he played like a one-man army, carrying the attack through goals, dribbling and playmaking. He could adapt to almost any position.",
+ "Rusue":"A pure midfielder and an underrated creator who could assist from almost anywhere. He gave his teams control and quality even after leaving Barça more than once to play for Re Al.",
+ "Anakin":"A pure number 9 who brought a goal threat to every match. He combined relentless scoring with sharp dribbling and close-range finishes against elite goalkeepers.",
+ "Gencay":"A pure number 9 with some of the fastest shots in the game. Give him the ball in a dangerous area and he could score from almost anywhere.",
+ "Bunny":"A pure striker with outstanding dribbling and adaptable shooting. He could create his own chance, change the angle and finish in different ways.",
+ "Hyper":"Barça's greatest goalkeeper and its last unbeatable line. He was the heart of the team through multiple trophies and the benchmark for goalkeeping in the game.",
+ "Real Isagi":"Also known as Emir, a dangerous striker and an effective attacking partner for Yuzarf. He had his own shooting quality and added another serious goal threat beside Barça's leading forward.",
+ "Tuna":"One of UE1's greatest goalkeepers. He was central to Barça's World Cup and UEL Season 1 campaigns, providing a dependable last line when the team needed him.",
+ "Nobilus":"One of Barça's finest all-rounders, able to keep goal, defend and create assists. His versatility made him a key part of the team across several seasons.",
+ "TheRin":"Barça's first major striker: explosive speed, powerful shooting and a defining role in the club's earliest trophy era. His performances gave the manager belief to keep the project alive.",
+ "Real Z":"A standout striker and midfielder of his era, known for underrated shooting technique, exceptional accuracy and memorable goals.",
+ "fenomas":"A new-generation midfield talent who could assist, score and contribute defensively. His work across the pitch helped carry the team during a demanding period.",
+ "Genius":"A new-generation Brazilian number 9 who became one of the team's leading goalscorers. He showed extraordinary talent and potential in only two seasons before retiring to focus on his studies.",
+ "Isagi demon king":"An elite striker with unpredictable shooting who carried Rubypool through multiple leagues. For a period he was the club's standout player, often shouldering an underpowered side almost alone.",
+ "Taski":"A dangerous striker with sharp, powerful shooting and the passing ability to bring teammates into the attack.",
+ "Cold Prince":"A new-generation attacker with elite dribbling and striking ability. He played an important role in several campaigns.",
+ "Dragonovedtv":"Founder and manager of Barça UEFC. Not celebrated for individual playing ability, but for assigning roles, building trust, motivating the squad and using tactics to turn a group of players into a winning team.",
+ "RndmX":"One of the best goalkeepers of his era, capable of carrying the goal and stopping shots that looked impossible. His character and presence made him a defining figure between the posts.",
+ "Andrew":"A dominant goalkeeper of his era. Strikers feared facing him, and his anticipation and reading of danger made him exceptionally difficult to beat.",
+ "Sarox":"A top goalkeeper with a powerful ability to lock in under pressure. When the team needed him, he could take over a match and carry the defensive effort.",
+ "Aiku":"A versatile defensive leader who could play defender, midfielder or goalkeeper. He acted as a wall at the back while also controlling the tempo.",
+ "Messi":"A gifted dribbler with exceptional speed, close control and shooting technique, plus the ability to tackle and contribute defensively. He repeatedly carried Barça in major matches, even if he could not sustain that level throughout his time.",
+ "Xiv":"One of the greats across multiple seasons. He did not play a huge number of matches for Barça, but his output and impact were remarkable for the time he spent at the club.",
+ "Error":"An elite performer who repeatedly stepped up and helped carry Rubypool in major matches.",
+ "Noob":"One of the original Rubypool players and a key part of the club's early trophies. At his peak he could carry a team alone. His loyalty became legendary when he was loaned to Barça and helped the club defeat his own parent team in the Elite League. His words became part of club culture: “I know it's my own team... But Barça is my home.”",
+ "Lostzin":"An elite goalkeeper who proved himself in major matches and major leagues, even while spending many games on the bench behind Hyper.",
+ "Shadow":"A talented, unselfish striker who produced strong performances before leaving Rubypool and went on to become one of the game's great forwards.",
+ "Water":"A goalkeeper with excellent reflexes who made a strong impression despite playing relatively few matches.",
+ "Luca":"One of UE's finest midfielders. He played only two or three matches for Barça, but delivered strong performances in that limited time.",
+ "Mikey | 303":"A good leader and goalkeeper. Many of his matches were deleted, so the surviving archive cannot show his full contribution.",
+ "lorenzo.kx":"A rare but outstanding presence: a defender who could appear once in a season and still cause opponents major problems. His peak performances made him one of the most memorable players of his era."
 };
 function playerMedia(name){
   return PLAYER_MEDIA[name] || null;
@@ -1732,19 +1794,33 @@ function handlePlayerImageError(img){
   }
 }
 function playerProfileCopy(name,p){
-  const role = PLAYER_ROLES[name] || (p && p.s >= 100 ? "Goalkeeper by recorded stats" : "Role not formally recorded");
-  const summary = PLAYER_PROFILE_NOTES[name] || (p
-    ? (p.s >= 100
-      ? `Goalkeeper contribution: ${p.s} recorded saves.`
-      : p.g >= p.a
-        ? `Attacking contribution: ${p.g} goals and ${p.a} assists in the current club table.`
-        : `Creative contribution: ${p.a} assists and ${p.g} goals in the current club table.`)
-    : "Archived squad member. Individual career totals are not included in the current player table.");
-  const comparison = PLAYER_PARALLELS[name];
-  const explanation = PLAYER_COMPARISON_NOTES[name] || (comparison
-    ? `A broad playing-style reference to ${comparison}, not a claim of identical careers.`
-    : "No one-to-one football comparison is assigned.");
+  const role=PLAYER_ROLES[name]||(p&&p.s>=100?"Goalkeeper":"Squad player");
+  const summary=PLAYER_PROFILE_NOTES[name]||(p?`Recorded contribution: ${p.g} goals, ${p.a} assists and ${p.s} saves.`:"Archived squad member. Individual career totals are not included in the current player-stat table.");
+  const comparison=PLAYER_PARALLELS[name]||"";
+  const explanation=PLAYER_COMPARISON_NOTES[name]||"A full historical comparison has not been assigned.";
   return {role,summary,comparison,explanation};
+}
+
+const PLAYER_DUOS=[
+ {a:"Shikai",b:"Yuzarf",medal:"gold"},
+ {a:"TheRin",b:"Noob",medal:"silver"},
+ {a:"Bunny",b:"Legit",medal:"silver"},
+ {a:"Genius",b:"fenomas",medal:"silver"},
+ {a:"Anakin",b:"Yuzarf",medal:"silver"},
+ {a:"Shikai",b:"Rusue",medal:"silver"},
+ {a:"Shikai",b:"Anakin",medal:"silver"},
+ {a:"Anakin",b:"Nobilus",medal:"silver"},
+ {a:"Isagi demon king",b:"Real Z",medal:"bronze"},
+ {a:"Bunny",b:"Aiku",medal:"bronze"},
+ {a:"Bunny",b:"Messi",medal:"bronze"},
+ {a:"Legit",b:"Real Z",medal:"bronze"},
+ {a:"Rusue",b:"Dragonovedtv",medal:"bronze"},
+ {a:"Gencay",b:"Yuzarf",medal:"bronze"}
+];
+function renderDuoMedals(name){
+ const duos=PLAYER_DUOS.filter(d=>d.a===name||d.b===name);
+ if(!duos.length)return "";
+ return `<h4 class="p-sec">Partnerships</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;const icon=d.medal==="gold"?"🥇":d.medal==="silver"?"🥈":"🥉";return `<div class="duo-row"><span class="duo-medal ${d.medal}">${icon}</span><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
 }
 
 function openPlayer(slug){
@@ -1804,6 +1880,7 @@ function openPlayer(slug){
     ${statsBlock}
     <h4 class="p-sec">Seasons Played <span class="count">${seasonsPlayed.length}</span></h4>
     ${seasonsBlock}
+    ${renderDuoMedals(profileName)}
     ${countChips ? `<div class="awards" style="margin-top:18px">${countChips}</div>` : ""}
     <h4 class="p-sec">Individual Honours <span class="count">${official.length} official${counts.bestPlayer ? ` + ${counts.bestPlayer} club` : ""}</span></h4>
     ${detailed}
@@ -1997,6 +2074,8 @@ function renderClubRecords(){
   ["Top playmaker",a.a,a.name,"Most assists in the current player-stat table"],
   ["Most goalkeeper saves",sv.s,sv.name,"Highest save total in the current player-stat table"],
   ["Goal contributions",g.g+g.a,g.name,"Top scorer's goals plus assists"],
+  ["Longest winning streak","25 matches","Barça UEFC","Consecutive wins · World Cup matches included"],
+  ["Longest unbeaten streak","31 matches","Barça UEFC","Wins and draws · no defeats · World Cup matches included"],
   ["Major achievements",ACHIEVEMENTS.length,"Barça UEFC",`${countTitles()} titles · ${ACHIEVEMENTS.filter(x=>x.tag==="runner").length} runner-up finishes · ${ACHIEVEMENTS.filter(x=>x.tag==="third").length} third places`]
  ];
  target.innerHTML=records.map(([k,v,n,d])=>`<article class="record-card"><div class="record-k">${escapeHtml(k)}</div><div class="record-v">${escapeHtml(String(v))}</div><div class="record-name">${escapeHtml(n)}</div><div class="record-sub">${escapeHtml(d)}</div></article>`).join("");

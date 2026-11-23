@@ -1612,18 +1612,18 @@ const PLAYER_MEDIA = {
   "Xiv": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Barcelona midfield legends"],
   "Messi": ["https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif","Bojan Krkić at Barcelona"],
   "Dragonovedtv": ["https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif","Pep Guardiola lifted by Barcelona players"],
-  "Bunny": ["https://media1.tenor.com/m/q8GqXr-vmLUAAAAd/lewandowski-lewandowski-barcelona.gif","Barcelona striker celebration"],
-  "Aiku": ["https://media1.tenor.com/m/dQuYvMWI_i8AAAAd/puyol-carles.gif","Barcelona defensive moment"],
-  "Hyper": ["https://media1.tenor.com/m/dQuYvMWI_i8AAAAd/puyol-carles.gif","Barcelona goalkeeper save moment"],
-  "Tuna": ["https://media1.tenor.com/m/rAnOhr5xiUgAAAAd/messi-world-cup.gif","Argentina goalkeeper and World Cup celebration"],
-  "Sarox": ["https://media1.tenor.com/m/dQuYvMWI_i8AAAAd/puyol-carles.gif","Barcelona goalkeeper save moment"],
-  "arian": ["https://media1.tenor.com/m/dQuYvMWI_i8AAAAd/puyol-carles.gif","Barcelona goalkeeper save moment"],
+  "Bunny": ["https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif","David Villa at Barcelona"],
+  "Aiku": ["https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif","Carles Puyol at Barcelona"],
+  "Hyper": ["https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif","Marc-André ter Stegen"],
+  "Tuna": ["https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif","Víctor Valdés at Barcelona"],
+  "Sarox": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · goalkeeper profile"],
+  "arian": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · goalkeeper profile"],
   "Noob": ["https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif","Bojan Krkić at Barcelona"],
   "Nobilus": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Barcelona midfield legends"],
   "Cold Prince": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Barcelona midfield legends"],
   "Taski": ["https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif","Pedri at Barcelona"],
-  "RndmX": ["https://media1.tenor.com/m/dQuYvMWI_i8AAAAd/puyol-carles.gif","Barcelona goalkeeper save moment"],
-  "Andrew": ["https://media1.tenor.com/m/dQuYvMWI_i8AAAAd/puyol-carles.gif","Barcelona goalkeeper save moment"]
+  "RndmX": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · squad profile"],
+  "Andrew": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · squad profile"]
 };
 const PLAYER_PARALLELS = {
   "Shikai":"Andrés Iniesta","Yuzarf":"Lionel Messi","Legit":"Robert Lewandowski","Rusue":"Xavi Hernández",
@@ -1650,7 +1650,7 @@ const PLAYER_PROFILE_NOTES = {
   "arian":"Fourth in the club's recorded goalkeeper ranking"
 };
 function playerMedia(name){
-  return PLAYER_MEDIA[name] || ["https://media1.tenor.com/m/3gzuhzWJVkkAAAAd/pepguardiola-pep-guardiola.gif","Barça club moment"];
+  return PLAYER_MEDIA[name] || ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest"];
 }
 
 function openPlayer(slug){
@@ -1704,7 +1704,7 @@ function openPlayer(slug){
   const profileNote = PLAYER_PROFILE_NOTES[profileName] || (p && p.s > 0 ? "Goalkeeper contribution recorded in the club stats" : "Club contributor · profile inspired by playing style and recorded stats");
   modalContent.innerHTML = `
     <div class="player-hero">
-      <img src="${media[0]}" alt="${escapeHtml(media[1])}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='https://media1.tenor.com/m/3gzuhzWJVkkAAAAd/pepguardiola-pep-guardiola.gif'">
+      <img src="${media[0]}" alt="${escapeHtml(media[1])}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif'">
       <div class="player-hero-copy">
         <b>${escapeHtml(media[1])}</b>
         <small>${escapeHtml(profileNote)}</small>

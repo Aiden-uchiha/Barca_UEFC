@@ -10,742 +10,265 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --red:#a50044;--red-light:#d81e6b;
-    --blue:#004d98;--blue-light:#1a72d4;
-    --gold:#f0b429;--gold-2:#ffd76e;
-    --bg:#08080d;--panel:#101018;--panel-2:#16161f;
-    --line:#23233a;--line-2:#2e2e48;
-    --text:#ececf4;--muted:#9a9ab4;--muted-2:#7a7a92;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:'Inter',system-ui,sans-serif;
-    background:var(--bg);color:var(--text);line-height:1.55;
-    overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  }
-  .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .aurora::before,.aurora::after{
-    content:'';position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;
-    animation:drift 22s ease-in-out infinite;
-  }
-  .aurora::before{
-    width:60vw;height:60vw;max-width:800px;max-height:800px;
-    background:radial-gradient(circle, rgba(165,0,68,.5), transparent 65%);
-    top:-20%;left:-15%;
-  }
-  .aurora::after{
-    width:60vw;height:60vw;max-width:800px;max-height:800px;
-    background:radial-gradient(circle, rgba(0,77,152,.5), transparent 65%);
-    top:-10%;right:-15%;animation-delay:-11s;
-  }
-  @keyframes drift{
-    0%,100%{transform:translate(0,0) scale(1)}
-    33%{transform:translate(6vw,4vh) scale(1.1)}
-    66%{transform:translate(-3vw,6vh) scale(.95)}
-  }
-  .particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .particle{
-    position:absolute;bottom:-10px;border-radius:50%;
-    background:var(--gold);opacity:.5;
-    box-shadow:0 0 8px rgba(240,180,41,.8);
-    animation:rise linear infinite;
-  }
-  @keyframes rise{
-    0%{transform:translateY(0) scale(.6);opacity:0}
-    10%{opacity:.6}90%{opacity:.6}
-    100%{transform:translateY(-105vh) scale(1);opacity:0}
-  }
-  a{color:inherit}
-  img{max-width:100%}
-  .stat-icon{
-    width:15px;height:15px;object-fit:contain;
-    vertical-align:-3px;display:inline-block;margin-right:4px;
-    filter:drop-shadow(0 0 3px rgba(240,180,41,.25));
-  }
-  .mini-icon{width:14px;height:14px;object-fit:contain;vertical-align:-2px;display:inline-block;margin-right:3px}
-  .pstat-icon{width:15px;height:15px;object-fit:contain;vertical-align:-2px;display:inline-block;margin-right:4px;filter:drop-shadow(0 0 3px rgba(240,180,41,.25))}
-
-  header{
-    position:sticky;top:0;z-index:50;
-    background:rgba(8,8,13,.72);
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-    border-bottom:1px solid #1e1e2e;
-  }
-  .nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:11px 20px}
-  .nav .logo{
-    width:40px;height:40px;object-fit:contain;
-    filter:drop-shadow(0 0 10px rgba(240,180,41,.4));
-    transition:transform .35s cubic-bezier(.2,.8,.2,1);
-  }
-  .nav .logo:hover{transform:rotate(-8deg) scale(1.08)}
-  .brand{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;font-size:1.02rem;white-space:nowrap}
-  .brand span{color:var(--gold)}
-  .nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
-  .nav-links a{
-    color:#b8b8cc;text-decoration:none;font-size:.8rem;font-weight:500;
-    padding:7px 11px;border-radius:999px;transition:.2s;white-space:nowrap;
-  }
-  .nav-links a:hover{background:#1a1a28;color:#fff;transform:translateY(-1px)}
-
-  .hero{
-    position:relative;z-index:1;max-width:1200px;margin:0 auto;
-    text-align:center;padding:70px 20px 54px;scroll-margin-top:80px;
-  }
-  .hero-logo-wrap{display:inline-block;position:relative;animation:hero-in .6s cubic-bezier(.2,.8,.2,1) both}
-  .hero-logo-wrap::before{
-    content:'';position:absolute;inset:-26px;border-radius:50%;
-    background:conic-gradient(from 0deg,
-      var(--gold), transparent 20%, var(--red-light) 40%, transparent 55%,
-      var(--blue-light) 70%, transparent 85%, var(--gold));
-    -webkit-mask:radial-gradient(circle, transparent 62%, #000 63%, #000 71%, transparent 72%);
-            mask:radial-gradient(circle, transparent 62%, #000 63%, #000 71%, transparent 72%);
-    animation:spin 9s linear infinite;opacity:.85;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .hero-logo{
-    width:150px;height:150px;object-fit:contain;position:relative;
-    filter:drop-shadow(0 0 30px rgba(240,180,41,.45)) drop-shadow(0 0 70px rgba(165,0,68,.3));
-    animation:float 6s ease-in-out infinite;
-  }
-  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(-2deg)}}
-  @keyframes hero-in{from{opacity:0;transform:translateY(20px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
-  .hero .sub{
-    font-family:'Oswald',sans-serif;color:var(--gold);
-    letter-spacing:5px;text-transform:uppercase;font-size:.85rem;margin-top:22px;
-    animation:hero-in .6s cubic-bezier(.2,.8,.2,1) .06s both;
-  }
-  .hero h1{
-    font-family:'Oswald',sans-serif;
-    font-size:clamp(2.7rem,7.5vw,5.2rem);
-    letter-spacing:3px;line-height:1.02;margin-top:6px;
-    background:linear-gradient(110deg,#ffffff 20%,#ffe6a8 40%,var(--gold) 50%,#ffe6a8 60%,#ffffff 80%);
-    background-size:200% 100%;
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    animation:hero-in .6s cubic-bezier(.2,.8,.2,1) .1s both, shimmer 5s linear infinite 1s;
-  }
-  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-  .hero .tag{
-    color:#c8c8dc;max-width:660px;margin:16px auto 0;
-    font-size:clamp(.98rem,2vw,1.12rem);
-    animation:hero-in .6s cubic-bezier(.2,.8,.2,1) .15s both;
-  }
-  .hero .tag b{color:#fff}
-  .hero .old-name{
-    color:var(--muted-2);font-size:.82rem;margin-top:10px;letter-spacing:.3px;
-    animation:hero-in .6s cubic-bezier(.2,.8,.2,1) .2s both;
-  }
-  .chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px}
-  .chip{
-    background:linear-gradient(180deg,#171722,#101018);
-    border:1px solid var(--line-2);border-radius:14px;
-    padding:14px 22px;min-width:132px;
-    box-shadow:0 8px 24px rgba(0,0,0,.35);
-    transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s, box-shadow .25s;
-    animation:hero-in .5s cubic-bezier(.2,.8,.2,1) both;
-  }
-  .chip:nth-child(1){animation-delay:.18s}.chip:nth-child(2){animation-delay:.24s}
-  .chip:nth-child(3){animation-delay:.3s}.chip:nth-child(4){animation-delay:.36s}
-  .chip:nth-child(5){animation-delay:.42s}
-  .chip:hover{transform:translateY(-4px);border-color:rgba(240,180,41,.4);box-shadow:0 12px 30px rgba(240,180,41,.15)}
-  .chip .num{font-family:'Oswald',sans-serif;font-size:1.85rem;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
-  .chip .lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-top:7px}
-  .banners{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
-  .duo-banner{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:9px 18px;border-radius:999px;
-    background:linear-gradient(90deg,rgba(240,180,41,.14),rgba(165,0,68,.14));
-    border:1px solid rgba(240,180,41,.35);font-size:.84rem;color:#ffe6a8;
-    animation:hero-in .5s cubic-bezier(.2,.8,.2,1) .42s both;
-  }
-  .duo-banner img{width:20px;height:20px;object-fit:contain}
-  .duo-banner b{color:#fff}
-  .world-banner{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:9px 18px;border-radius:999px;
-    background:linear-gradient(90deg,rgba(0,77,152,.28),rgba(165,0,68,.24));
-    border:1px solid rgba(120,170,255,.45);font-size:.84rem;color:#cfe1ff;
-    box-shadow:0 0 28px rgba(60,130,255,.18);
-    animation:hero-in .5s cubic-bezier(.2,.8,.2,1) .48s both;
-  }
-  .world-banner b{color:#fff}
-
-  main{position:relative;z-index:1}
-  section{max-width:1200px;margin:0 auto;padding:58px 20px;scroll-margin-top:74px}
-  .sec-head{display:flex;align-items:center;gap:16px;margin-bottom:26px;flex-wrap:wrap}
-  .sec-head h2{
-    font-family:'Oswald',sans-serif;
-    font-size:clamp(1.55rem,3.6vw,2.3rem);
-    letter-spacing:1.5px;text-transform:uppercase;
-  }
-  .sec-head .line{
-    flex:1;min-width:40px;height:1px;
-    background:linear-gradient(90deg,var(--line-2),transparent);
-    transform-origin:left;transform:scaleX(0);
-    transition:transform .5s cubic-bezier(.2,.8,.2,1);
-  }
-  section.revealed .sec-head .line{transform:scaleX(1)}
-  .sec-head .note{
-    color:var(--muted);font-size:.8rem;
-    background:#13131d;border:1px solid var(--line);
-    padding:6px 12px;border-radius:999px;
-  }
-
-  .reveal{
-    opacity:0;transform:translateY(12px);
-    transition:opacity .4s cubic-bezier(.2,.8,.2,1) var(--delay,0s),
-               transform .4s cubic-bezier(.2,.8,.2,1) var(--delay,0s);
-  }
-  .reveal.revealed{opacity:1;transform:translateY(0)}
-
-  .mini-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
-  .mini{
-    background:linear-gradient(180deg,#14141f,#0f0f17);
-    border:1px solid var(--line);border-radius:14px;padding:14px 16px;
-    transition:border-color .25s, box-shadow .25s;
-  }
-  .mini:hover{border-color:rgba(240,180,41,.4);box-shadow:0 8px 24px rgba(240,180,41,.12)}
-  .mini-k{display:block;font-size:.66rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px}
-  .mini-v{font-family:'Oswald',sans-serif;font-size:1.15rem;color:#fff;font-variant-numeric:tabular-nums}
-  .mini-v a{color:#fff;text-decoration:none}
-  .mini-v a:hover{color:var(--gold)}
-
-  .table-wrap{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.35)}
-  .table-scroll{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:600px}
-  thead th{
-    background:#15151f;color:var(--muted);font-weight:600;font-size:.68rem;
-    text-transform:uppercase;letter-spacing:1.2px;padding:14px 12px;
-    text-align:right;white-space:nowrap;
-  }
-  thead th:first-child{text-align:center;width:72px}
-  thead th:nth-child(2){text-align:left}
-  th.sortable{cursor:pointer;user-select:none;transition:color .2s,background .2s}
-  th.sortable:hover{color:#fff;background:#1b1b28}
-  th.sortable:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
-  th.sortable.active{color:var(--gold)}
-  th.sortable .arrow{opacity:.35;margin-left:4px;font-size:.62rem;display:inline-block;transition:.2s}
-  th.sortable.active .arrow{opacity:1}
-  tbody td{padding:11px 12px;border-top:1px solid #1c1c2c;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-  tbody td:first-child{text-align:center;color:#6a6a84;font-family:'Oswald',sans-serif;font-size:1rem}
-  tbody td:nth-child(2){text-align:left;font-weight:600;white-space:normal}
-  tbody tr{transition:background .15s}
-  tbody tr:hover{background:#15151f}
-  .medal{font-size:.8rem}
-  .pts{color:var(--gold);font-weight:700;font-family:'Oswald',sans-serif;font-size:1rem}
-  .cell-top{color:#fff;font-weight:700;position:relative}
-  .cell-top::after{
-    content:'';position:absolute;right:6px;top:50%;transform:translateY(-50%);
-    width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);
-  }
-  .player-link{color:var(--text);text-decoration:none;border-bottom:1px dashed transparent;transition:color .15s,border-color .15s}
-  .player-link:hover{color:var(--gold);border-bottom-color:var(--gold)}
-  .sort-hint{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-size:.78rem;color:var(--muted-2)}
-  .squad-searchbar{display:grid;grid-template-columns:130px minmax(0,1fr) auto;align-items:center;gap:12px;margin:0 0 14px;padding:11px 13px;background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:13px}
-  .squad-searchbar label{font-size:.66rem;font-weight:800;letter-spacing:1.1px;color:var(--muted);white-space:nowrap}
-  .squad-searchbar input{width:100%;min-width:0;padding:10px 12px;background:#090910;border:1px solid #303047;border-radius:9px;color:var(--text);font:inherit;font-size:.84rem;outline:none}
-  .squad-searchbar input:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(240,180,41,.1)}
-  .squad-searchbar input::placeholder{color:#707087}
-  .squad-searchbar span{font-size:.7rem;color:var(--muted-2);white-space:nowrap}
-  @media(max-width:560px){.squad-searchbar{grid-template-columns:1fr;gap:7px}.squad-searchbar span{white-space:normal}}
-  .sort-hint .pill{background:#13131d;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:#c8c8dc;transition:.2s}
-  .sort-hint .pill b{color:var(--gold)}
-  .footnote{color:var(--muted-2);font-size:.78rem;margin-top:12px}
-
-  .cab-stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
-  .cab-stat{
-    display:inline-flex;align-items:center;gap:8px;
-    background:#13131d;border:1px solid var(--line);
-    padding:8px 14px;border-radius:999px;font-size:.8rem;color:#c8c8dc;
-    transition:transform .25s, border-color .25s;
-  }
-  .cab-stat:hover{transform:translateY(-2px);border-color:rgba(240,180,41,.35)}
-  .cab-stat b{color:#fff;font-variant-numeric:tabular-nums}
-  .cab-stat small{color:var(--muted-2);font-size:.72rem}
-  .cabinet{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;perspective:1400px}
-  .ach{
-    position:relative;background:linear-gradient(180deg,#12121c,#0d0d15);
-    border:1px solid var(--line);border-radius:16px;
-    padding:20px 20px 20px 24px;overflow:hidden;
-    transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
-    transition:border-color .25s, box-shadow .25s, transform .18s ease-out;
-  }
-  .ach::before{
-    content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
-    background:var(--accent,#3a3a5a);box-shadow:0 0 14px var(--accent, transparent);
-  }
-  .ach::after{
-    content:'';position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.07), transparent 40%);
-    opacity:0;transition:opacity .3s;
-  }
-  .ach:hover::after{opacity:1}
-  .ach:hover{border-color:#3a3a5a;box-shadow:0 24px 50px rgba(0,0,0,.5)}
-  .ach.champion{--accent:var(--gold)}
-  .ach.runner{--accent:#b9b9cc}
-  .ach.third{--accent:#cd7f32}
-  .ach.season{--accent:#4a7fc9}
-  .ach.featured{
-    border-color:rgba(240,180,41,.55);
-    background:linear-gradient(180deg,#1c1710,#0f0f17);
-    box-shadow:0 0 0 1px rgba(240,180,41,.15), 0 20px 50px rgba(240,180,41,.14);
-    animation:worldGlow 4s ease-in-out infinite;
-  }
-  .ach.featured::before{width:5px;box-shadow:0 0 20px var(--gold)}
-  @keyframes worldGlow{
-    0%,100%{box-shadow:0 0 0 1px rgba(240,180,41,.15), 0 20px 50px rgba(240,180,41,.12)}
-    50%{box-shadow:0 0 0 1px rgba(240,180,41,.35), 0 20px 60px rgba(240,180,41,.25)}
-  }
-  .world-tag{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:.62rem;font-weight:700;letter-spacing:1.3px;
-    text-transform:uppercase;color:#ffe6a8;
-    background:rgba(240,180,41,.14);border:1px solid rgba(240,180,41,.42);
-    padding:3px 9px;border-radius:999px;margin-bottom:8px;
-  }
-  .ach-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-  .ach-num{font-family:'Oswald',sans-serif;font-size:.82rem;color:var(--muted-2);letter-spacing:1px}
-  .badge{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap}
-  .badge.champion{background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#1a1200;box-shadow:0 0 14px rgba(240,180,41,.5);background-size:200% 100%;animation:badgeShift 3s linear infinite}
-  @keyframes badgeShift{0%{background-position:0% 0}100%{background-position:200% 0}}
-  .badge.runner{background:#2a2a3e;color:#d8d8e8}
-  .badge.third{background:#3a2416;color:#e8a76a}
-  .ach h3{font-family:'Oswald',sans-serif;font-size:1.16rem;letter-spacing:.6px;line-height:1.25}
-  .season-open{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(240,180,41,.35);transition:color .2s,border-color .2s}
-  .season-open:hover{color:var(--gold);border-color:var(--gold)}
-  .ach-note{color:var(--muted-2);font-size:.78rem;margin-top:4px;font-style:italic}
-  .awards{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
-  .aw{
-    display:inline-flex;align-items:center;gap:6px;
-    background:#171722;border:1px solid var(--line);
-    border-radius:999px;padding:5px 11px;font-size:.74rem;color:#c8c8dc;
-    transition:transform .18s, border-color .18s;
-  }
-  .aw:hover{transform:translateY(-1px);border-color:rgba(240,180,41,.3)}
-  .aw img{width:18px;height:18px;object-fit:contain;flex-shrink:0}
-  .aw .em{font-size:15px;line-height:1}
-  .aw b{color:#fff;font-weight:600}
-  .aw b .player-link{color:#fff}
-  .aw b .player-link:hover{color:var(--gold)}
-  .cab-note{
-    margin-top:14px;color:var(--muted-2);font-size:.78rem;
-    padding:10px 14px;background:#101018;
-    border:1px solid var(--line);border-radius:10px;
-    border-left:3px solid rgba(240,180,41,.5);
-  }
-  .cab-note b{color:#ffe6a8;font-weight:600}
-
-  .honours{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;perspective:1400px}
-  .honour{
-    background:linear-gradient(180deg,#14141f,#0f0f17);
-    border:1px solid var(--line);border-radius:16px;padding:18px 20px;
-    transition:border-color .25s, box-shadow .25s, transform .25s;
-  }
-  .honour:hover{border-color:rgba(240,180,41,.35);box-shadow:0 12px 32px rgba(240,180,41,.08);transform:translateY(-3px)}
-  .h-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-  .h-head img{width:26px;height:26px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(240,180,41,.3))}
-  .h-head .em{font-size:22px;line-height:1}
-  .h-head h3{font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:.8px;text-transform:uppercase}
-  .h-total{
-    margin-left:auto;font-family:'Oswald',sans-serif;font-size:.78rem;color:#1a1200;
-    background:linear-gradient(90deg,var(--gold),var(--gold-2));
-    border-radius:999px;padding:2px 9px;font-variant-numeric:tabular-nums;
-  }
-  .h-sub{color:var(--muted-2);font-size:.7rem;margin:-6px 0 10px;font-style:italic;line-height:1.4}
-  .honour .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #1c1c2c;font-size:.86rem}
-  .honour .row:first-of-type{border-top:none}
-  .honour .nm{color:#d8d8e8}
-  .honour .ct{color:var(--gold);font-family:'Oswald',sans-serif;font-weight:600;font-size:.9rem;white-space:nowrap;font-variant-numeric:tabular-nums}
-  .honour.club{border-style:dashed;opacity:.92}
-  .honour.club .h-total{background:#2a2a3e;color:#c8c8dc}
-
-  /* ================= ROSTERS ================= */
-  .roster-toolbar{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:12px;margin-bottom:20px;flex-wrap:wrap;
-  }
-  .roster-tabs{
-    display:flex;gap:4px;background:#101018;
-    border:1px solid var(--line);border-radius:999px;padding:4px;
-  }
-  .tab{
-    background:transparent;border:none;color:var(--muted);
-    padding:7px 16px;border-radius:999px;cursor:pointer;
-    font-family:inherit;font-size:.8rem;font-weight:600;transition:.2s;
-  }
-  .tab:hover{color:#fff}
-  .tab.active{background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#1a1200}
-
-  .roster-view{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-  .season-card{
-    background:linear-gradient(180deg,#14141f,#0f0f17);
-    border:1px solid var(--line);border-radius:14px;padding:16px;
-    transition:border-color .25s, transform .25s;
-  }
-  .season-card:hover{border-color:#3a3a5a;transform:translateY(-2px)}
-  .season-card-head{margin-bottom:10px}
-  .season-card-num{font-size:.68rem;color:var(--muted-2);font-family:'Oswald',sans-serif;letter-spacing:.5px;text-transform:uppercase}
-  .season-card-title{font-family:'Oswald',sans-serif;font-size:1.02rem;letter-spacing:.5px;line-height:1.25;margin-top:2px}
-  .roster-preview{display:flex;flex-wrap:wrap;gap:5px;min-height:22px}
-  .roster-tag{
-    display:inline-flex;align-items:center;gap:4px;
-    background:#171722;border:1px solid var(--line);
-    border-radius:999px;padding:3px 9px;font-size:.72rem;color:#d8d8e8;
-  }
-  .roster-tag .player-link{color:inherit;border-bottom:none}
-  .roster-tag .player-link:hover{color:var(--gold)}
-  .roster-tag.empty{color:var(--muted-2);font-style:italic;border-style:dashed}
-
-  .player-roster-card{
-    background:linear-gradient(180deg,#14141f,#0f0f17);
-    border:1px solid var(--line);border-radius:14px;padding:16px;
-    transition:border-color .25s;
-  }
-  .player-roster-card:hover{border-color:#3a3a5a}
-  .player-roster-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-  .player-roster-name{font-family:'Oswald',sans-serif;font-size:1.12rem;letter-spacing:.5px}
-  .player-roster-name a{color:#fff;text-decoration:none}
-  .player-roster-name a:hover{color:var(--gold)}
-  .player-roster-count{color:var(--gold);font-family:'Oswald',sans-serif;font-size:.82rem;white-space:nowrap}
-  .duo-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin:8px 0 16px}
-  .duo-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:#11111b;border:1px solid var(--line);border-radius:10px;font-size:.82rem}
-  .duo-medal{font-size:1.1rem;line-height:1}
-  .player-roster-seasons{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
-  .season-pill{
-    background:#171722;border:1px solid var(--line);
-    border-radius:999px;padding:3px 10px;font-size:.72rem;color:#c8c8dc;
-  }
-  .season-pill.champion{border-color:rgba(240,180,41,.35);color:#ffe6a8}
-  .season-pill.runner{border-color:rgba(200,200,220,.2);color:#d8d8e8}
-  .season-pill.third{border-color:rgba(205,127,50,.3);color:#e8a76a}
-
-  /* ================= HISTORY ================= */
-  .history-intro{
-    background:linear-gradient(180deg,#14141f,#0f0f17);
-    border:1px solid var(--line);border-left:3px solid var(--gold);
-    border-radius:16px;padding:22px 24px;margin-bottom:22px;
-  }
-  .history-intro p{color:#c8c8dc;font-size:.95rem}
-  .history-intro p b{color:#fff}
-
-  /* GIF strip */
-  .gif-strip{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:14px;margin-bottom:24px;
-  }
-  .gif-card{
-    position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;
-    border:1px solid var(--line);
-    background:radial-gradient(circle at 50% 40%,#1a1a28,#0a0a10);
-    display:flex;align-items:center;justify-content:center;
-    transition:border-color .3s, transform .3s, box-shadow .3s;
-  }
-  .gif-card{transition:transform .35s cubic-bezier(.2,.75,.25,1),border-color .3s,box-shadow .3s}
-  .gif-card:hover{
-    border-color:rgba(240,180,41,.5);
-    transform:translateY(-3px);
-    box-shadow:0 16px 36px rgba(0,0,0,.5);
-  }
-  .gif-card img{
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;opacity:.85;transition:transform .6s, opacity .3s;
-  }
-  a.gif-card{color:inherit;text-decoration:none;cursor:pointer}
-  .gif-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .gif-card:hover img{transform:scale(1.06);opacity:1}
-  .gif-fallback{
-    display:none;font-size:46px;line-height:1;
-    filter:drop-shadow(0 0 22px rgba(240,180,41,.55));
-    animation:pulseEmoji 2.2s ease-in-out infinite;
-  }
-  @keyframes pulseEmoji{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-  .gif-card.gif-failed img{display:none}
-  .gif-card.gif-failed .gif-fallback{display:block}
-  .gif-label{
-    position:absolute;left:0;right:0;bottom:0;z-index:2;
-    padding:20px 14px 10px;
-    background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,.55) 55%,transparent);
-    font-family:'Oswald',sans-serif;font-size:.82rem;
-    letter-spacing:.6px;color:#fff;text-shadow:0 1px 4px #000;
-  }
-  .gif-label small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;color:#c8c8dc;letter-spacing:.2px;margin-top:1px}
-
-  /* ================= CINEMATIC REVEAL MOTION ================= */
-  .reveal-item{
-    opacity:1;
-    transform:none;
-    filter:none;
-  }
-  .motion-ready .reveal-item{
-    opacity:0;
-    transform:translate3d(0,28px,0) scale(.985);
-    filter:blur(7px);
-    transition:
-      opacity .72s cubic-bezier(.2,.75,.25,1),
-      transform .82s cubic-bezier(.2,.75,.25,1),
-      filter .82s cubic-bezier(.2,.75,.25,1);
-    transition-delay:var(--reveal-delay,0ms);
-    will-change:opacity,transform,filter;
-  }
-  .motion-ready .reveal-item.is-visible{
-    opacity:1;
-    transform:translate3d(0,0,0) scale(1);
-    filter:blur(0);
-  }
-  .hero .hero-logo-wrap,
-  .hero .sub,
-  .hero h1,
-  .hero .tag,
-  .hero .old-name,
-  .hero .chips,
-  .hero .world-banner{
-    opacity:0;
-    animation:hero-enter .85s cubic-bezier(.2,.75,.25,1) forwards;
-  }
-  .hero .hero-logo-wrap{animation-delay:.08s}
-  .hero .sub{animation-delay:.18s}
-  .hero h1{animation-delay:.28s}
-  .hero .tag{animation-delay:.4s}
-  .hero .old-name{animation-delay:.5s}
-  .hero .chips{animation-delay:.62s}
-  .hero .world-banner{animation-delay:.74s}
-  @keyframes hero-enter{
-    from{opacity:0;transform:translate3d(0,24px,0) scale(.985);filter:blur(8px)}
-    to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
-  }
-  header{animation:nav-enter .65s ease-out both}
-  @keyframes nav-enter{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
-  .reveal-item[data-reveal-group]{
-    transition-delay:calc(var(--reveal-delay,0ms) + var(--group-delay,0ms));
-  }
-  @media (prefers-reduced-motion:reduce){
-    .hero .hero-logo-wrap,.hero .sub,.hero h1,.hero .tag,.hero .old-name,
-    .hero .chips,.hero .world-banner,header{opacity:1;animation:none;filter:none;transform:none}
-    .motion-ready .reveal-item{opacity:1;transform:none;filter:none;transition:none}
-  }
-  .era{
-    position:relative;
-    background:linear-gradient(180deg,#12121c,#0d0d15);
-    border:1px solid var(--line);
-    border-left:3px solid var(--era-accent,var(--gold));
-    border-radius:16px;
-    padding:24px 26px;
-    overflow:hidden;
-    transition:border-color .3s, transform .3s, box-shadow .3s;
-  }
-  .era:hover{
-    border-color:#3a3a5a;
-    border-left-color:var(--era-accent,var(--gold));
-    transform:translateY(-2px);
-    box-shadow:0 18px 40px rgba(0,0,0,.45);
-  }
-  .era::after{
-    content:'';position:absolute;right:-40px;top:-40px;
-    width:160px;height:160px;border-radius:50%;
-    background:radial-gradient(circle,var(--era-glow,rgba(240,180,41,.10)),transparent 70%);
-    pointer-events:none;
-  }
-  .era-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px;flex-wrap:wrap}
-  .era-node{
-    font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;
-    color:#0b0b12;
-    background:linear-gradient(135deg,var(--era-accent,var(--gold)),rgba(255,255,255,.85));
-    border-radius:10px;padding:5px 12px;
-    letter-spacing:1px;line-height:1.4;flex-shrink:0;
-    box-shadow:0 0 18px var(--era-glow,rgba(240,180,41,.3));
-  }
-  .era-titles{flex:1;min-width:200px}
-  .era-label{
-    font-size:.64rem;letter-spacing:2px;text-transform:uppercase;
-    color:var(--era-accent,var(--gold));font-weight:700;opacity:.9;
-  }
-  .era h3{
-    font-family:'Oswald',sans-serif;font-size:clamp(1.18rem,2.6vw,1.5rem);
-    letter-spacing:.6px;line-height:1.22;margin-top:2px;
-  }
-  .era-lead{
-    color:#b8b8cc;font-size:.9rem;font-style:italic;
-    margin-bottom:16px;padding-bottom:14px;
-    border-bottom:1px solid #1c1c2c;
-  }
-  .era-block{margin-top:14px}
-  .era-block h4{
-    font-family:'Oswald',sans-serif;font-size:.94rem;
-    letter-spacing:.8px;text-transform:uppercase;
-    color:#ffe6a8;margin-bottom:6px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .era-block h4::before{
-    content:'';width:6px;height:6px;border-radius:50%;
-    background:var(--era-accent,var(--gold));flex-shrink:0;
-    box-shadow:0 0 8px var(--era-accent,var(--gold));
-  }
-  .era-block p{color:#b8b8cc;font-size:.89rem}
-  .era-block p b{color:#fff}
-  .era-block p .pl{color:#fff;font-weight:600}
-
-  .moment{
-    margin-top:14px;padding:12px 16px;
-    background:rgba(240,180,41,.06);
-    border:1px solid rgba(240,180,41,.28);
-    border-radius:12px;
-    display:flex;gap:12px;align-items:flex-start;
-  }
-  .moment .ico{font-size:20px;line-height:1.25;flex-shrink:0}
-  .moment .m-body{font-size:.86rem;color:#e2d3a8}
-  .moment .m-body b{color:#ffe6a8}
-
-  .story-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0 4px}
-  .story-media figure{margin:0;overflow:hidden;background:#10101a;border:1px solid var(--line-2);border-radius:13px}
-  .story-media img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#090910}
-  .story-media figcaption{padding:9px 11px;color:#d7d7e5;font-size:.74rem;line-height:1.45}
-  .era-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-  .era-tag{
-    font-size:.68rem;font-weight:600;letter-spacing:.5px;
-    background:#171722;border:1px solid var(--line);
-    border-radius:999px;padding:3px 10px;color:#c8c8dc;
-  }
-  .era-tag.gold{border-color:rgba(240,180,41,.4);color:#ffe6a8;background:rgba(240,180,41,.08)}
-
-  footer{
-    position:relative;z-index:1;border-top:1px solid #1e1e2e;
-    padding:34px 20px;text-align:center;color:var(--muted-2);font-size:.82rem;
-  }
-  footer .f-logo{width:36px;height:36px;object-fit:contain;margin-bottom:10px;opacity:.85;animation:float 7s ease-in-out infinite}
-  footer b{color:#d8d8e8}
-
-  .modal{
-    position:fixed;inset:0;z-index:100;
-    display:none;align-items:center;justify-content:center;padding:18px;
-    background:rgba(4,4,8,.84);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  }
-  .modal.open{display:flex}
-  .modal-panel{
-    width:100%;max-width:660px;max-height:88vh;overflow:auto;
-    background:linear-gradient(180deg,#14141f,#0c0c13);
-    border:1px solid var(--line-2);border-radius:20px;padding:28px;
-    position:relative;animation:pop .22s cubic-bezier(.2,.8,.2,1);
-    box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 60px rgba(240,180,41,.06);
-  }
-  @keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
-  .modal-close{
-    position:absolute;top:14px;right:14px;width:34px;height:34px;
-    border-radius:50%;background:#1e1e2e;border:1px solid #33334a;
-    color:#c8c8dc;font-size:20px;line-height:1;cursor:pointer;
-    transition:.2s;display:flex;align-items:center;justify-content:center;
-  }
-  .modal-close:hover{background:#2a2a3e;color:#fff;transform:rotate(90deg)}
-  .player-hero{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:12px;margin:0 0 18px;padding:11px;background:linear-gradient(110deg,rgba(20,50,110,.25),rgba(120,20,45,.18));border:1px solid var(--line-2);border-radius:15px}
-  .player-hero img{display:block;width:100%;height:auto;max-height:420px;object-fit:contain;object-position:center;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:#10101a}
-  .player-hero img.image-failed{display:none}
-  .player-hero.no-image{grid-template-columns:minmax(0,1fr)}
-  .player-hero-copy{min-width:0}
-  .player-hero-copy .role{display:inline-flex;padding:3px 8px;border:1px solid rgba(240,180,41,.28);border-radius:999px;color:#f2d38a;font-size:.64rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
-  .player-hero-copy .summary{display:block;color:#d7d7e5;font-size:.78rem;line-height:1.5;margin-top:7px}
-  .player-hero-copy .comparison{display:block;color:#aebbd3;font-size:.72rem;line-height:1.45;margin-top:6px}
-  .player-hero-copy .comparison b{color:#ffe6a8}
-  @media(max-width:480px){.player-hero{grid-template-columns:minmax(0,1fr);gap:10px;padding:9px}.player-hero img{width:100%;height:auto;max-height:420px}.player-hero-copy .summary{font-size:.72rem}}
-
-  .ach-detail{color:#b8b8cc;font-size:.76rem;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #242438}
-  .profile-report{margin-top:18px;padding:15px 16px;background:linear-gradient(120deg,rgba(20,50,110,.22),rgba(120,20,45,.16));border:1px solid var(--line-2);border-radius:13px}
-  .profile-report .report-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
-  .profile-report .role-pill{font-size:.66rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#ffe6a8;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:999px;padding:4px 9px}
-  .profile-report .contrib-pill{font-size:.68rem;color:#c8d9ff;background:rgba(70,120,210,.12);border:1px solid rgba(90,140,220,.25);border-radius:999px;padding:4px 9px}
-  .profile-report p{font-size:.82rem;color:#d0d0df;line-height:1.65}
-  .profile-report p b{color:#fff}
-  .profile-report .reference{display:block;margin-top:9px;font-size:.68rem;color:var(--muted-2)}
-  .profile-report .reference a,.history-source a{color:#e8c979;text-decoration:none;border-bottom:1px dotted rgba(240,180,41,.4)}
-  .history-records{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:22px}
-  .record-card{background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:14px;padding:16px}
-  .record-card .record-k{font-size:.65rem;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted-2)}
-  .record-card .record-v{font-family:'Oswald',sans-serif;font-size:1.45rem;color:var(--gold);margin-top:3px}
-  .record-card .record-name{font-size:.82rem;color:#fff;font-weight:700}
-  .record-card .record-sub{font-size:.7rem;color:var(--muted-2);margin-top:3px}
-  .history-source{font-size:.72rem;color:var(--muted-2);margin-top:14px}
-  .era-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0 4px}
-  .era-media figure{margin:0;position:relative;min-width:0;aspect-ratio:16/10;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#10101a}
-  .era-media img{display:block;width:100%;height:100%;object-fit:cover}
-  .era-media figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;background:linear-gradient(0deg,rgba(0,0,0,.92),transparent);font-size:.72rem;font-weight:700;color:#fff}
-  .era-media figcaption small{display:block;font-size:.62rem;font-weight:400;color:#d0d0df;margin-top:2px}
-  @media(max-width:480px){.player-hero{grid-template-columns:88px 1fr}.player-hero img{width:88px;height:92px}.era-media{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  .p-head{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-right:40px}
-  .p-rank{
-    font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);
-    background:#1a1a28;border:1px solid var(--line-2);border-radius:12px;
-    padding:6px 14px;white-space:nowrap;
-  }
-  .p-head h3{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5vw,2.1rem);letter-spacing:1px;line-height:1.1}
-  .pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .pstat{
-    background:var(--panel-2);border:1px solid var(--line);
-    border-radius:12px;padding:14px 8px;text-align:center;
-    transition:border-color .25s, transform .25s;
-  }
-  .pstat:hover{border-color:rgba(240,180,41,.35);transform:translateY(-2px)}
-  .pstat .v{display:block;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums}
-  .pstat .v.gold{color:var(--gold)}
-  .pstat .k{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted-2);margin-top:5px}
-  .p-sec{
-    font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:1.2px;
-    text-transform:uppercase;color:var(--muted);margin:22px 0 12px;
-    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  }
-  .p-sec .count{
-    font-family:'Inter',sans-serif;font-size:.68rem;letter-spacing:.6px;
-    color:var(--gold);background:rgba(240,180,41,.12);
-    border:1px solid rgba(240,180,41,.32);border-radius:999px;
-    padding:2px 9px;text-transform:none;
-  }
-  .pa-list{display:flex;flex-direction:column;gap:8px}
-  .season-result{margin:0 0 16px;padding:14px 16px;background:rgba(240,180,41,.07);border:1px solid rgba(240,180,41,.24);border-radius:12px;color:#e2d3a8}
-  .season-result b{color:#ffe6a8}
-  .season-squad{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
-  .season-player{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;font-size:.82rem}
-  .season-player .career{color:var(--muted-2);font-size:.7rem;white-space:nowrap}
-  .season-player .player-link{font-weight:600}
-  .legacy-note{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2);color:var(--muted);font-size:.84rem}
-  .pa-row{
-    display:flex;align-items:center;gap:12px;
-    background:var(--panel-2);border:1px solid var(--line);
-    border-radius:12px;padding:10px 14px;
-    animation:row-in .3s cubic-bezier(.2,.8,.2,1) backwards;
-  }
-  .pa-row:nth-child(1){animation-delay:.03s}.pa-row:nth-child(2){animation-delay:.06s}
-  .pa-row:nth-child(3){animation-delay:.09s}.pa-row:nth-child(4){animation-delay:.12s}
-  .pa-row:nth-child(5){animation-delay:.15s}
-  @keyframes row-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-  .pa-row.club{border-style:dashed;opacity:.88}
-  .pa-row img{width:24px;height:24px;object-fit:contain;flex-shrink:0}
-  .pa-row .em{font-size:22px;line-height:1;flex-shrink:0}
-  .pa-name{font-weight:600;font-size:.9rem;color:#fff}
-  .pa-ctx{font-size:.74rem;color:var(--muted-2);margin-top:1px}
-  .muted{color:var(--muted-2);font-size:.88rem}
-
-  @media (max-width:640px){
-    .nav{padding:10px 14px;gap:10px}
-    .nav-links a{padding:6px 9px;font-size:.74rem}
-    .hero{padding-top:48px}
-    .hero-logo{width:112px;height:112px}
-    .hero-logo-wrap::before{inset:-18px}
-    section{padding:44px 14px}
-    .cabinet{grid-template-columns:1fr}
-    .pstats{grid-template-columns:repeat(2,1fr)}
-    .modal-panel{padding:22px 18px}
-    .particles{display:none}
-    .era{padding:20px 18px}
-    .gif-strip{grid-template-columns:1fr}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{
-      animation-duration:.01ms!important;animation-iteration-count:1!important;
-      transition-duration:.01ms!important;
-    }
-    html{scroll-behavior:auto}
-    .particles,.aurora::before,.aurora::after{display:none}
-    .reveal{opacity:1;transform:none}
-  }
+:root{--red:#a50044;--red-light:#d81e6b;--blue:#004d98;--blue-light:#1a72d4;--gold:#f0b429;--gold-2:#ffd76e;--bg:#08080d;--panel:#101018;--panel-2:#16161f;--line:#23233a;--line-2:#2e2e48;--text:#ececf4;--muted:#9a9ab4;--muted-2:#7a7a92}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora::before,.aurora::after{content:'';position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:drift 22s ease-in-out infinite}
+.aurora::before{width:60vw;height:60vw;max-width:800px;max-height:800px;background:radial-gradient(circle,rgba(165,0,68,.5),transparent 65%);top:-20%;left:-15%}
+.aurora::after{width:60vw;height:60vw;max-width:800px;max-height:800px;background:radial-gradient(circle,rgba(0,77,152,.5),transparent 65%);top:-10%;right:-15%;animation-delay:-11s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(6vw,4vh) scale(1.1)}66%{transform:translate(-3vw,6vh) scale(.95)}}
+.particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;bottom:-10px;border-radius:50%;background:var(--gold);opacity:.5;box-shadow:0 0 8px rgba(240,180,41,.8);animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-105vh) scale(1);opacity:0}}
+a{color:inherit}
+img{max-width:100%}
+.stat-icon{width:15px;height:15px;object-fit:contain;vertical-align:-3px;display:inline-block;margin-right:4px;filter:drop-shadow(0 0 3px rgba(240,180,41,.25))}
+.mini-icon{width:14px;height:14px;object-fit:contain;vertical-align:-2px;display:inline-block;margin-right:3px}
+.pstat-icon{width:15px;height:15px;object-fit:contain;vertical-align:-2px;display:inline-block;margin-right:4px;filter:drop-shadow(0 0 3px rgba(240,180,41,.25))}
+header{position:sticky;top:0;z-index:50;background:rgba(8,8,13,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #1e1e2e}
+.nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:11px 20px}
+.nav .logo{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(240,180,41,.4));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.nav .logo:hover{transform:rotate(-8deg) scale(1.08)}
+.brand{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;font-size:1.02rem;white-space:nowrap}
+.brand span{color:var(--gold)}
+.nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+.nav-links a{color:#b8b8cc;text-decoration:none;font-size:.8rem;font-weight:500;padding:7px 11px;border-radius:999px;transition:.2s;white-space:nowrap}
+.nav-links a:hover{background:#1a1a28;color:#fff;transform:translateY(-1px)}
+.hero{position:relative;z-index:1;max-width:1200px;margin:0 auto;text-align:center;padding:70px 20px 54px;scroll-margin-top:80px}
+.hero-logo-wrap{display:inline-block;position:relative}
+.hero-logo-wrap::before{content:'';position:absolute;inset:-26px;border-radius:50%;background:conic-gradient(from 0deg,var(--gold),transparent 20%,var(--red-light) 40%,transparent 55%,var(--blue-light) 70%,transparent 85%,var(--gold));-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%,#000 71%,transparent 72%);mask:radial-gradient(circle,transparent 62%,#000 63%,#000 71%,transparent 72%);animation:spin 9s linear infinite;opacity:.85}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-logo{width:150px;height:150px;object-fit:contain;position:relative;filter:drop-shadow(0 0 30px rgba(240,180,41,.45)) drop-shadow(0 0 70px rgba(165,0,68,.3));animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(-2deg)}}
+.hero .sub{font-family:'Oswald',sans-serif;color:var(--gold);letter-spacing:5px;text-transform:uppercase;font-size:.85rem;margin-top:22px}
+.hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2.7rem,7.5vw,5.2rem);letter-spacing:3px;line-height:1.02;margin-top:6px;background:linear-gradient(110deg,#ffffff 20%,#ffe6a8 40%,var(--gold) 50%,#ffe6a8 60%,#ffffff 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .tag{color:#c8c8dc;max-width:660px;margin:16px auto 0;font-size:clamp(.98rem,2vw,1.12rem)}
+.hero .tag b{color:#fff}
+.hero .old-name{color:var(--muted-2);font-size:.82rem;margin-top:10px;letter-spacing:.3px}
+.chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px}
+.chip{background:linear-gradient(180deg,#171722,#101018);border:1px solid var(--line-2);border-radius:14px;padding:14px 22px;min-width:132px;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+.chip:hover{transform:translateY(-4px);border-color:rgba(240,180,41,.4);box-shadow:0 12px 30px rgba(240,180,41,.15)}
+.chip .num{font-family:'Oswald',sans-serif;font-size:1.85rem;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.chip .lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-top:7px}
+.banners{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
+.duo-banner{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:999px;background:linear-gradient(90deg,rgba(240,180,41,.14),rgba(165,0,68,.14));border:1px solid rgba(240,180,41,.35);font-size:.84rem;color:#ffe6a8}
+.duo-banner img{width:20px;height:20px;object-fit:contain}
+.duo-banner b{color:#fff}
+.world-banner{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:999px;background:linear-gradient(90deg,rgba(0,77,152,.28),rgba(165,0,68,.24));border:1px solid rgba(120,170,255,.45);font-size:.84rem;color:#cfe1ff;box-shadow:0 0 28px rgba(60,130,255,.18)}
+.world-banner b{color:#fff}
+main{position:relative;z-index:1}
+section{max-width:1200px;margin:0 auto;padding:58px 20px;scroll-margin-top:74px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head h2{font-family:'Oswald',sans-serif;font-size:clamp(1.55rem,3.6vw,2.3rem);letter-spacing:1.5px;text-transform:uppercase}
+.sec-head .line{flex:1;min-width:40px;height:1px;background:linear-gradient(90deg,var(--line-2),transparent);transform-origin:left;transform:scaleX(0);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+section.revealed .sec-head .line{transform:scaleX(1)}
+.sec-head .note{color:var(--muted);font-size:.8rem;background:#13131d;border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+.mini-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.mini{background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:14px;padding:14px 16px;transition:border-color .25s,box-shadow .25s}
+.mini:hover{border-color:rgba(240,180,41,.4);box-shadow:0 8px 24px rgba(240,180,41,.12)}
+.mini-k{display:block;font-size:.66rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px}
+.mini-v{font-family:'Oswald',sans-serif;font-size:1.15rem;color:#fff;font-variant-numeric:tabular-nums}
+.mini-v a{color:#fff;text-decoration:none}
+.mini-v a:hover{color:var(--gold)}
+.table-wrap{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:600px}
+thead th{background:#15151f;color:var(--muted);font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;padding:14px 12px;text-align:right;white-space:nowrap}
+thead th:first-child{text-align:center;width:72px}
+thead th:nth-child(2){text-align:left}
+th.sortable{cursor:pointer;user-select:none;transition:color .2s,background .2s}
+th.sortable:hover{color:#fff;background:#1b1b28}
+th.sortable:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+th.sortable.active{color:var(--gold)}
+th.sortable .arrow{opacity:.35;margin-left:4px;font-size:.62rem;display:inline-block;transition:.2s}
+th.sortable.active .arrow{opacity:1}
+tbody td{padding:11px 12px;border-top:1px solid #1c1c2c;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tbody td:first-child{text-align:center;color:#6a6a84;font-family:'Oswald',sans-serif;font-size:1rem}
+tbody td:nth-child(2){text-align:left;font-weight:600;white-space:normal}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:#15151f}
+.medal{font-size:.8rem}
+.pts{color:var(--gold);font-weight:700;font-family:'Oswald',sans-serif;font-size:1rem}
+.cell-top{color:#fff;font-weight:700;position:relative}
+.cell-top::after{content:'';position:absolute;right:6px;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
+.player-link{color:var(--text);text-decoration:none;border-bottom:1px dashed transparent;transition:color .15s,border-color .15s}
+.player-link:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.sort-hint{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-size:.78rem;color:var(--muted-2)}
+.squad-searchbar{display:grid;grid-template-columns:130px minmax(0,1fr) auto;align-items:center;gap:12px;margin:0 0 14px;padding:11px 13px;background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:13px}
+.squad-searchbar label{font-size:.66rem;font-weight:800;letter-spacing:1.1px;color:var(--muted);white-space:nowrap}
+.squad-searchbar input{width:100%;min-width:0;padding:10px 12px;background:#090910;border:1px solid #303047;border-radius:9px;color:var(--text);font:inherit;font-size:.84rem;outline:none}
+.squad-searchbar input:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(240,180,41,.1)}
+.squad-searchbar input::placeholder{color:#707087}
+.squad-searchbar span{font-size:.7rem;color:var(--muted-2);white-space:nowrap}
+@media(max-width:560px){.squad-searchbar{grid-template-columns:1fr;gap:7px}.squad-searchbar span{white-space:normal}}
+.sort-hint .pill{background:#13131d;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:#c8c8dc;transition:.2s}
+.sort-hint .pill b{color:var(--gold)}
+.cab-stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.cab-stat{display:inline-flex;align-items:center;gap:8px;background:#13131d;border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-size:.8rem;color:#c8c8dc;transition:transform .25s,border-color .25s}
+.cab-stat:hover{transform:translateY(-2px);border-color:rgba(240,180,41,.35)}
+.cab-stat b{color:#fff;font-variant-numeric:tabular-nums}
+.cab-stat small{color:var(--muted-2);font-size:.72rem}
+.cabinet{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;perspective:1400px}
+.ach{position:relative;background:linear-gradient(180deg,#12121c,#0d0d15);border:1px solid var(--line);border-radius:16px;padding:20px 20px 20px 24px;overflow:hidden;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:border-color .25s,box-shadow .25s,transform .18s ease-out}
+.ach::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,#3a3a5a);box-shadow:0 0 14px var(--accent,transparent)}
+.ach::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.07),transparent 40%);opacity:0;transition:opacity .3s}
+.ach:hover::after{opacity:1}
+.ach:hover{border-color:#3a3a5a;box-shadow:0 24px 50px rgba(0,0,0,.5)}
+.ach.champion{--accent:var(--gold)}
+.ach.runner{--accent:#b9b9cc}
+.ach.third{--accent:#cd7f32}
+.ach.season{--accent:#4a7fc9}
+.ach.featured{border-color:rgba(240,180,41,.55);background:linear-gradient(180deg,#1c1710,#0f0f17);box-shadow:0 0 0 1px rgba(240,180,41,.15),0 20px 50px rgba(240,180,41,.14);animation:worldGlow 4s ease-in-out infinite}
+.ach.featured::before{width:5px;box-shadow:0 0 20px var(--gold)}
+@keyframes worldGlow{0%,100%{box-shadow:0 0 0 1px rgba(240,180,41,.15),0 20px 50px rgba(240,180,41,.12)}50%{box-shadow:0 0 0 1px rgba(240,180,41,.35),0 20px 60px rgba(240,180,41,.25)}}
+.world-tag{display:inline-flex;align-items:center;gap:6px;font-size:.62rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:#ffe6a8;background:rgba(240,180,41,.14);border:1px solid rgba(240,180,41,.42);padding:3px 9px;border-radius:999px;margin-bottom:8px}
+.ach-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.ach-num{font-family:'Oswald',sans-serif;font-size:.82rem;color:var(--muted-2);letter-spacing:1px}
+.badge{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.badge.champion{background:linear-gradient(90deg,var(--gold),var(--gold-2));color:#1a1200;box-shadow:0 0 14px rgba(240,180,41,.5);background-size:200% 100%;animation:badgeShift 3s linear infinite}
+@keyframes badgeShift{0%{background-position:0% 0}100%{background-position:200% 0}}
+.badge.runner{background:#2a2a3e;color:#d8d8e8}
+.badge.third{background:#3a2416;color:#e8a76a}
+.ach h3{font-family:'Oswald',sans-serif;font-size:1.16rem;letter-spacing:.6px;line-height:1.25}
+.season-open{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(240,180,41,.35);transition:color .2s,border-color .2s}
+.season-open:hover{color:var(--gold);border-color:var(--gold)}
+.ach-note{color:var(--muted-2);font-size:.78rem;margin-top:4px;font-style:italic}
+.awards{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.aw{display:inline-flex;align-items:center;gap:6px;background:#171722;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:.74rem;color:#c8c8dc;transition:transform .18s,border-color .18s}
+.aw:hover{transform:translateY(-1px);border-color:rgba(240,180,41,.3)}
+.aw img{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+.aw .em{font-size:15px;line-height:1}
+.aw b{color:#fff;font-weight:600}
+.aw b .player-link{color:#fff}
+.aw b .player-link:hover{color:var(--gold)}
+.cab-note{margin-top:14px;color:var(--muted-2);font-size:.78rem;padding:10px 14px;background:#101018;border:1px solid var(--line);border-radius:10px;border-left:3px solid rgba(240,180,41,.5)}
+.cab-note b{color:#ffe6a8;font-weight:600}
+.honours{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;perspective:1400px}
+.honour{background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:16px;padding:18px 20px;transition:border-color .25s,box-shadow .25s,transform .25s}
+.honour:hover{border-color:rgba(240,180,41,.35);box-shadow:0 12px 32px rgba(240,180,41,.08);transform:translateY(-3px)}
+.h-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.h-head img{width:26px;height:26px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(240,180,41,.3))}
+.h-head .em{font-size:22px;line-height:1}
+.h-head h3{font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:.8px;text-transform:uppercase}
+.h-total{margin-left:auto;font-family:'Oswald',sans-serif;font-size:.78rem;color:#1a1200;background:linear-gradient(90deg,var(--gold),var(--gold-2));border-radius:999px;padding:2px 9px;font-variant-numeric:tabular-nums}
+.h-sub{color:var(--muted-2);font-size:.7rem;margin:-6px 0 10px;font-style:italic;line-height:1.4}
+.honour .row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #1c1c2c;font-size:.86rem}
+.honour .row:first-of-type{border-top:none}
+.honour .nm{color:#d8d8e8}
+.honour .ct{color:var(--gold);font-family:'Oswald',sans-serif;font-weight:600;font-size:.9rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.honour.club{border-style:dashed;opacity:.92}
+.honour.club .h-total{background:#2a2a3e;color:#c8c8dc}
+.history-intro{background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:16px;padding:22px 24px;margin-bottom:22px}
+.history-intro p{color:#c8c8dc;font-size:.95rem}
+.history-intro p b{color:#fff}
+.motion-ready .reveal-item{opacity:0;transform:translate3d(0,28px,0) scale(.985);filter:blur(7px);transition:opacity .72s cubic-bezier(.2,.75,.25,1),transform .82s cubic-bezier(.2,.75,.25,1),filter .82s cubic-bezier(.2,.75,.25,1);transition-delay:var(--reveal-delay,0ms);will-change:opacity,transform,filter}
+.motion-ready .reveal-item.is-visible{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+.hero .hero-logo-wrap,.hero .sub,.hero h1,.hero .tag,.hero .old-name,.hero .chips,.hero .world-banner,.hero .duo-banner{opacity:0;animation:hero-enter .85s cubic-bezier(.2,.75,.25,1) forwards}
+.hero h1{animation:hero-enter .85s cubic-bezier(.2,.75,.25,1) .28s forwards,shimmer 5s linear infinite 1s}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.hero .hero-logo-wrap{animation-delay:.08s}
+.hero .sub{animation-delay:.18s}
+.hero .tag{animation-delay:.4s}
+.hero .old-name{animation-delay:.5s}
+.hero .chips{animation-delay:.62s}
+.hero .duo-banner{animation-delay:.68s}
+.hero .world-banner{animation-delay:.74s}
+@keyframes hero-enter{from{opacity:0;transform:translate3d(0,24px,0) scale(.985);filter:blur(8px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+header{animation:nav-enter .65s ease-out both}
+@keyframes nav-enter{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.era{position:relative;background:linear-gradient(180deg,#12121c,#0d0d15);border:1px solid var(--line);border-left:3px solid var(--era-accent,var(--gold));border-radius:16px;padding:24px 26px;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s;margin-bottom:18px}
+.era:hover{border-color:#3a3a5a;border-left-color:var(--era-accent,var(--gold));transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.era::after{content:'';position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,var(--era-glow,rgba(240,180,41,.10)),transparent 70%);pointer-events:none}
+.era-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.era-node{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:#0b0b12;background:linear-gradient(135deg,var(--era-accent,var(--gold)),rgba(255,255,255,.85));border-radius:10px;padding:5px 12px;letter-spacing:1px;line-height:1.4;flex-shrink:0;box-shadow:0 0 18px var(--era-glow,rgba(240,180,41,.3))}
+.era-titles{flex:1;min-width:200px}
+.era-label{font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:var(--era-accent,var(--gold));font-weight:700;opacity:.9}
+.era h3{font-family:'Oswald',sans-serif;font-size:clamp(1.18rem,2.6vw,1.5rem);letter-spacing:.6px;line-height:1.22;margin-top:2px}
+.era-lead{color:#b8b8cc;font-size:.9rem;font-style:italic;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #1c1c2c}
+.era-block{margin-top:14px}
+.era-block h4{font-family:'Oswald',sans-serif;font-size:.94rem;letter-spacing:.8px;text-transform:uppercase;color:#ffe6a8;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.era-block h4::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--era-accent,var(--gold));flex-shrink:0;box-shadow:0 0 8px var(--era-accent,var(--gold))}
+.era-block p{color:#b8b8cc;font-size:.89rem}
+.era-block p b{color:#fff}
+.era-block p .pl{color:#fff;font-weight:600}
+.moment{margin-top:14px;padding:12px 16px;background:rgba(240,180,41,.06);border:1px solid rgba(240,180,41,.28);border-radius:12px;display:flex;gap:12px;align-items:flex-start}
+.moment .ico{font-size:20px;line-height:1.25;flex-shrink:0}
+.moment .m-body{font-size:.86rem;color:#e2d3a8}
+.moment .m-body b{color:#ffe6a8}
+.story-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0 4px}
+.story-media figure{margin:0;overflow:hidden;background:#10101a;border:1px solid var(--line-2);border-radius:13px}
+.story-media img{display:block;width:100%;height:230px;object-fit:cover;object-position:center 30%;background:#090910}
+.story-media img,.player-hero img{pointer-events:none;user-select:none;-webkit-user-drag:none}
+.story-media figcaption{padding:9px 11px;color:#d7d7e5;font-size:.74rem;line-height:1.45}
+.era-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.era-tag{font-size:.68rem;font-weight:600;letter-spacing:.5px;background:#171722;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:#c8c8dc}
+.era-tag.gold{border-color:rgba(240,180,41,.4);color:#ffe6a8;background:rgba(240,180,41,.08)}
+.history-records{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:22px}
+.record-card{background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:14px;padding:16px}
+.record-card .record-k{font-size:.65rem;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted-2)}
+.record-card .record-v{font-family:'Oswald',sans-serif;font-size:1.45rem;color:var(--gold);margin-top:3px}
+.record-card .record-name{font-size:.82rem;color:#fff;font-weight:700}
+.record-card .record-sub{font-size:.7rem;color:var(--muted-2);margin-top:3px}
+footer{position:relative;z-index:1;border-top:1px solid #1e1e2e;padding:34px 20px;text-align:center;color:var(--muted-2);font-size:.82rem}
+footer .f-logo{width:36px;height:36px;object-fit:contain;margin-bottom:10px;opacity:.85;animation:float 7s ease-in-out infinite}
+footer b{color:#d8d8e8}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(4,4,8,.84);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.modal.open{display:flex}
+.modal-panel{width:100%;max-width:660px;max-height:88vh;overflow:auto;background:linear-gradient(180deg,#14141f,#0c0c13);border:1px solid var(--line-2);border-radius:20px;padding:28px;position:relative;animation:pop .22s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(240,180,41,.06)}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:#1e1e2e;border:1px solid #33334a;color:#c8c8dc;font-size:20px;line-height:1;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:#2a2a3e;color:#fff;transform:rotate(90deg)}
+.player-hero{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:12px;margin:0 0 18px;padding:11px;background:linear-gradient(110deg,rgba(20,50,110,.25),rgba(120,20,45,.18));border:1px solid var(--line-2);border-radius:15px}
+.player-hero img{display:block;width:100%;height:auto;max-height:420px;object-fit:contain;object-position:center;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:#10101a}
+.player-hero-copy{min-width:0}
+.player-hero-copy .role{display:inline-flex;padding:3px 8px;border:1px solid rgba(240,180,41,.28);border-radius:999px;color:#f2d38a;font-size:.64rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
+.player-hero-copy .summary{display:block;color:#d7d7e5;font-size:.78rem;line-height:1.5;margin-top:7px}
+.player-hero-copy .comparison{display:block;color:#aebbd3;font-size:.72rem;margin-top:6px}.player-hero-copy .comparison b{color:#ffe6a8}
+.ach-detail{color:#b8b8cc;font-size:.76rem;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #242438}
+.profile-report{margin-top:18px;padding:15px 16px;background:linear-gradient(120deg,rgba(20,50,110,.22),rgba(120,20,45,.16));border:1px solid var(--line-2);border-radius:13px}
+.profile-report .report-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.profile-report .role-pill{font-size:.66rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#ffe6a8;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:999px;padding:4px 9px}
+.profile-report p{font-size:.82rem;color:#d0d0df;line-height:1.65}
+.profile-report p b{color:#fff}
+.p-head{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-right:40px}
+.p-rank{font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);background:#1a1a28;border:1px solid var(--line-2);border-radius:12px;padding:6px 14px;white-space:nowrap}
+.p-head h3{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5vw,2.1rem);letter-spacing:1px;line-height:1.1}
+.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pstat{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 8px;text-align:center;transition:border-color .25s,transform .25s}
+.pstat:hover{border-color:rgba(240,180,41,.35);transform:translateY(-2px)}
+.pstat .v{display:block;font-family:'Oswald',sans-serif;font-size:1.5rem;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums}
+.pstat .v.gold{color:var(--gold)}
+.pstat .k{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted-2);margin-top:5px}
+.p-sec{font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.p-sec .count{font-family:'Inter',sans-serif;font-size:.68rem;letter-spacing:.6px;color:var(--gold);background:rgba(240,180,41,.12);border:1px solid rgba(240,180,41,.32);border-radius:999px;padding:2px 9px;text-transform:none}
+.pa-list{display:flex;flex-direction:column;gap:8px}
+.season-result{margin:0 0 16px;padding:14px 16px;background:rgba(240,180,41,.07);border:1px solid rgba(240,180,41,.24);border-radius:12px;color:#e2d3a8}
+.season-result b{color:#ffe6a8}
+.season-squad{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.season-player{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;font-size:.82rem}
+.season-player .career{color:var(--muted-2);font-size:.7rem;white-space:nowrap}
+.season-player .player-link{font-weight:600}
+.legacy-note{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2);color:var(--muted);font-size:.84rem}
+.pa-row{display:flex;align-items:center;gap:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;animation:row-in .3s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes row-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.pa-row.club{border-style:dashed;opacity:.88}
+.pa-row img{width:24px;height:24px;object-fit:contain;flex-shrink:0}
+.pa-row .em{font-size:22px;line-height:1;flex-shrink:0}
+.pa-name{font-weight:600;font-size:.9rem;color:#fff}
+.pa-ctx{font-size:.74rem;color:var(--muted-2);margin-top:1px}
+.muted{color:var(--muted-2);font-size:.88rem}
+.duo-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin:8px 0 16px}
+.duo-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:#11111b;border:1px solid var(--line);border-radius:10px;font-size:.82rem}
+.duo-medal{font-size:1.1rem;line-height:1}
+.player-roster-seasons{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.season-pill{background:#171722;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.72rem;color:#c8c8dc}
+.season-pill.champion{border-color:rgba(240,180,41,.35);color:#ffe6a8}
+.season-pill.runner{border-color:rgba(200,200,220,.2);color:#d8d8e8}
+.season-pill.third{border-color:rgba(205,127,50,.3);color:#e8a76a}
+@media(max-width:640px){.nav{padding:10px 14px;gap:10px}.nav-links a{padding:6px 9px;font-size:.74rem}.hero{padding-top:48px}.hero-logo{width:112px;height:112px}.hero-logo-wrap::before{inset:-18px}section{padding:44px 14px}.cabinet{grid-template-columns:1fr}.pstats{grid-template-columns:repeat(2,1fr)}.modal-panel{padding:22px 18px}.particles{display:none}.era{padding:20px 18px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}.particles,.aurora::before,.aurora::after{display:none}.hero *,header{opacity:1}.motion-ready .reveal-item{opacity:1;transform:none;filter:none}}
 </style>
 </head>
 <body>
@@ -761,7 +284,7 @@
       <a href="#squad">Squad</a>
       <a href="#cabinet">Cabinet</a>
       <a href="#honours">Honours</a>
-          <a href="#history">History</a>
+      <a href="#history">History</a>
     </nav>
   </div>
 </header>
@@ -859,14 +382,9 @@
       <p>Barça UEFC's legacy spans <b>five distinct competitive eras</b> — marked by dynasty-building, heartbreaking collapses, miracle rebuilds, and unmatched global dominance.</p>
     </div>
 
-    <!-- CLUB GIF MOMENTS: images are intentionally non-clickable -->
-    
-
-
-
     <div class="timeline" id="history-timeline" aria-label="Five eras of Barça UEFC history">
 
-      <!-- ================= ERA I ================= -->
+      <!-- ERA I -->
       <article class="era reveal-item" style="--era-accent:#4a7fc9;--era-glow:rgba(74,127,201,.35)">
         <div class="era-head">
           <div class="era-node">I</div>
@@ -882,7 +400,7 @@
           <p>The club's earliest competitive foundation was built in the <b>Brazilian Pro League</b>, anchored by <span class="pl">TheRin</span>. When family obligations forced TheRin to step back and retire from regular play, the club faced its first major transition.</p>
         </div>
 
-<div class="era-block">
+        <div class="era-block">
           <h4>The Nexus &amp; Second Brazilian Cup Dynasty</h4>
           <p>Stepping onto a massive stage in <b>Nexus</b>, Barça attracted a wave of elite talent — <span class="pl">Legit</span>, <span class="pl">Bunny</span>, <span class="pl">Real Z</span>, <span class="pl">Isagi demon king</span>, <span class="pl">Aiku</span>, <span class="pl">Error</span>, <span class="pl">Water</span>, <span class="pl">lorenzo.kx</span>, <span class="pl">Carla</span> and <span class="pl">Void</span>. Managing a stacked roster of world-class stars required careful lineup rotation, which paid off immediately as Barça secured a <b>2nd-place finish in the Nexus League</b> — their final achievement under the Rubypool banner before rebranding to <b>Barça UEFC</b>.</p>
         </div>
@@ -892,7 +410,7 @@
           <p>Taking a 7-man squad into the fiercely competitive <b>Brazilian Cup</b> (Legit, Real Z, Aiku, Dragonovedtv, Mikey | 303, TheRin and lorenzo.kx), Barça accepted the local challenge and dominated. <span class="pl">Legit</span> played like an unstoppable monster despite high ping, teaming up with <span class="pl">Real Z</span> on offense and <span class="pl">Aiku</span> in goal to secure the title.</p>
         </div>
 
-        <div class="story-media"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Maradona_camiseta_barcelona.jpg" alt="Diego Maradona in the Barcelona shirt" loading="lazy"><figcaption>The first generation and Maradona's Barcelona era</figcaption></figure></div>
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media.airedesantafe.com.ar/p/d5c10180f9b1deed498ddcb302e189be/adjuntos/268/imagenes/003/176/0003176071/diego-maradona-barcelona.jpg" alt="TheRin carried the club's first foundation in the Brazilian Pro League — UE1's Maradona." loading="lazy" draggable="false"><figcaption>TheRin carried the club's first foundation in the Brazilian Pro League — UE1's Maradona.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/MJcVyZeyr8UAAAAd/ronaldinho-messi.gif" alt="Early flair and the GOAT era to come: Noob's Ronaldinho-style magic in Era I, the Messi-style takeover later." loading="lazy" draggable="false"><figcaption>Early flair and the GOAT era to come: Noob's Ronaldinho-style magic in Era I, the Messi-style takeover later.</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag gold">🏆 Brazilian Pro League</span>
           <span class="era-tag">🥈 Nexus League</span>
@@ -900,7 +418,7 @@
         </div>
       </article>
 
-      <!-- ================= ERA II ================= -->
+      <!-- ERA II -->
       <article class="era reveal-item" style="--era-accent:#b9b9cc;--era-glow:rgba(185,185,204,.28)">
         <div class="era-head">
           <div class="era-node">II</div>
@@ -916,6 +434,8 @@
           <p>Entering the <b>Velterra Cup</b>, Barça's win rate skyrocketed. The team was spearheaded by the unstoppable duo of <span class="pl">Bunny</span> — a pure, lethal shooter — and <span class="pl">Legit</span>, an all-around force who defended, passed, assisted and scored at will.</p>
         </div>
 
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif" alt="Bunny, Legit and Real Z formed Velterra's attack — a front line in the spirit of MSN." loading="lazy" draggable="false"><figcaption>Bunny, Legit and Real Z formed Velterra's attack — a front line in the spirit of MSN.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/LqREXY0__2sAAAAd/neymar-jr-lionel-messi.gif" alt="Real Z's Neymar-style link-up play fed the Nexus-era attack." loading="lazy" draggable="false"><figcaption>Real Z's Neymar-style link-up play fed the Nexus-era attack.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/A1OggULE5bMAAAAd/lewandowski-vs-madrid-celebration.gif" alt="Legit, UE1's Lewandowski — the number 9 behind the Phantom Shoot and the Velterra peak." loading="lazy" draggable="false"><figcaption>Legit, UE1's Lewandowski — the number 9 behind the Phantom Shoot and the Velterra peak.</figcaption></figure></div>
+
         <div class="era-block">
           <h4>The Final Collapse</h4>
           <p>Reaching the Velterra Cup Finals against one of the era's biggest teams, disaster struck in the first leg. With manager <span class="pl">Dragonovedtv</span> delayed, internal friction flared over starting spots, resulting in a <b>5–2 loss</b>. Despite returning with Legit to win the European second leg, internal player scandals and a grueling Asian-server third leg led to an overall series loss and a <b>2nd-place finish</b>.</p>
@@ -926,14 +446,13 @@
           <div class="m-body"><b>The Exodus:</b> Following the heartbreak, egos and demands for playtime and individual awards fractured the locker room, causing the star-studded roster to leave for rival clubs.</div>
         </div>
 
-        
         <div class="era-tag-row">
           <span class="era-tag">🥈 Velterra Cup</span>
           <span class="era-tag">The Unstoppable Duo: Bunny &amp; Legit</span>
         </div>
       </article>
 
-      <!-- ================= ERA III ================= -->
+      <!-- ERA III -->
       <article class="era reveal-item" style="--era-accent:#a06ad4;--era-glow:rgba(160,106,212,.30)">
         <div class="era-head">
           <div class="era-node">III</div>
@@ -949,6 +468,8 @@
           <p>Left with almost no players, the club entered the <b>Neo Champions Circuit</b> with remaining loyalists <span class="pl">Rusue</span>, <span class="pl">Cold Prince</span> and <span class="pl">RndmX</span>. Entering a prime stretch of form, Rusue single-handedly engineered comebacks and carried the depleted roster to an improbable <b>2nd-place finish</b>. Rusue was rewarded with the <b>MVP of the Season</b> and <b>Best Player of Barça</b>.</p>
         </div>
 
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" style="object-position:center 20%" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2012_2013_-_06_Xavi_Hern%C3%A1ndez.jpg?width=600" alt="Rusue, UE1's Xavi — he carried the depleted Neo Champions squad to 2nd place and won MVP." loading="lazy" draggable="false"><figcaption>Rusue, UE1's Xavi — he carried the depleted Neo Champions squad to 2nd place and won MVP.</figcaption></figure></div>
+
         <div class="era-block">
           <h4>The New Gen Prime (Elite League)</h4>
           <p>After Rusue departed, Barça recruited a fresh wave of Brazilian and international "New Gen" prodigies — <span class="pl">fenomas</span>, <span class="pl">Genius</span>, <span class="pl">arian</span> and <span class="pl">Cold Prince</span> — rejoined by veteran <span class="pl">Aiku</span>. <span class="pl">Genius</span> proved clinical in front of goal, sweeping the <b>Ballon d'Or</b> and <b>Golden Boot</b>, while <span class="pl">fenomas</span> dominated every leg with tackles, assists and goals to earn the <b>Playmaker</b> award.</p>
@@ -959,7 +480,7 @@
           <div class="m-body"><b>The 50-Save Miracle:</b> Goalkeeper <span class="pl">arian</span> cemented his place in Barça history during an El Clásico clash against Re AL, recording <b>over 50 saves in a single leg</b> — one of the greatest defensive performances ever seen — propelling the New Gen squad to a 1st-place league title.</div>
         </div>
 
-        <div class="story-media"><figure><img src="https://cdn.eremnews.io/media/95bebe3f-ca44-4553-846c-26ea978c7630.webp" alt="Barcelona's new generation" loading="lazy"><figcaption>The new generation: young players shaping the next era</figcaption></figure></div>
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://cdn.eremnews.io/media/95bebe3f-ca44-4553-846c-26ea978c7630.webp" alt="The New Gen core — fenomas, Genius, arian and Cold Prince — won the Elite League." loading="lazy" draggable="false"><figcaption>The New Gen core — fenomas, Genius, arian and Cold Prince — won the Elite League.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/L3V7DVYSsdkAAAAd/lamine-yamal-barcelona.gif" alt="Genius, UE1's Yamal — Ballon d'Or and Golden Boot in the Elite League." loading="lazy" draggable="false"><figcaption>Genius, UE1's Yamal — Ballon d'Or and Golden Boot in the Elite League.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/jy2O1HjhbQ4AAAAd/pedri-pedri-gonzalez.gif" alt="fenomas, UE1's Pedri — Playmaker of the Elite League with tackles, assists and goals." loading="lazy" draggable="false"><figcaption>fenomas, UE1's Pedri — Playmaker of the Elite League with tackles, assists and goals.</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag">🥈 Neo Champions Circuit</span>
           <span class="era-tag gold">🏆 Elite League</span>
@@ -967,7 +488,7 @@
         </div>
       </article>
 
-      <!-- ================= ERA IV ================= -->
+      <!-- ERA IV -->
       <article class="era reveal-item" style="--era-accent:#f0b429;--era-glow:rgba(240,180,41,.35)">
         <div class="era-head">
           <div class="era-node">IV</div>
@@ -983,32 +504,38 @@
           <p>Returning to Nexus, the club recruited <span class="pl">Shikai</span>, the Turkish powerhouse <span class="pl">Yuzarf</span>, goalkeeper <span class="pl">Sarox</span> and striker <span class="pl">Gencay</span>. After a rocky debut against the league's strongest squad, the team clicked — highlighted by a <b>10–0 El Clásico demolition of Re AL</b> and a <b>3rd-place league finish</b>.</p>
         </div>
 
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/Fbph0Ngf2WYAAAAd/fcb-fc-barcelona.gif" alt="Gencay, UE1's Raphinha — some of the fastest shots in the game." loading="lazy" draggable="false"><figcaption>Gencay, UE1's Raphinha — some of the fastest shots in the game.</figcaption></figure></div>
+
         <div class="era-block">
           <h4>Yuzarf — The GOAT</h4>
           <p>Widely recognized as the greatest player in club history for his sheer individual takeover ability and clutch gene.</p>
         </div>
+
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/NDxTID34FMcAAAAd/messi-leonalmessi.gif" alt="Yuzarf, the GOAT of UE1 — his takeover ability mirrors Messi." loading="lazy" draggable="false"><figcaption>Yuzarf, the GOAT of UE1 — his takeover ability mirrors Messi.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/ZsRm_L6Y8pEAAAAd/goat-lionel-messi.gif" alt="Yuzarf swept the Ballon d'Or and Golden Boot on the way to the World Cup." loading="lazy" draggable="false"><figcaption>Yuzarf swept the Ballon d'Or and Golden Boot on the way to the World Cup.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/nR4Fg60rSBMAAAAd/kamp-nou-yappershubham.gif" alt="Yuzarf and Shikai's partnership turned the 10–0 El Clásico win over Re AL into a golden run." loading="lazy" draggable="false"><figcaption>Yuzarf and Shikai's partnership turned the 10–0 El Clásico win over Re AL into a golden run.</figcaption></figure></div>
 
         <div class="era-block">
           <h4>Shikai — The Best Player &amp; Maestro</h4>
           <p>The most effective player in Barça history, serving as the tactical heart of the squad and unlocking unmatched team chemistry alongside Yuzarf.</p>
         </div>
 
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/KL79gJaSz54AAAAd/iniesta.gif" alt="Shikai, UE1's Iniesta — the tactical heart of the squad." loading="lazy" draggable="false"><figcaption>Shikai, UE1's Iniesta — the tactical heart of the squad.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/xhbPSageSC4AAAAd/iniesta-andres-iniesta.gif" alt="Shikai's control, class and timing — the Iniesta touch behind the Yuzarf partnership." loading="lazy" draggable="false"><figcaption>Shikai's control, class and timing — the Iniesta touch behind the Yuzarf partnership.</figcaption></figure></div>
+
         <div class="era-block">
           <h4>UECL Silver</h4>
           <p>Directly following the Nexus campaign, Barça made a deep run in the <b>UECL (Unmatched Ego Champions League)</b>, finishing as runners-up in <b>2nd place</b>. The four-player squad was <span class="pl">Dragonovedtv</span>, <span class="pl">Sarox</span>, <span class="pl">Shikai</span> and <span class="pl">Yuzarf</span>. <span class="pl">Shikai</span> won both the <b>Golden Boot</b> and Barça's <b>Best Player</b> award, while <span class="pl">Yuzarf</span> claimed the <b>Playmaker Award</b>.</p>
         </div>
 
-<div class="era-block">
+        <div class="era-block">
           <h4>World Cup Conquest</h4>
           <p>Taking the Barça core onto the international stage with <b>Japan (Barça)</b>, the squad dismantled the group stage with routine <b>10–0 victories</b>. In a clash against the Nexus League champions — without their starting keeper — emergency signing <span class="pl">Tuna</span> delivered a masterclass in goal to upset the tournament favorites. Everyone was shocked, because they thought it was impossible to beat them — until Japan (Barça) humiliated them <b>10–4</b>.</p>
         </div>
 
-<div class="moment">
+        <div class="moment">
           <span class="ico">⚡</span>
           <div class="m-body"><b>The Semifinal Miracle vs France:</b> Trailing <b>5–1</b> after the first leg with Yuzarf absent, Barça faced near-certain elimination. Arriving late for the second leg, <span class="pl">Yuzarf scored 5 goals in 3 minutes</span> to stun France in a legendary comeback — before Barça swept all four legs of the Finals to claim the World Cup.</div>
         </div>
 
-        <div class="story-media"><figure><img src="https://media1.tenor.com/m/Oboy6FFZh6kAAAAd/pep-pep-guardiola.gif" alt="Pep Guardiola reaction" loading="lazy"><figcaption>Pep's reaction to the five-goal comeback against France</figcaption></figure><figure><img src="https://www.datocms-assets.com/43475/1671389529-argentina-campioana-mondiala-2.jpg?auto=format&fit=max&w=1200" alt="Enzo Fernández and Emiliano Martínez celebration" loading="lazy"><figcaption>The World Cup comeback and the celebrations after the final</figcaption></figure></div>
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/5MiGotJNww8AAAAd/chokbar-foot.gif" alt="Dragonovedtv's reaction — Yuzarf's 5 goals in 3 minutes against France" loading="lazy" draggable="false"><figcaption>Dragonovedtv's reaction — Yuzarf's 5 goals in 3 minutes against France</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/ecJLiK2OPEIAAAAd/enzofernandez-emilianomartinez.gif" alt="Japan (Barça) won the Unmatched Ego World Cup — Yuzarf, Shikai and Tuna led the run." loading="lazy" draggable="false"><figcaption>Japan (Barça) won the Unmatched Ego World Cup — Yuzarf, Shikai and Tuna led the run.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/SUtUv7dYFkUAAAAd/lionel-messi-lifting-the-world-cup-trophy.gif" alt="World Cup champions: Barça's own title in the Unmatched Ego World Cup." loading="lazy" draggable="false"><figcaption>World Cup champions: Barça's own title in the Unmatched Ego World Cup.</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag">🥉 Nexus</span>
           <span class="era-tag">🥈 UECL</span>
@@ -1016,7 +543,7 @@
         </div>
       </article>
 
-      <!-- ================= ERA V ================= -->
+      <!-- ERA V -->
       <article class="era reveal-item" style="--era-accent:#3ecf8e;--era-glow:rgba(62,207,142,.30)">
         <div class="era-head">
           <div class="era-node">V</div>
@@ -1032,17 +559,21 @@
           <p>Entering the inaugural <b>Uzbekistan Super League (USL)</b> without Gencay, Barça achieved total perfection — going <b>undefeated</b>, setting the all-time USL record for <b>highest Goal Difference</b>, averaging <b>10 goals a game</b>, and <b>never conceding more than four</b>, with <span class="pl">Hyper</span> anchoring the net.</p>
         </div>
 
-<div class="era-block">
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/bOZVR38tvysAAAAd/puyol-trophy.gif" alt="USL Season 1 perfection — undefeated, with Hyper anchoring the net." loading="lazy" draggable="false"><figcaption>USL Season 1 perfection — undefeated, with Hyper anchoring the net.</figcaption></figure></div>
+
+        <div class="era-block">
           <h4>UEL &amp; Cup Lower-Bracket Runs</h4>
           <p>In both <b>Unmatched Egoist League (UEL) Season 1</b> and <b>Unmatched Egoist Cup Season 1</b>, Barça suffered rare early knockout setbacks when key players missed matches — only to storm through the lower brackets, defeat the teams that knocked them out, and claim both trophies to complete a <b>historic Treble</b>.</p>
         </div>
 
-<div class="era-block">
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/j6HgGht4aoYAAAAd/champions-league-barcelona.gif" alt="The Treble — UEL Season 1, Cup Season 1 and USL Season 1 — Barça's own clean sweep." loading="lazy" draggable="false"><figcaption>The Treble — UEL Season 1, Cup Season 1 and USL Season 1 — Barça's own clean sweep.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/mUnh7IsZUdIAAAAd/m3n-messi.gif" alt="UEL Season 1 — won through the lower bracket in Yuzarf's Ballon d'Or season." loading="lazy" draggable="false"><figcaption>UEL Season 1 — won through the lower bracket in Yuzarf's Ballon d'Or season.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif" alt="Cup Season 1 — the lower-bracket run that completed the Treble." loading="lazy" draggable="false"><figcaption>Cup Season 1 — the lower-bracket run that completed the Treble.</figcaption></figure></div>
+
+        <div class="era-block">
           <h4>USL Season 2 &amp; The Anakin Era</h4>
           <p>After a hard-fought <b>2nd-place finish</b> in a grueling USL Season 2 (hampered by device issues and Yuzarf's absence in the final), Yuzarf departed for a rival club. Barça reloaded by signing European star <span class="pl">Anakin</span> alongside <span class="pl">Hyper</span> (both playing in Asia alongside Asian star <span class="pl">Taski</span>). Operating as a relentless goal machine, Anakin joined forces with <span class="pl">Shikai</span> to sweep <b>UEL Season 2</b>, the <b>Uzbekistan Super Cup</b> and <b>Unmatched Egoist Cup Season 2</b> without dropping a beat.</p>
         </div>
 
-        <div class="story-media"><figure><img src="https://media.thehardtackle.com/uploads/2015/06/04787139.jpg" alt="Barcelona 2015 Champions League trophy-winning team" loading="lazy"><figcaption>Barcelona’s 2014–15 treble-winning team in Berlin</figcaption></figure></div>
+        <div class="story-media"><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/0YA-SXxg5t8AAAAd/barcelona.gif" alt="Dragonovedtv, UE1's Guardiola — the manager behind the Treble." loading="lazy" draggable="false"><figcaption>Dragonovedtv, UE1's Guardiola — the manager behind the Treble.</figcaption></figure><figure><img referrerpolicy="no-referrer" src="https://media1.tenor.com/m/3jYjyoHfKTsAAAAd/luis-suarez.gif" alt="Anakin, UE1's Suárez — the goal machine of the Anakin era." loading="lazy" draggable="false"><figcaption>Anakin, UE1's Suárez — the goal machine of the Anakin era.</figcaption></figure></div>
         <div class="era-tag-row">
           <span class="era-tag gold">🏆 USL S1</span>
           <span class="era-tag gold">🏆 UEL S1</span>
@@ -1075,9 +606,6 @@
 </div>
 
 <script>
-/* =========================================================
-   DATA
-   ========================================================= */
 const IMG = {
   ballonDor:    "https://images-ext-1.discordapp.net/external/seQDmadbz6mYjlMn8z8_fVg3VcFUI6iapO_UDSqi-Tw/https/cdn.discordapp.com/emojis/1496862833542037646.png?format=webp&quality=lossless",
   playmaker:    "https://images-ext-1.discordapp.net/external/f5OdScGWrl9kZX-50Xs7kJCCItqCtp0CPyKtHq-FIAs/https/cdn.discordapp.com/emojis/1439706722255241236.png?format=webp&quality=lossless",
@@ -1115,7 +643,7 @@ const RAW_PLAYERS = [
   ["Real Z",33,17,0],["fenomas",20,21,0],["Genius",32,8,0],["arian",0,8,121],
   ["Isagi demon king",35,3,0],["Taski",17,20,0],["Cold Prince",19,17,0],
   ["Dragonovedtv",24,11,2],["RndmX",1,6,111],["Andrew",0,4,119],["Sarox",0,2,121],
-  ["Aiku",7,16,24],["Messi",14,15,0],["Xiv",24,4,0],["Error",18,6,0],["Noob",24,23,20],
+  ["Aiku",7,16,24],["Messi",14,15,0],["Xiv",24,4,0],["Error",18,6,0],["Noob",34,23,20],
   ["Lostzin",2,9,34],["Shadow",8,11,0],["Dragon Lord",1,15,0],["Water",1,4,44],
   ["Luca",5,4,0],["lorenzo.kx",4,10,22],["Mikey | 303",0,4,26],["Rin",1,2,13],
   ["Akiif",1,5,0],["Carla",0,5,0],["Void",3,0,0],["Akashi",0,3,0],
@@ -1133,7 +661,6 @@ const ACHIEVEMENTS = [
     awards:{ bestPlayer:"Legit", goldenBoot:"Legit", playmaker:"Real Z" } },
   { n:4, title:"Velterra Cup", placement:"2nd Place", tag:"runner",
     awards:{ bestPlayer:"Legit", goldenBoot:"Isagi demon king" } },
-  /* Corrected: Rusue won MVP + Best Player — no Playmaker this season */
   { n:5, title:"Neo Champions Circuit", placement:"2nd Place", tag:"runner",
     note:"Rusue carried the depleted roster to the final",
     awards:{ bestPlayer:"Rusue", mvp:"Rusue", goldenGloves:"RndmX" } },
@@ -1166,7 +693,7 @@ const ACHIEVEMENTS = [
   { n:16, title:"Unmatched Egoist Cup — S2", placement:"Champions", tag:"champion",
     note:"Cup winners · individual results not recorded",
     awards:{ bestPlayer:"Anakin" } }
- ];
+];
 
 const ACHIEVEMENT_STORIES = {
   1:"The first recorded title established the club's competitive identity. TheRin led the early era and collected the season's top individual honours.",
@@ -1186,38 +713,6 @@ const ACHIEVEMENT_STORIES = {
   15:"The Uzbekistan Super Cup added another title during the Anakin era. Anakin won MVP, Ballon d'Or and Golden Boot, with Shikai taking Playmaker.",
   16:"The second Unmatched Egoist Cup title completed the recorded trophy run. Anakin was selected as Barça Best Player."
 };
-const ROLE_LABELS={"Hyper":"Goalkeeper","Tuna":"Goalkeeper","Sarox":"Goalkeeper","arian":"Goalkeeper","RndmX":"Goalkeeper","Andrew":"Goalkeeper","Gencay":"Striker","Dragonovedtv":"Manager / player"};
-const PLAYER_PARALLEL_DETAILS = {
- "Shikai":"Iniesta comparison: composure, close control and decisive timing in the final pass. Shikai's archive records 107 goals and 112 assists, alongside repeated playmaking and Best Player recognition. Iniesta is remembered at Barça for technical quality, commitment and influence in midfield.",
- "Yuzarf":"Messi comparison: elite output and match-winning influence. Yuzarf has 123 goals and 89 assists, plus the World Cup, Ballon d'Or and Golden Boot honours. Barça describes Messi as its record-setting La Masia graduate and greatest player to wear the shirt.",
- "Legit":"Lewandowski comparison: reliable finishing and penalty-box presence. Legit has 83 goals, 48 assists and 40 saves. Barça notes Lewandowski joined in 2022 from Bayern Munich and quickly demonstrated his goalscoring quality.",
- "Rusue":"Xavi comparison: tempo control, distribution and chance creation. Rusue's 76 assists are among the highest totals in the club table, alongside 46 goals. Barça describes Xavi as a homegrown midfielder and an example of the club's football values.",
- "Anakin":"Suárez comparison: relentless movement and high-volume finishing. Anakin has 103 goals and won the UEL Season 2 Ballon d'Or, MVP and Golden Boot. Suárez scored 198 official goals for Barça.",
- "Gencay":"Recorded role: striker. Raphinha comparison: direct attacking threat and decisive forward play. Gencay has 61 goals and 13 assists and was named Barça Best Player during the third-place Nexus campaign.",
- "TheRin":"Maradona comparison: an early-era talisman whose influence helped establish the club. The archive records 53 goals and the first Brazilian Pro League Ballon d'Or, Golden Boot and Best Player awards. Maradona is recognised by Barça among football's historic greats.",
- "fenomas":"Pedri comparison: a midfielder who contributes across the game. fenomas has 20 goals and 21 assists and won the Elite League Playmaker award. Pedri is listed by Barça as a first-team midfielder.",
- "Genius":"Yamal comparison: a young, high-output attacking profile. Genius recorded 32 goals and 8 assists and won the Elite League Ballon d'Or and Golden Boot. Lamine Yamal is listed by Barça as a first-team forward.",
- "Real Z":"Neymar comparison: creativity, one-versus-one threat and attacking combinations. Real Z has 33 goals and 17 assists and won the Brazilian Cup Playmaker award. Neymar joined Barça in 2013 and formed part of the famous MSN attack.",
- "Xiv":"Deco comparison: tactical intelligence and a winning mentality. Xiv has 24 goals and 4 assists. Barça describes Deco as a player with a winning spirit and strong tactical intelligence.",
- "Messi":"Bojan comparison: a reference to a young Barça attacking prospect, not a claim that their careers are identical. Messi's current club record is 14 goals and 15 assists.",
- "Dragonovedtv":"Pep Guardiola comparison: building a winning structure as manager. Dragonovedtv has 24 goals and 11 assists as a player. Guardiola's Barça won 14 trophies from 2008 to 2012, including the 2008/09 treble and the 2009 six-trophy calendar year.",
- "Bunny":"David Villa comparison: a direct, efficient goalscoring forward. Bunny has 60 goals and 13 assists and won the Nexus Golden Boot. Barça describes Villa as an experienced striker among Spain's leading forwards.",
- "Aiku":"Puyol comparison: defensive commitment and reliability. Aiku's recorded contribution includes 24 saves, 16 assists and 7 goals, and he featured in the early Brazilian Cup-winning squad. Barça identifies Puyol as one of the most important players in its history.",
- "Hyper":"Goalkeeper. Hyper leads the current club save table with 264 saves and won Golden Gloves in the undefeated USL Season 1 campaign. Ter Stegen is the modern Barça goalkeeper reference.",
- "Tuna":"Goalkeeper. Tuna has 195 saves and won World Cup Golden Gloves after stepping in as an emergency keeper during the title run. Víctor Valdés was Barça's first-choice goalkeeper for 12 seasons.",
- "Sarox":"Goalkeeper. Sarox has 121 saves and was part of the four-player UECL runners-up squad. Claudio Bravo made 75 Barça appearances and shared goalkeeping duties during a trophy-rich period.",
- "arian":"Goalkeeper. arian has 121 saves and is remembered for the 50-plus-save El Clásico performance during the Elite League title run. Zubizarreta is one of the most celebrated goalkeepers in Barça and Spanish football history.",
- "Nobilus":"Busquets comparison: positional discipline and connecting defence with attack. Nobilus has 12 goals and 46 assists and appeared in multiple title-winning squads. Busquets was part of Guardiola's sextuple-winning Barça side.",
- "Cold Prince":"Busquets comparison: balance, reading play and supporting the team's structure. Cold Prince has 19 goals and 17 assists and was part of the Neo Champions Circuit rebuild and Elite League title squad.",
- "Taski":"Gavi comparison: energy and intensity in midfield. Taski has 17 goals and 20 assists and featured in the UEL Season 2 and Egoist Cup Season 2 title squads. Barça lists Gavi as a first-team midfielder.",
- "RndmX":"Goalkeeper. RndmX has 111 saves and won Golden Gloves during the Neo Champions Circuit runners-up campaign. Víctor Valdés is the Barça reference for a long-serving first-choice keeper.",
- "Andrew":"Goalkeeper. Andrew has 119 saves. The Claudio Bravo comparison reflects a goalkeeper known for reliability and strong performances in a trophy-winning Barça period.",
- "Noob":"Bojan comparison: a young attacking player in Barça's system. Noob has 15 goals and 1 assist and won the Playmaker award in the first Brazilian Pro League campaign."
-};
-
-/* =========================================================
-   OFFICIAL SEASON ROSTERS
-   ========================================================= */
 
 const ROSTERS = {
   "1": ["TheRin","Noob","Akiif","Dragonovedtv","Dragon Lord","Shadow"],
@@ -1238,9 +733,195 @@ const ROSTERS = {
   "16": ["Anakin","Shikai","Taski","Akashi","Hyper","Nobilus","Lostzin","Dragonovedtv"]
 };
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
+const PLAYER_MEDIA = {
+  "Shikai": {src:"https://media1.tenor.com/m/KL79gJaSz54AAAAd/iniesta.gif"},
+  "Yuzarf": {src:"https://media1.tenor.com/m/4tdgVCWep1IAAAAd/regele-fotbalului-regele.gif"},
+  "Legit": {src:"https://media1.tenor.com/m/K8v7vsIsZJAAAAAd/lewandowski.gif"},
+  "Rusue": {src:"https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif"},
+  "Anakin": {src:"https://media1.tenor.com/m/t7dsqPB2zr0AAAAd/luis-suarez-soccer.gif"},
+  "Gencay": {src:"https://media1.tenor.com/m/Fbph0Ngf2WYAAAAd/fcb-fc-barcelona.gif"},
+  "Bunny": {src:"https://media1.tenor.com/m/5USV_-QGrnQAAAAd/david-villa-football-player.gif"},
+  "Hyper": {src:"https://media1.tenor.com/m/FCuUHMpr-lUAAAAd/ter-stegen-ter-stegen-trophy.gif"},
+  "Real Isagi": {src:"https://media1.tenor.com/m/7MS_Guc2SoEAAAAd/samu-etoo.gif"},
+  "Tuna": {src:"https://www.fcbarcelona.com/fcbarcelona/photo/2019/07/17/3437d0f2-818d-4c4f-8d89-e531e1d64579/temp.-2013.jpg"},
+  "Nobilus": {src:"https://media1.tenor.com/m/_dPYU5HPTNMAAAAd/busquets.gif"},
+  "TheRin": {src:"https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"},
+  "Real Z": {src:"https://media1.tenor.com/m/-S1hLDFv1G0AAAAd/neymar-neymar-jr.gif"},
+  "fenomas": {src:"https://media1.tenor.com/m/jy2O1HjhbQ4AAAAd/pedri-pedri-gonzalez.gif"},
+  "Genius": {src:"https://media1.tenor.com/m/L3V7DVYSsdkAAAAd/lamine-yamal-barcelona.gif"},
+  "arian": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/2025%2004%2026%20Final%20de%20la%20Copa%20del%20Rey%20-%2054482387776%20(cropped)%20(Wojciech%20Szcz%C4%99sny).jpg?width=600"},
+  "Isagi demon king": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Thierry_Henry_FC_Barcelona.jpg?width=600"},
+  "Taski": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Gavi_%28footballer%29.jpg?width=600"},
+  "Cold Prince": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Ousmane_Demb%C3%A9l%C3%A9_vs_Valladolid.jpg?width=600"},
+  "Dragonovedtv": {src:"https://media1.tenor.com/m/0YA-SXxg5t8AAAAd/barcelona.gif"},
+  "Sarox": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bar%C3%A7a_-_Napoli_-_20140806_-_Claudio_Bravo.jpg?width=600"},
+  "Aiku": {src:"https://media1.tenor.com/m/khfZ3DLuiUcAAAAd/ronaldinho-puyol.gif"},
+  "Messi": {src:"https://media1.tenor.com/m/vefvbeW5vO0AAAAd/bojan-krkic-bojan-krki%C4%87.gif"},
+  "Xiv": {src:"https://media1.tenor.com/m/d-stWS-f38wAAAAd/ronaldo-r9.gif"},
+  "Error": {src:"https://media1.tenor.com/m/LNU2qGktUs0AAAAd/rivaldo-hattrick.gif"},
+  "Noob": {src:"https://media1.tenor.com/m/x5l6MMAH3J8AAAAd/ronaldinho-dance.gif"},
+  "lorenzo.kx": {src:"https://media1.tenor.com/m/RWBdZO8BDG0AAAAd/dani-alves-and-ronaldo.gif"},
+  "Mikey | 303": {src:"https://media1.tenor.com/m/OmomzRlSt2QAAAAd/luis-figo-barcelona.gif"},
+  "Andrew": {src:"https://media1.tenor.com/m/ggyH8pVQtAMAAAAd/liverpool-becker.gif"},
+  "RndmX": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Andoni_Zubizarreta.jpg?width=600"},
+  "Lostzin": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bar%C3%A7a_-_Napoli_-_20140806_-_Jordi_Masip.jpg?width=600"},
+  "Shadow": {src:"https://media1.tenor.com/m/fftuKUgXHJUAAAAd/tibur%C3%B3n-ferran-torres.gif"},
+  "Luca": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Cesc_F%C3%A0bregas_-_Presentation.jpg?width=600"},
+  "Rin": {src:"https://www.fcbarcelona.com/photo-resources/2022/07/01/118e01d4-6d78-4552-9b06-fbae7be231c0/jugador_fitxa-jordi_alba.jpg?height=750&width=1200"},
+  "Akiif": {src:"https://media1.tenor.com/m/AXQha3ygLVMAAAAd/elevensports-forthefans.gif"},
+  "Carla": {src:"https://media1.tenor.com/m/EYnnd_w5Jl0AAAAd/gerard-pique-barcelona.gif"},
+  "Void": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Ansu_Fati_%E2%80%94_Dinamo_vs_Barcelona_0-1_%28cropped%29.jpg?width=600"},
+  "Akashi": {src:"https://media1.tenor.com/m/IltdKLOKJ98AAAAd/fermin-fermin-lopez.gif"},
+  "Destroyer": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sergi_Roberto_2019_03_17_1.jpg?width=600"},
+  "@nagi05321": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Jos%C3%A9_Manuel_Pinto_-_004.jpg?width=600"}
+};
+
+const PARALLEL_LABELS = {"Andrew":"Real-life parallel"};
+const PLAYER_PARALLELS = {
+  "Shikai":"Andrés Iniesta",
+  "Yuzarf":"Lionel Messi",
+  "Legit":"Robert Lewandowski",
+  "Rusue":"Xavi Hernández",
+  "Anakin":"Luis Suárez",
+  "Gencay":"Raphinha",
+  "TheRin":"Diego Maradona",
+  "Real Isagi":"Samuel Eto'o",
+  "Real Z":"Neymar Jr.",
+  "fenomas":"Pedri",
+  "Genius":"Lamine Yamal",
+  "Xiv":"Ronaldo Nazário",
+  "Messi":"Bojan Krkić",
+  "Dragonovedtv":"Pep Guardiola",
+  "Bunny":"David Villa",
+  "Aiku":"Carles Puyol",
+  "Hyper":"Marc-André ter Stegen",
+  "Tuna":"Víctor Valdés",
+  "Sarox":"Claudio Bravo",
+  "arian":"Wojciech Szczęsny",
+  "Nobilus":"Sergio Busquets",
+  "Cold Prince":"Ousmane Dembélé",
+  "Taski":"Gavi",
+  "Noob":"Ronaldinho",
+  "Isagi demon king":"Thierry Henry",
+  "Error":"Rivaldo",
+  "Lostzin":"Jordi Masip",
+  "Luca":"Cesc Fàbregas",
+  "lorenzo.kx":"Dani Alves",
+  "Rin":"Jordi Alba",
+  "Akiif":"Frenkie de Jong",
+  "Carla":"Gerard Piqué",
+  "Akashi":"Fermín López",
+  "Void":"Ansu Fati",
+  "Shadow":"Ferran Torres",
+  "Destroyer":"Sergi Roberto",
+  "@nagi05321":"José Manuel Pinto",
+  "Andrew":"Alisson Becker",
+  "RndmX":"Andoni Zubizarreta",
+  "Mikey | 303":"Luís Figo"
+};
+
+const PLAYER_ROLES = {
+  "Shikai":"Midfielder · all-position player · coach · manager","Yuzarf":"Striker · all-rounder","Legit":"Striker · all-position player",
+  "Rusue":"Midfielder","Anakin":"Striker","Gencay":"Striker","Bunny":"Striker","Hyper":"Goalkeeper","Real Isagi":"Striker",
+  "Tuna":"Goalkeeper","Nobilus":"All-rounder","TheRin":"Striker","Real Z":"Striker · midfielder","fenomas":"Midfielder",
+  "Genius":"Striker","Isagi demon king":"Striker","Taski":"Striker","Cold Prince":"Forward","Dragonovedtv":"Founder · manager",
+  "RndmX":"Goalkeeper","Andrew":"Goalkeeper","Sarox":"Goalkeeper","Aiku":"Defender · midfielder · goalkeeper","Messi":"Forward · dribbler",
+  "Xiv":"Midfielder","Error":"Forward","Noob":"Forward","Lostzin":"Goalkeeper","Shadow":"Striker","Water":"Goalkeeper",
+  "Luca":"Midfielder","Mikey | 303":"Goalkeeper","lorenzo.kx":"Defender"
+};
+
+const PLAYER_COMPARISON_NOTES = {
+  "Shikai":"An Iniesta-style reference for midfield control, but Shikai's defining trait is his ability to perform at an elite level in almost every role.",
+  "Yuzarf":"A Messi-style reference for all-round influence, while his primary identity is a pure striker and UE1's best player.",
+  "Legit":"A Lewandowski-style number 9, with his own Phantom Shoot and unusually broad positional range.",
+  "Rusue":"A Xavi-style midfielder: understated, precise and capable of creating chances from deep or advanced positions.",
+  "Anakin":"A Suárez-style striker: relentless movement, dribbling and reliable finishing.",
+  "Gencay":"A Raphinha-style direct forward, defined by speed of release and long-range threat.",
+  "Bunny":"A David Villa-style finisher with extra emphasis on dribbling and shot adaptation.",
+  "Hyper":"A ter Stegen-style last line, but regarded by Barça as the best goalkeeper in UE.",
+  "Real Isagi":"A Samuel Eto'o-style striker, especially in his partnership with Yuzarf.",
+  "Tuna":"A Víctor Valdés-style keeper whose importance was clearest in major tournament campaigns.",
+  "Nobilus":"A Busquets-style reader of the game, with a wider all-round role including goalkeeping and assists.",
+  "TheRin":"A Maradona-style early talisman whose speed and shooting helped keep the club project alive.",
+  "Real Z":"A Neymar-style attacker with a distinctive emphasis on shooting accuracy and midfield contribution.",
+  "fenomas":"A Pedri-style new-generation midfielder who contributes in both directions.",
+  "Genius":"A Yamal-style new-generation talent, though Genius's primary role was a pure number 9.",
+  "Isagi demon king":"A high-impact striker whose unpredictable shooting and carrying role defined his Rubypool peak.",
+  "Taski":"A Gavi-style forward with a balance of sharp shooting and creative passing.",
+  "Cold Prince":"A Dembélé-style attacker with elite dribbling and finishing.",
+  "Dragonovedtv":"A Guardiola-style manager: his legacy is tactical organisation, trust and motivation rather than individual statistics.",
+  "RndmX":"A Zubizarreta-style keeper — a Dream Team-calibre last line whose reflexes and presence earned Golden Gloves.",
+  "Andrew":"An Alisson-style goalkeeper — commanding, with elite anticipation. Alisson is the real-life reference, not a Barça player.",
+  "Sarox":"A clutch goalkeeper whose best trait was raising his level when the team needed him.",
+  "Aiku":"A Puyol-style defensive leader with the added ability to play midfield or goalkeeper.",
+  "Messi":"A Bojan-style talent: a technically gifted dribbler and big-match performer whose peak flashes were exceptional.",
+  "Xiv":"A Ronaldo Nazário-style finisher: a short stay with an outsized, unforgettable output relative to his appearances.",
+  "Error":"A Rivaldo-style big-match forward who repeatedly stepped up in major games for Rubypool.",
+  "Noob":"A Ronaldinho-style early Barça forward: flair, joy and big moments, remembered especially for loyalty and the loan that helped Barça beat his parent team.",
+  "Lostzin":"A reliable big-game goalkeeper who made the most of opportunities behind Hyper.",
+  "Shadow":"A mobile, unselfish striker whose later career became even more distinguished.",
+  "Water":"A reflex-based goalkeeper whose surviving sample is small.",
+  "Luca":"A technically strong midfielder whose short Barça spell still left a good impression.",
+  "Mikey | 303":"A Figo-style leader: a captain's presence, with deleted match records leaving an incomplete statistical picture.",
+  "lorenzo.kx":"A defender with a reputation for turning rare appearances into high-impact performances.",
+  "arian":"A Szczęsny-style keeper: calm and commanding, and the hero of the 50-save El Clásico leg.",
+  "Destroyer":"A Sergi Roberto-style utility player: loyal, versatile, and useful wherever the team needs him.",
+  "@nagi05321":"A José Manuel Pinto-style keeper: a dependable shot-stopper and squad man.",
+  "Void":"An Ansu Fati-style young forward: a short, bright spell with goals from limited time."
+};
+
+const PLAYER_PROFILE_NOTES = {
+  "Shikai":"UE1's best midfielder and the team's natural organiser. A genuine all-position player who could switch into striker, goalkeeper or elite-defender roles, while also coaching and managing. His game intelligence, creativity and versatility made the whole team better.",
+  "Yuzarf":"A pure striker and Barça's best player in UE1. His finishing led the attack, but he was also an exceptional all-rounder who could pass, defend, make saves and influence every phase of a match.",
+  "Legit":"A prime number 9 with his signature Phantom Shoot, a technique goalkeepers struggled to read or stop. In the Velterra final he played like a one-man army, carrying the attack through goals, dribbling and playmaking. He could adapt to almost any position.",
+  "Rusue":"A pure midfielder and an underrated creator who could assist from almost anywhere. He gave his teams control and quality even after leaving Barça more than once to play for Re Al.",
+  "Anakin":"A pure number 9 who brought a goal threat to every match. He combined relentless scoring with sharp dribbling and close-range finishes against elite goalkeepers.",
+  "Gencay":"A pure number 9 with some of the fastest shots in the game. Give him the ball in a dangerous area and he could score from almost anywhere.",
+  "Bunny":"A pure striker with outstanding dribbling and adaptable shooting. He could create his own chance, change the angle and finish in different ways.",
+  "Hyper":"Barça's greatest goalkeeper and its last unbeatable line. He was the heart of the team through multiple trophies and the benchmark for goalkeeping in the game.",
+  "Real Isagi":"Also known as Emir, a dangerous striker and an effective attacking partner for Yuzarf. He had his own shooting quality and added another serious goal threat beside Barça's leading forward.",
+  "Tuna":"One of UE1's greatest goalkeepers. He was central to Barça's World Cup and UEL Season 1 campaigns, providing a dependable last line when the team needed him.",
+  "Nobilus":"One of Barça's finest all-rounders, able to keep goal, defend and create assists. His versatility made him a key part of the team across several seasons.",
+  "TheRin":"Barça's first major striker: explosive speed, powerful shooting and a defining role in the club's earliest trophy era. His performances gave the manager belief to keep the project alive.",
+  "Real Z":"A standout striker and midfielder of his era, known for underrated shooting technique, exceptional accuracy and memorable goals.",
+  "fenomas":"A new-generation midfield talent who could assist, score and contribute defensively. His work across the pitch helped carry the team during a demanding period.",
+  "Genius":"A new-generation Brazilian number 9 who became one of the team's leading goalscorers. He showed extraordinary talent and potential in only two seasons before retiring to focus on his studies.",
+  "Isagi demon king":"An elite striker with unpredictable shooting who carried Rubypool through multiple leagues. For a period he was the club's standout player, often shouldering an underpowered side almost alone.",
+  "Taski":"A dangerous striker with sharp, powerful shooting and the passing ability to bring teammates into the attack.",
+  "Cold Prince":"A new-generation attacker with elite dribbling and striking ability. He played an important role in several campaigns.",
+  "Dragonovedtv":"Founder and manager of Barça UEFC. Not celebrated for individual playing ability, but for assigning roles, building trust, motivating the squad and using tactics to turn a group of players into a winning team.",
+  "RndmX":"One of the best goalkeepers of his era, capable of carrying the goal and stopping shots that looked impossible. His character and presence made him a defining figure between the posts.",
+  "Andrew":"A dominant goalkeeper of his era. Strikers feared facing him, and his anticipation and reading of danger made him exceptionally difficult to beat.",
+  "Sarox":"A top goalkeeper with a powerful ability to lock in under pressure. When the team needed him, he could take over a match and carry the defensive effort.",
+  "Aiku":"A versatile defensive leader who could play defender, midfielder or goalkeeper. He acted as a wall at the back while also controlling the tempo.",
+  "Messi":"A gifted dribbler with exceptional speed, close control and shooting technique, plus the ability to tackle and contribute defensively. He repeatedly carried Barça in major matches, even if he could not sustain that level throughout his time.",
+  "Xiv":"One of the greats across multiple seasons. He did not play a huge number of matches for Barça, but his output and impact were remarkable for the time he spent at the club.",
+  "Error":"An elite performer who repeatedly stepped up and helped carry Rubypool in major matches.",
+  "Noob":"One of the original Rubypool players and a key part of the club's early trophies. At his peak he could carry a team alone. His loyalty became legendary when he was loaned to Barça and helped the club defeat his own parent team in the Elite League. His words became part of club culture: “I know it's my own team... But Barça is my home.”",
+  "Lostzin":"An elite goalkeeper who proved himself in major matches and major leagues, even while spending many games on the bench behind Hyper.",
+  "Shadow":"A talented, unselfish striker who produced strong performances before leaving Rubypool and went on to become one of the game's great forwards.",
+  "Water":"A goalkeeper with excellent reflexes who made a strong impression despite playing relatively few matches.",
+  "Luca":"One of UE's finest midfielders. He played only two or three matches for Barça, but delivered strong performances in that limited time.",
+  "Mikey | 303":"A good leader and goalkeeper. Many of his matches were deleted, so the surviving archive cannot show his full contribution.",
+  "lorenzo.kx":"A rare but outstanding presence: a defender who could appear once in a season and still cause opponents major problems. His peak performances made him one of the most memorable players of his era."
+};
+
+const PLAYER_DUOS=[
+ {a:"TheRin",b:"Noob",medal:"silver"},
+ {a:"Isagi demon king",b:"Real Z",medal:"bronze"},
+ {a:"Bunny",b:"Aiku",medal:"bronze"},
+ {a:"Bunny",b:"Messi",medal:"bronze"},
+ {a:"Legit",b:"Real Z",medal:"bronze"},
+ {a:"Bunny",b:"Legit",medal:"silver"},
+ {a:"Rusue",b:"Dragonovedtv",medal:"bronze"},
+ {a:"Genius",b:"fenomas",medal:"silver"},
+ {a:"Gencay",b:"Yuzarf",medal:"bronze"},
+ {a:"Shikai",b:"Yuzarf",medal:"gold"},
+ {a:"Anakin",b:"Yuzarf",medal:"silver"},
+ {a:"Shikai",b:"Rusue",medal:"silver"},
+ {a:"Shikai",b:"Anakin",medal:"silver"},
+ {a:"Anakin",b:"Nobilus",medal:"silver"}
+];
 
 function slugify(name){ return name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
 function escapeHtml(s){
@@ -1297,10 +978,7 @@ function countHonours(includeClub){
 }
 function countTitles(){ return ACHIEVEMENTS.filter(a => a.tag === "champion").length; }
 
-/* =========================================================
-   ANIMATION UTILITIES
-   ========================================================= */
-
+/* ---------- animation utilities ---------- */
 function countUp(el, target, opts = {}){
   if (!el) return;
   if (el.dataset.counted === "1" && !opts.force) return;
@@ -1318,7 +996,6 @@ function countUp(el, target, opts = {}){
   }
   requestAnimationFrame(frame);
 }
-
 const countObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
@@ -1329,11 +1006,9 @@ const countObserver = new IntersectionObserver(entries => {
     countObserver.unobserve(el);
   });
 }, { threshold: 0.1 });
-
 function registerCounter(el){
   if (el && el.dataset.count !== undefined && el.dataset.counted !== "1") countObserver.observe(el);
 }
-
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting){
@@ -1342,13 +1017,11 @@ const revealObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.01, rootMargin: "0px 0px -10px 0px" });
-
 function registerReveal(el, delay){
   if (!el) return;
   if (delay !== undefined) el.style.setProperty("--delay", delay + "s");
   revealObserver.observe(el);
 }
-
 function attachTilt(el, intensity = 6){
   if (!el) return;
   let rafId = null, lastX = 0, lastY = 0;
@@ -1375,10 +1048,7 @@ function attachTilt(el, intensity = 6){
   });
 }
 
-/* =========================================================
-   PARTICLES
-   ========================================================= */
-
+/* ---------- particles ---------- */
 (function spawnParticles(){
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (window.matchMedia("(max-width: 640px)").matches) return;
@@ -1398,10 +1068,7 @@ function attachTilt(el, intensity = 6){
   document.body.appendChild(wrap);
 })();
 
-/* =========================================================
-   HERO CHIPS
-   ========================================================= */
-
+/* ---------- hero chips ---------- */
 function renderHeroChips(){
   const wrap = document.getElementById("hero-chips");
   wrap.innerHTML = `
@@ -1414,27 +1081,21 @@ function renderHeroChips(){
   wrap.querySelectorAll("[data-count]").forEach(registerCounter);
 }
 
-/* =========================================================
-   SQUAD
-   ========================================================= */
-
+/* ---------- squad ---------- */
 function renderMiniCards(){
   const el = document.getElementById("mini-cards");
   const topScorer  = [...players].sort((a,b) => b.g - a.g)[0];
   const topAssists = [...players].sort((a,b) => b.a - a.a)[0];
   const topSaves   = [...players].sort((a,b) => b.s - a.s)[0];
   const topPoints  = players[0];
-
   const items = [
     ["Top Scorer",   topScorer,  "g",   0, STAT_IMG.goals],
     ["Top Assists",  topAssists, "a",   0, STAT_IMG.assists],
     ["Top GK Saves", topSaves,   "s",   0, STAT_IMG.saves],
     ["Top Points",   topPoints,  "pts", 2, null]
   ];
-
-  el.innerHTML = items.map(([label,p,key,dec,icon], i) => {
+  el.innerHTML = items.map(([label,p,key,dec,icon]) => {
     const value = dec ? Number(p[key]).toFixed(dec) : p[key].toLocaleString();
-    const direction = i % 2 === 0 ? "" : "";
     return `
       <div class="mini reveal-item">
         <span class="mini-k">${icon ? `<img class="mini-icon" src="${icon}" alt="">` : ""}${label}</span>
@@ -1446,7 +1107,6 @@ function renderMiniCards(){
 const SORT_LABELS = { g:"Goals", a:"Assists", s:"Saves", pts:"Points" };
 let sortKey = "pts";
 let sortDir = "desc";
-
 let squadSearchQuery = "";
 function renderSquad(){
   const body = document.getElementById("squad-body");
@@ -1487,22 +1147,16 @@ function renderSquad(){
     th.setAttribute("aria-sort", active ? (sortDir === "asc" ? "ascending" : "descending") : "none");
     th.querySelector(".arrow").textContent = active ? (sortDir === "asc" ? "▲" : "▼") : "↕";
   });
-
   document.getElementById("sort-pill").innerHTML =
     `Sorted by <b>${SORT_LABELS[sortKey]}</b> ${sortDir === "asc" ? "↑" : "↓"}`;
   const count = document.getElementById("squad-results-count");
   if (count) count.textContent = query ? `Showing ${matching.length} of ${players.length} players` : `Showing all ${players.length} players`;
 }
-
 function bindPlayerSearch(){
   const input = document.getElementById("squad-search");
   if (!input) return;
-  input.addEventListener("input", () => {
-    squadSearchQuery = input.value;
-    renderSquad();
-  });
+  input.addEventListener("input", () => { squadSearchQuery = input.value; renderSquad(); });
 }
-
 function bindSorting(){
   document.querySelectorAll("#squad th.sortable").forEach(th => {
     const activate = () => {
@@ -1518,21 +1172,14 @@ function bindSorting(){
   });
 }
 
-/* =========================================================
-   CABINET
-   ========================================================= */
-
-const AWARD_ORDER = [
-  "ballonDor","mvp","goldenBoot","playmaker","goldenGloves",
-  "bestPlayer","bestDuo","bestManager","puskas"
-];
+/* ---------- cabinet ---------- */
+const AWARD_ORDER = ["ballonDor","mvp","goldenBoot","playmaker","goldenGloves","bestPlayer","bestDuo","bestManager","puskas"];
 
 function renderCabinet(){
   const statsEl = document.getElementById("cab-stats");
   const champs  = ACHIEVEMENTS.filter(a => a.tag === "champion").length;
   const runners = ACHIEVEMENTS.filter(a => a.tag === "runner").length;
   const thirds  = ACHIEVEMENTS.filter(a => a.tag === "third").length;
-
   statsEl.innerHTML = `
     <span class="cab-stat">🏆 <b data-count="${champs}">0</b> Titles</span>
     <span class="cab-stat">🥈 <b data-count="${runners}">0</b> Runner-up Finishes</span>
@@ -1543,11 +1190,8 @@ function renderCabinet(){
   statsEl.querySelectorAll("[data-count]").forEach(registerCounter);
 
   const grid = document.getElementById("cabinet-grid");
-  grid.innerHTML = ACHIEVEMENTS.map((ach,i) => {
-    const chips = AWARD_ORDER
-      .filter(k => ach.awards[k])
-      .map(k => awardChip(k, ach.awards[k]))
-      .join("");
+  grid.innerHTML = ACHIEVEMENTS.map(ach => {
+    const chips = AWARD_ORDER.filter(k => ach.awards[k]).map(k => awardChip(k, ach.awards[k])).join("");
     return `
       <div class="reveal-item" data-reveal-group>
         <article class="ach ${ach.tag}${ach.featured ? " featured" : ""}" data-tilt>
@@ -1564,17 +1208,13 @@ function renderCabinet(){
       </div>
     `;
   }).join("");
-
   grid.querySelectorAll("[data-tilt]").forEach(el => attachTilt(el, 6));
   grid.querySelectorAll("[data-reveal-group]").forEach((el,i) => {
     el.style.setProperty("--reveal-delay", Math.min(i % 3,2) * 90 + "ms");
   });
 }
 
-/* =========================================================
-   HONOURS
-   ========================================================= */
-
+/* ---------- honours ---------- */
 function awardLeaderboard(key){
   const map = {};
   ACHIEVEMENTS.forEach(ach => {
@@ -1584,7 +1224,6 @@ function awardLeaderboard(key){
   });
   return Object.entries(map).sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 }
-
 function honourCard(key){
   const m = AWARDS[key];
   const entries = awardLeaderboard(key);
@@ -1608,16 +1247,10 @@ function honourCard(key){
     </div>
   `;
 }
-
 function renderHonours(){
-  const order = [
-    "ballonDor","goldenBoot","mvp","playmaker","goldenGloves",
-    "bestManager","bestDuo","puskas","bestPlayer"
-  ];
+  const order = ["ballonDor","goldenBoot","mvp","playmaker","goldenGloves","bestManager","bestDuo","puskas","bestPlayer"];
   const grid = document.getElementById("honours-grid");
-  grid.innerHTML = order.map((k,i) =>
-    `<div class="reveal-item" data-reveal-group>${honourCard(k)}</div>`
-  ).join("");
+  grid.innerHTML = order.map(k => `<div class="reveal-item" data-reveal-group>${honourCard(k)}</div>`).join("");
   grid.querySelectorAll("[data-reveal-group]").forEach((el,i) => {
     el.style.setProperty("--reveal-delay", Math.min(i % 3,2) * 90 + "ms");
   });
@@ -1625,10 +1258,7 @@ function renderHonours(){
     `<b style="color:#fff">${countHonours(false)}</b> honours · club Best Player excluded`;
 }
 
-/* =========================================================
-   PLAYER PROFILE MODAL
-   ========================================================= */
-
+/* ---------- modal ---------- */
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
 const modalPanel = document.querySelector(".modal-panel");
@@ -1645,183 +1275,19 @@ function awardsFor(playerName){
   });
   return out;
 }
-
-const PLAYER_MEDIA = {
-  "Shikai": {src:"https://media1.tenor.com/m/CokmdYnk1woAAAAd/iniesta-andres-iniesta.gif"},
-  "Yuzarf": {src:"https://media1.tenor.com/m/VOpjVoMvqUsAAAAd/lionel-messi-barcelona.gif"},
-  "Legit": {src:"https://media1.tenor.com/m/q8GqXr-vmLUAAAAd/lewandowski-lewandowski-barcelona.gif"},
-  "Rusue": {src:"https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif"},
-  "Anakin": {src:"https://upload.wikimedia.org/wikipedia/commons/0/0a/Luis_Suarez_FCB_2014.jpg"},
-  "Gencay": {src:"https://media1.tenor.com/m/Hws0HV_kSpgAAAAd/raphinha-barcelona.gif"},
-  "Bunny": {src:"https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif"},
-  "Hyper": {src:"https://imagenes.elpais.com/resizer/v2/JZPCXM23XTZESKXU2GMBBWQXTI.jpg?auth=f02e6c1a9f96e5c86ff2c68c8e78a216e2b5305c68d20c8979c73176c6aa6314&width=1200"},
-  "Real Isagi": {src:"https://media1.tenor.com/m/ZS7I4XDv4VgAAAAd/samuel-eto%27o.gif"},
-  "Tuna": {src:"https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif"},
-  "Nobilus": {src:"https://media1.tenor.com/m/iQuATQizBWEAAAAd/sergio-busquets-e-football.gif"},
-  "TheRin": {src:"https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"},
-  "Real Z": {src:"https://upload.wikimedia.org/wikipedia/commons/0/0c/Neymar_%2816245492137%29.jpg"},
-  "fenomas": {src:"https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"},
-  "Genius": {src:"https://www.fcbarcelona.com/photo-resources/2025/07/01/66685bc0-ccee-47df-93dc-ce942ffa85f0/19-Lamine-M.jpg?height=470&width=470"},
-  "arian": {src:"https://www.fcbarcelona.com/photo-resources/fcbarcelona/photo/2018/06/28/58d39ac0-e707-4b1b-93bc-c332fd616b48/XhTfPajg.jpg?height=750&width=1200"},
-  "Isagi demon king": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Thierry_Henry_2008.jpg"},
-  "Taski": {src:"https://media1.tenor.com/m/rJ4RxweX8NkAAAAd/gavi-barcelona.gif"},
-  "Cold Prince": {src:"https://www.fcbarcelona.com/photo-resources/2022/11/02/c065cb6b-56a0-42e5-b303-2e128eb6171f/07-OUSMANE_DEMBELE.jpg?height=470&width=470"},
-  "Dragonovedtv": {src:"https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif"},
-  "RndmX": {src:"https://upload.wikimedia.org/wikipedia/commons/e/e8/Alisson_Becker_04012026_%281%29.jpg"},
-  "Andrew": {src:"https://framerusercontent.com/images/fbOplif7LLfxe0xkrXI49zD6uQ.webp?height=1224&width=1800"},
-  "Sarox": {src:"https://upload.wikimedia.org/wikipedia/commons/1/14/Claudio-bravo.jpg"},
-  "Aiku": {src:"https://www.fcbarcelona.com/photo-resources/2025/05/06/672bab03-9d23-447c-afd1-1738e8fb4fcc/partit-LEGENDS-163.jpg?height=750&width=1200"},
-  "Messi": {src:"https://image.news.livedoor.com/newsimage/stf/e/9/e93fc_1610_66bfd7cf_72228c71.jpg"},
-  "Xiv": {src:"https://imgr.foot11.com/2023/08/Icon_qui_310108_01_06.jpg"},
-  "Error": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Javier_Mascherano_2018.jpg"},
-  "Noob": {src:"https://upload.wikimedia.org/wikipedia/commons/9/99/Bojan_Krki%C4%87_celebrate.jpg"},
-  "Lostzin": {src:"https://upload.wikimedia.org/wikipedia/commons/2/25/Pepe_Reina.JPG"},
-  "Shadow": {src:"https://pbs.twimg.com/media/GQ3XQdTWsAASVPQ.jpg"},
-  "Dragon Lord": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Frank_Rijkaard_2006.jpg"},
-  "Water": {src:"https://upload.wikimedia.org/wikipedia/commons/1/11/Simon_Mignolet_saves_penalty.jpg"},
-  "Luca": {src:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2013/06/11/17/web-fabgregas-getty.jpg?fit=crop&height=1200&width=1200"},
-  "lorenzo.kx": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/DanielAlves.JPG"},
-  "Mikey | 303": {src:"https://imagenes.elpais.com/resizer/v2/VNGOL2NDPTTUAVCQ7A3AXXDMBI.jpg?auth=9b4d2758f51c84b8f943b3c207507f7f4bce2c989773f817b4c3752058991b2d&height=980&smart=true&width=980"},
-  "Rin": {src:"https://www.fcbarcelona.com/photo-resources/2022/07/01/118e01d4-6d78-4552-9b06-fbae7be231c0/jugador_fitxa-jordi_alba.jpg?height=750&width=1200"},
-  "Akiif": {src:"https://www.fcbarcelona.com/photo-resources/2022/07/01/1c44f8dd-2de6-4f10-9f5b-2d3b93c62f5b/frenkie.png?height=790&width=670"},
-  "Carla": {src:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/03/09/09/pique.jpg"},
-  "Void": {src:"https://upload.wikimedia.org/wikipedia/commons/4/4d/Lionel_Messi_in_a_La_Liga_match_at_Camp_Nou%2C_Barcelona_%28_Ank_Kumar%2C_Infosys_Limited%29_08.jpg"},
-  "Akashi": {src:"https://www.fcbarcelona.com/photo-resources/2024/02/01/8688e3ca-62dc-4d0a-8cd3-69d06699b124/mini_16-FERMIN.png?height=790&width=670"},
-  "Destroyer": {src:"https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif"},
-  "@nagi05321": {src:"https://media1.tenor.com/m/5tkvAwzoa4UAAAAd/lamine-yamal-lamine.gif"}
-};
-const PLAYER_PARALLELS = {
-  "Shikai":"Andrés Iniesta","Yuzarf":"Lionel Messi","Legit":"Robert Lewandowski","Rusue":"Xavi Hernández",
-  "Anakin":"Luis Suárez","Gencay":"Raphinha","TheRin":"Diego Maradona","Real Isagi":"Samuel Eto'o",
-  "Real Z":"Neymar Jr.","fenomas":"Pedri","Genius":"Lamine Yamal","Xiv":"Deco",
-  "Messi":"Pedro Rodríguez","Dragonovedtv":"Pep Guardiola","Bunny":"David Villa","Aiku":"Carles Puyol",
-  "Hyper":"Marc-André ter Stegen","Tuna":"Víctor Valdés","Sarox":"Claudio Bravo","arian":"Andoni Zubizarreta",
-  "Nobilus":"Sergio Busquets","Cold Prince":"Javier Mascherano","Taski":"Gavi","Noob":"Bojan Krkić"
-};
-const PLAYER_ROLES = {
- "Shikai":"Midfielder · all-position player · coach · manager","Yuzarf":"Striker · all-rounder","Legit":"Striker · all-position player",
- "Rusue":"Midfielder","Anakin":"Striker","Gencay":"Striker","Bunny":"Striker","Hyper":"Goalkeeper","Real Isagi":"Striker",
- "Tuna":"Goalkeeper","Nobilus":"All-rounder","TheRin":"Striker","Real Z":"Striker · midfielder","fenomas":"Midfielder",
- "Genius":"Striker","Isagi demon king":"Striker","Taski":"Striker","Cold Prince":"Forward","Dragonovedtv":"Founder · manager",
- "RndmX":"Goalkeeper","Andrew":"Goalkeeper","Sarox":"Goalkeeper","Aiku":"Defender · midfielder · goalkeeper","Messi":"Forward · dribbler",
- "Xiv":"Midfielder","Error":"Forward","Noob":"Forward","Lostzin":"Goalkeeper","Shadow":"Striker","Water":"Goalkeeper",
- "Luca":"Midfielder","Mikey | 303":"Goalkeeper","lorenzo.kx":"Defender"
-};
-const PLAYER_COMPARISON_NOTES = {
- "Shikai":"An Iniesta-style reference for midfield control, but Shikai's defining trait is his ability to perform at an elite level in almost every role.",
- "Yuzarf":"A Messi-style reference for all-round influence, while his primary identity is a pure striker and UE1's best player.",
- "Legit":"A Lewandowski-style number 9, with his own Phantom Shoot and unusually broad positional range.",
- "Rusue":"A Xavi-style midfielder: understated, precise and capable of creating chances from deep or advanced positions.",
- "Anakin":"A Suárez-style striker: relentless movement, dribbling and reliable finishing.",
- "Gencay":"A Raphinha-style direct forward, defined by speed of release and long-range threat.",
- "Bunny":"A David Villa-style finisher with extra emphasis on dribbling and shot adaptation.",
- "Hyper":"A ter Stegen-style last line, but regarded by Barça as the greatest goalkeeper in UE.",
- "Real Isagi":"A Samuel Eto'o-style striker, especially in his partnership with Yuzarf.",
- "Tuna":"A Víctor Valdés-style keeper whose importance was clearest in major tournament campaigns.",
- "Nobilus":"A Busquets-style reader of the game, with a wider all-round role including goalkeeping and assists.",
- "TheRin":"A Maradona-style early talisman whose speed and shooting helped keep the club project alive.",
- "Real Z":"A Neymar-style attacker with a distinctive emphasis on shooting accuracy and midfield contribution.",
- "fenomas":"A Pedri-style new-generation midfielder who contributes in both directions.",
- "Genius":"A Yamal-style new-generation talent, though Genius's primary role was a pure number 9.",
- "Isagi demon king":"A high-impact striker whose unpredictable shooting and carrying role defined his Rubypool peak.",
- "Taski":"A forward with a balance of sharp shooting and creative passing.",
- "Cold Prince":"A modern technical attacker with elite dribbling and finishing.",
- "Dragonovedtv":"A Guardiola-style manager: his legacy is tactical organisation, trust and motivation rather than individual statistics.",
- "RndmX":"A top-level keeper whose reflexes and presence defined his era.",
- "Andrew":"A commanding goalkeeper known for anticipation and intimidating strikers.",
- "Sarox":"A clutch goalkeeper whose best trait was raising his level when the team needed him.",
- "Aiku":"A Puyol-style defensive leader with the added ability to play midfield or goalkeeper.",
- "Messi":"A technically gifted dribbler and big-match performer whose peak flashes were exceptional.",
- "Xiv":"A Deco-style midfielder whose output was unusually high relative to his appearances.",
- "Error":"An elite big-match contributor from the Rubypool era.",
- "Noob":"A Bojan-style early Barça prospect, remembered especially for loyalty and the loan that helped Barça beat his parent team.",
- "Lostzin":"A reliable big-game goalkeeper who made the most of opportunities behind Hyper.",
- "Shadow":"A mobile, unselfish striker whose later career became even more distinguished.",
- "Water":"A reflex-based goalkeeper whose surviving sample is small.",
- "Luca":"A technically strong midfielder whose short Barça spell still left a good impression.",
- "Mikey | 303":"A leadership-focused goalkeeper whose deleted match records leave an incomplete statistical picture.",
- "lorenzo.kx":"A defender with a reputation for turning rare appearances into high-impact performances."
-};
-const PLAYER_PROFILE_NOTES = {
- "Shikai":"UE1's best midfielder and the team's natural organiser. A genuine all-position player who could switch into striker, goalkeeper or elite-defender roles, while also coaching and managing. His game intelligence, creativity and versatility made the whole team better.",
- "Yuzarf":"A pure striker and Barça's best player in UE1. His finishing led the attack, but he was also an exceptional all-rounder who could pass, defend, make saves and influence every phase of a match.",
- "Legit":"A prime number 9 with his signature Phantom Shoot, a technique goalkeepers struggled to read or stop. In the Velterra final he played like a one-man army, carrying the attack through goals, dribbling and playmaking. He could adapt to almost any position.",
- "Rusue":"A pure midfielder and an underrated creator who could assist from almost anywhere. He gave his teams control and quality even after leaving Barça more than once to play for Re Al.",
- "Anakin":"A pure number 9 who brought a goal threat to every match. He combined relentless scoring with sharp dribbling and close-range finishes against elite goalkeepers.",
- "Gencay":"A pure number 9 with some of the fastest shots in the game. Give him the ball in a dangerous area and he could score from almost anywhere.",
- "Bunny":"A pure striker with outstanding dribbling and adaptable shooting. He could create his own chance, change the angle and finish in different ways.",
- "Hyper":"Barça's greatest goalkeeper and its last unbeatable line. He was the heart of the team through multiple trophies and the benchmark for goalkeeping in the game.",
- "Real Isagi":"Also known as Emir, a dangerous striker and an effective attacking partner for Yuzarf. He had his own shooting quality and added another serious goal threat beside Barça's leading forward.",
- "Tuna":"One of UE1's greatest goalkeepers. He was central to Barça's World Cup and UEL Season 1 campaigns, providing a dependable last line when the team needed him.",
- "Nobilus":"One of Barça's finest all-rounders, able to keep goal, defend and create assists. His versatility made him a key part of the team across several seasons.",
- "TheRin":"Barça's first major striker: explosive speed, powerful shooting and a defining role in the club's earliest trophy era. His performances gave the manager belief to keep the project alive.",
- "Real Z":"A standout striker and midfielder of his era, known for underrated shooting technique, exceptional accuracy and memorable goals.",
- "fenomas":"A new-generation midfield talent who could assist, score and contribute defensively. His work across the pitch helped carry the team during a demanding period.",
- "Genius":"A new-generation Brazilian number 9 who became one of the team's leading goalscorers. He showed extraordinary talent and potential in only two seasons before retiring to focus on his studies.",
- "Isagi demon king":"An elite striker with unpredictable shooting who carried Rubypool through multiple leagues. For a period he was the club's standout player, often shouldering an underpowered side almost alone.",
- "Taski":"A dangerous striker with sharp, powerful shooting and the passing ability to bring teammates into the attack.",
- "Cold Prince":"A new-generation attacker with elite dribbling and striking ability. He played an important role in several campaigns.",
- "Dragonovedtv":"Founder and manager of Barça UEFC. Not celebrated for individual playing ability, but for assigning roles, building trust, motivating the squad and using tactics to turn a group of players into a winning team.",
- "RndmX":"One of the best goalkeepers of his era, capable of carrying the goal and stopping shots that looked impossible. His character and presence made him a defining figure between the posts.",
- "Andrew":"A dominant goalkeeper of his era. Strikers feared facing him, and his anticipation and reading of danger made him exceptionally difficult to beat.",
- "Sarox":"A top goalkeeper with a powerful ability to lock in under pressure. When the team needed him, he could take over a match and carry the defensive effort.",
- "Aiku":"A versatile defensive leader who could play defender, midfielder or goalkeeper. He acted as a wall at the back while also controlling the tempo.",
- "Messi":"A gifted dribbler with exceptional speed, close control and shooting technique, plus the ability to tackle and contribute defensively. He repeatedly carried Barça in major matches, even if he could not sustain that level throughout his time.",
- "Xiv":"One of the greats across multiple seasons. He did not play a huge number of matches for Barça, but his output and impact were remarkable for the time he spent at the club.",
- "Error":"An elite performer who repeatedly stepped up and helped carry Rubypool in major matches.",
- "Noob":"One of the original Rubypool players and a key part of the club's early trophies. At his peak he could carry a team alone. His loyalty became legendary when he was loaned to Barça and helped the club defeat his own parent team in the Elite League. His words became part of club culture: “I know it's my own team... But Barça is my home.”",
- "Lostzin":"An elite goalkeeper who proved himself in major matches and major leagues, even while spending many games on the bench behind Hyper.",
- "Shadow":"A talented, unselfish striker who produced strong performances before leaving Rubypool and went on to become one of the game's great forwards.",
- "Water":"A goalkeeper with excellent reflexes who made a strong impression despite playing relatively few matches.",
- "Luca":"One of UE's finest midfielders. He played only two or three matches for Barça, but delivered strong performances in that limited time.",
- "Mikey | 303":"A good leader and goalkeeper. Many of his matches were deleted, so the surviving archive cannot show his full contribution.",
- "lorenzo.kx":"A rare but outstanding presence: a defender who could appear once in a season and still cause opponents major problems. His peak performances made him one of the most memorable players of his era."
-};
-function playerMedia(name){
-  return PLAYER_MEDIA[name] || null;
-}
-function handlePlayerImageError(img){
-  const remaining = (img.dataset.fallbacks || "").split("|").filter(Boolean);
-  const next = remaining.shift();
-  img.dataset.fallbacks = remaining.join("|");
-  if (next) {
-    img.onerror = () => handlePlayerImageError(img);
-    img.src = next;
-  } else {
-    img.onerror = null;
-    const card = img.closest(".player-hero");
-    img.remove();
-    if (card) card.classList.add("no-image");
-  }
-}
+function playerMedia(name){ return PLAYER_MEDIA[name] || null; }
 function playerProfileCopy(name,p){
   const role=PLAYER_ROLES[name]||(p&&p.s>=100?"Goalkeeper":"Squad player");
   const summary=PLAYER_PROFILE_NOTES[name]||(p?`Recorded contribution: ${p.g} goals, ${p.a} assists and ${p.s} saves.`:"Archived squad member. Individual career totals are not included in the current player-stat table.");
   const comparison=PLAYER_PARALLELS[name]||"";
+  const parallelLabel=PARALLEL_LABELS[name]||"Barça parallel";
   const explanation=PLAYER_COMPARISON_NOTES[name]||"A full historical comparison has not been assigned.";
-  return {role,summary,comparison,explanation};
+  return {role,summary,comparison,parallelLabel,explanation};
 }
-
-const PLAYER_DUOS=[
- {a:"TheRin",b:"Noob",medal:"silver"},
- {a:"Isagi demon king",b:"Real Z",medal:"bronze"},
- {a:"Bunny",b:"Aiku",medal:"bronze"},
- {a:"Bunny",b:"Messi",medal:"bronze"},
- {a:"Legit",b:"Real Z",medal:"bronze"},
- {a:"Bunny",b:"Legit",medal:"silver"},
- {a:"Rusue",b:"Dragonovedtv",medal:"bronze"},
- {a:"Genius",b:"fenomas",medal:"silver"},
- {a:"Gencay",b:"Yuzarf",medal:"bronze"},
- {a:"Shikai",b:"Yuzarf",medal:"gold"},
- {a:"Anakin",b:"Yuzarf",medal:"silver"},
- {a:"Shikai",b:"Rusue",medal:"silver"},
- {a:"Shikai",b:"Anakin",medal:"silver"},
- {a:"Anakin",b:"Nobilus",medal:"silver"}
-];
 function renderDuoMedals(name){
- const duos=PLAYER_DUOS.filter(d=>d.a===name||d.b===name);
- if(!duos.length)return "";
- return `<h4 class="p-sec">Partnerships</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;const icon=d.medal==="gold"?"🥇":d.medal==="silver"?"🥈":"🥉";return `<div class="duo-row"><span class="duo-medal ${d.medal}">${icon}</span><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
+  const duos=PLAYER_DUOS.filter(d=>d.a===name||d.b===name);
+  if(!duos.length)return "";
+  return `<h4 class="p-sec">Partnerships</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;const icon=d.medal==="gold"?"🥇":d.medal==="silver"?"🥈":"🥉";return `<div class="duo-row"><span class="duo-medal ${d.medal}">${icon}</span><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
 }
 
 function openPlayer(slug){
@@ -1873,7 +1339,7 @@ function openPlayer(slug){
   const media = playerMedia(profileName);
   const copy = playerProfileCopy(profileName,p);
   modalContent.innerHTML = `
-    ${media ? `<div class="player-hero"><img src="${media.src}"|")}" alt="" loading="eager" decoding="async"><div class="player-hero-copy"><span class="role">${escapeHtml(copy.role)}</span><span class="summary">${escapeHtml(copy.summary)}</span></div></div>` : `<div class="profile-report"><b>${escapeHtml(copy.role)}</b><p>${escapeHtml(copy.summary)}</p><p>${escapeHtml(copy.explanation)}</p></div>`}
+    ${media ? `<div class="player-hero"><img referrerpolicy="no-referrer" src="${media.src}" ${media.fallback?`data-fb="${media.fallback}"`:""} alt="" loading="eager" decoding="async" onerror="if(this.dataset.fb){var f=this.dataset.fb;this.dataset.fb='';this.src=f}else{this.parentNode.classList.add('no-image');this.remove()}"><div class="player-hero-copy"><span class="role">${escapeHtml(copy.role)}</span>${copy.comparison?`<span class="comparison">${escapeHtml(copy.parallelLabel)}: <b>${escapeHtml(copy.comparison)}</b></span>`:""}<span class="summary">${escapeHtml(copy.summary)}</span></div></div>` : `<div class="profile-report"><b>${escapeHtml(copy.role)}</b>${copy.comparison?`<p>${escapeHtml(copy.parallelLabel)}: <b>${escapeHtml(copy.comparison)}</b></p>`:""}<p>${escapeHtml(copy.summary)}</p><p>${escapeHtml(copy.explanation)}</p></div>`}
     <div class="p-head">
       <div class="p-rank">${p ? "#" + rank : "ARCHIVE"}</div>
       <h3>${escapeHtml(profileName)}</h3>
@@ -1886,12 +1352,12 @@ function openPlayer(slug){
     <h4 class="p-sec">Individual Honours <span class="count">${official.length} official${counts.bestPlayer ? ` + ${counts.bestPlayer} club` : ""}</span></h4>
     ${detailed}
   `;
-
   modalType = "player";
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
   modalPanel.scrollTop = 0;
 }
+
 function openSeason(seasonNumber){
   const ach = ACHIEVEMENTS.find(a => a.n === seasonNumber);
   if (!ach){ closeModal(false); return; }
@@ -1945,7 +1411,6 @@ function openSeason(seasonNumber){
     <h4 class="p-sec">Season Squad <span class="count">${roster.length} players</span></h4>
     <div class="season-squad">${squadRows}</div>
   `;
-
   modalType = "season";
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -1960,23 +1425,19 @@ function closeModal(updateHash = true){
   }
   modalType = null;
 }
-
 function route(){
   const hash = decodeURIComponent(location.hash || "");
   if (hash.startsWith("#player/")) openPlayer(hash.slice(8));
   else if (hash.startsWith("#season/")) openSeason(Number(hash.slice(8)));
   else if (modal.classList.contains("open")) closeModal(false);
 }
-
+document.addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&t.closest(".story-media"))t.closest("figure").remove();},true);
 document.getElementById("modal-close").addEventListener("click", () => closeModal());
 modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 window.addEventListener("hashchange", route);
 
-/* =========================================================
-   CINEMATIC SCROLL REVEALS
-   ========================================================= */
-
+/* ---------- scroll reveals ---------- */
 function initRevealMotion(root = document){
   const elements = Array.from(root.querySelectorAll(".reveal-item"));
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1984,7 +1445,6 @@ function initRevealMotion(root = document){
     elements.forEach(el => el.classList.add("is-visible"));
     return;
   }
-
   document.documentElement.classList.add("motion-ready");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -1993,7 +1453,6 @@ function initRevealMotion(root = document){
       observer.unobserve(entry.target);
     });
   }, { threshold:0.12, rootMargin:"0px 0px -6% 0px" });
-
   elements.forEach((el,i) => {
     if (el.hasAttribute("data-reveal-group") && !el.style.getPropertyValue("--reveal-delay")){
       el.style.setProperty("--reveal-delay", Math.min(i % 3,2) * 80 + "ms");
@@ -2009,19 +1468,17 @@ function linkifyPlayerNames(root){
     acceptNode(node){
       const parent = node.parentElement;
       if (!parent || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-      if (parent.closest("a,script,style,button,textarea,input,select,option")) return NodeFilter.FILTER_REJECT;
+      if (parent.closest("a,figcaption,script,style,button,textarea,input,select,option")) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT;
     }
   });
   const textNodes = [];
   while (walker.nextNode()) textNodes.push(walker.currentNode);
-
   textNodes.forEach(node => {
     const source = node.nodeValue;
     const lower = source.toLowerCase();
     const fragment = document.createDocumentFragment();
     let cursor = 0, changed = false;
-
     while (cursor < source.length){
       let best = null;
       for (const name of names){
@@ -2042,7 +1499,6 @@ function linkifyPlayerNames(root){
         }
       }
       if (!best) break;
-
       if (best.position > cursor){
         fragment.appendChild(document.createTextNode(source.slice(cursor,best.position)));
       }
@@ -2054,7 +1510,6 @@ function linkifyPlayerNames(root){
       cursor = best.position + best.name.length;
       changed = true;
     }
-
     if (changed){
       if (cursor < source.length) fragment.appendChild(document.createTextNode(source.slice(cursor)));
       node.parentNode.replaceChild(fragment,node);
@@ -2062,9 +1517,7 @@ function linkifyPlayerNames(root){
   });
 }
 
-/* =========================================================
-   CLUB RECORDS
-   ========================================================= */
+/* ---------- club records ---------- */
 function renderClubRecords(){
  const target=document.getElementById("history-records"); if(!target)return;
  const top=k=>[...players].sort((a,b)=>b[k]-a[k]||a.name.localeCompare(b.name))[0];
@@ -2082,10 +1535,7 @@ function renderClubRecords(){
  target.innerHTML=records.map(([k,v,n,d])=>`<article class="record-card"><div class="record-k">${escapeHtml(k)}</div><div class="record-v">${escapeHtml(String(v))}</div><div class="record-name">${escapeHtml(n)}</div><div class="record-sub">${escapeHtml(d)}</div></article>`).join("");
 }
 
-/* =========================================================
-   INIT
-   ========================================================= */
-
+/* ---------- init ---------- */
 renderHeroChips();
 renderMiniCards();
 renderSquad();
@@ -2095,12 +1545,10 @@ renderCabinet();
 renderHonours();
 renderClubRecords();
 route();
-
 linkifyPlayerNames(document.querySelector("main"));
 linkifyPlayerNames(document.querySelector("footer"));
 initRevealMotion();
 document.querySelectorAll(".reveal-target").forEach(registerReveal);
-
 </script>
 </body>
 </html>

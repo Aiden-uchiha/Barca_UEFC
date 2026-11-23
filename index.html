@@ -441,6 +441,8 @@
     position:absolute;inset:0;width:100%;height:100%;
     object-fit:cover;opacity:.85;transition:transform .6s, opacity .3s;
   }
+  a.gif-card{color:inherit;text-decoration:none;cursor:pointer}
+  .gif-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   .gif-card:hover img{transform:scale(1.06);opacity:1}
   .gif-fallback{
     display:none;font-size:46px;line-height:1;
@@ -825,6 +827,18 @@
         <div class="gif-fallback">🧤</div>
         <div class="gif-label">50-Save Miracle<small>arian vs Re AL · El Clásico</small></div>
       </div>
+      <a class="gif-card reveal-item" href="https://tenor.com/view/messi-neymar-suarez-barcelona-barca-gif-26825152" target="_blank" rel="noopener noreferrer" aria-label="Open MSN Barcelona GIF on Tenor">
+        <img src="https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif" alt="Messi, Suárez and Neymar together for Barcelona" loading="lazy"
+             onerror="this.parentElement.classList.add('gif-failed')">
+        <div class="gif-fallback">✨</div>
+        <div class="gif-label">MSN: Messi · Suárez · Neymar<small>The legendary attacking trio</small></div>
+      </a>
+      <a class="gif-card reveal-item" href="https://klipy.com/gifs/lamine-yamal-lamine-yamal-trophy" target="_blank" rel="noopener noreferrer" aria-label="Open Lamine Yamal trophy GIF on KLIPY">
+        <img src="https://static2.klipy.com/ii/4e7bea9f7a3371424e6c16ebc93252fe/85/f5/qEajrmpoEv00RJnenxy.gif" alt="Lamine Yamal lifting a trophy" loading="lazy"
+             onerror="this.parentElement.classList.add('gif-failed')">
+        <div class="gif-fallback">🏆</div>
+        <div class="gif-label">Yamal Lifts the Trophy<small>The next generation of Barça</small></div>
+      </a>
     </div>
 
     <div class="timeline" id="history-timeline" aria-label="Five eras of Barça UEFC history">

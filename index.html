@@ -629,6 +629,23 @@
   .player-hero-copy b{display:block;font-family:'Oswald',sans-serif;font-size:1.05rem;letter-spacing:.6px;color:#fff}
   .player-hero-copy small{display:block;color:var(--muted-2);font-size:.74rem;line-height:1.45;margin-top:5px}
   .player-hero-copy .parallel{display:inline-flex;margin-top:7px;padding:4px 9px;border:1px solid rgba(240,180,41,.28);border-radius:999px;background:rgba(240,180,41,.08);color:#f2d38a;font-size:.68rem;font-weight:700}
+
+  .ach-detail{color:#b8b8cc;font-size:.76rem;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #242438}
+  .profile-report{margin-top:18px;padding:15px 16px;background:linear-gradient(120deg,rgba(20,50,110,.22),rgba(120,20,45,.16));border:1px solid var(--line-2);border-radius:13px}
+  .profile-report .report-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .profile-report .role-pill{font-size:.66rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#ffe6a8;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:999px;padding:4px 9px}
+  .profile-report .contrib-pill{font-size:.68rem;color:#c8d9ff;background:rgba(70,120,210,.12);border:1px solid rgba(90,140,220,.25);border-radius:999px;padding:4px 9px}
+  .profile-report p{font-size:.82rem;color:#d0d0df;line-height:1.65}
+  .profile-report p b{color:#fff}
+  .profile-report .reference{display:block;margin-top:9px;font-size:.68rem;color:var(--muted-2)}
+  .profile-report .reference a,.history-source a{color:#e8c979;text-decoration:none;border-bottom:1px dotted rgba(240,180,41,.4)}
+  .history-records{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:22px}
+  .record-card{background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .record-card .record-k{font-size:.65rem;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted-2)}
+  .record-card .record-v{font-family:'Oswald',sans-serif;font-size:1.45rem;color:var(--gold);margin-top:3px}
+  .record-card .record-name{font-size:.82rem;color:#fff;font-weight:700}
+  .record-card .record-sub{font-size:.7rem;color:var(--muted-2);margin-top:3px}
+  .history-source{font-size:.72rem;color:var(--muted-2);margin-top:14px}
   .era-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0 4px}
   .era-media figure{margin:0;position:relative;min-width:0;aspect-ratio:16/10;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#10101a}
   .era-media img{display:block;width:100%;height:100%;object-fit:cover}
@@ -1071,6 +1088,9 @@
       </article>
 
     </div>
+    <div class="sec-head reveal-item" style="margin-top:34px"><h2>Club Records &amp; Milestones</h2><div class="line"></div><span class="note">Calculated from the published squad table</span></div>
+    <div class="history-records" id="history-records"></div>
+    <p class="history-source">Player comparisons are contextual references, not claims that Barça UEFC players have identical careers. Sources: <a href="https://www.fcbarcelona.com/en/club/history/legendary-players" target="_blank" rel="noopener">FC Barcelona legendary players</a>, <a href="https://www.fcbarcelona.com/en/football/first-team/honours" target="_blank" rel="noopener">official honours list</a>, and <a href="https://www.fcbarcelona.com/en/guardiolas-barcelona" target="_blank" rel="noopener">Guardiola era</a>.</p>
   </section>
 
 </main>
@@ -1180,7 +1200,54 @@ const ACHIEVEMENTS = [
   { n:16, title:"Unmatched Egoist Cup — S2", placement:"Champions", tag:"champion",
     note:"Cup winners · individual results not recorded",
     awards:{ bestPlayer:"Anakin" } }
-];
+ ];
+
+const ACHIEVEMENT_STORIES = {
+  1:"The first recorded title established the club's competitive identity. TheRin led the early era and collected the season's top individual honours.",
+  2:"The final campaign under the Rubypool name ended with a silver medal. Legit was named Best Player, while Bunny finished as Golden Boot winner.",
+  3:"The Brazilian Cup became the first major cup triumph in the archive. Legit took both Best Player and Golden Boot, with Real Z earning Playmaker.",
+  4:"A painful final defeat left Barça with silver. The campaign still produced a Golden Boot for Isagi demon king and another Best Player award for Legit.",
+  5:"A depleted roster reached the final through Rusue's performances. Rusue collected both MVP and Barça Best Player, while RndmX won Golden Gloves.",
+  6:"The Elite League title was powered by the New Gen core: Genius won Ballon d'Or and Golden Boot, fenomas took Playmaker, and arian won Golden Gloves.",
+  7:"The return to Nexus ended in third place. Gencay was selected as Barça Best Player and Shikai earned the Playmaker award.",
+  8:"Barça reached the UECL final with a four-player squad. Shikai won Golden Boot and Barça Best Player; Yuzarf was named Playmaker.",
+  9:"Japan (Barça) won the Unmatched Ego World Cup. Yuzarf swept the Ballon d'Or and Golden Boot, Shikai earned tournament MVP, and Tuna took Golden Gloves.",
+  10:"The inaugural USL campaign was an undefeated title run. The archive records a club-best goal-difference mark and a ten-goal-per-game average, alongside a full set of individual honours.",
+  11:"Barça won UEL Season 1. Anakin collected MVP and Golden Boot, while Yuzarf was named Ballon d'Or winner and Barça Best Player.",
+  12:"The first Unmatched Egoist Cup title added another trophy to the cabinet. The archive records the team championship but no individual cup awards.",
+  13:"USL Season 2 ended as runners-up. Shikai earned Barça Best Player, Rusue won Playmaker, and Hyper led the goalkeeper honours.",
+  14:"Anakin led the UEL Season 2 title campaign, winning Ballon d'Or, MVP and Golden Boot. Shikai was named Best Manager.",
+  15:"The Uzbekistan Super Cup added another title during the Anakin era. Anakin won MVP, Ballon d'Or and Golden Boot, with Shikai taking Playmaker.",
+  16:"The second Unmatched Egoist Cup title completed the recorded trophy run. Anakin was selected as Barça Best Player."
+};
+const ROLE_LABELS={"Hyper":"Goalkeeper","Tuna":"Goalkeeper","Sarox":"Goalkeeper","arian":"Goalkeeper","RndmX":"Goalkeeper","Andrew":"Goalkeeper","Gencay":"Striker","Dragonovedtv":"Manager / player"};
+const PLAYER_PARALLEL_DETAILS = {
+ "Shikai":"Iniesta comparison: composure, close control and decisive timing in the final pass. Shikai's archive records 107 goals and 112 assists, alongside repeated playmaking and Best Player recognition. Iniesta is remembered at Barça for technical quality, commitment and influence in midfield.",
+ "Yuzarf":"Messi comparison: elite output and match-winning influence. Yuzarf has 123 goals and 89 assists, plus the World Cup, Ballon d'Or and Golden Boot honours. Barça describes Messi as its record-setting La Masia graduate and greatest player to wear the shirt.",
+ "Legit":"Lewandowski comparison: reliable finishing and penalty-box presence. Legit has 83 goals, 48 assists and 40 saves. Barça notes Lewandowski joined in 2022 from Bayern Munich and quickly demonstrated his goalscoring quality.",
+ "Rusue":"Xavi comparison: tempo control, distribution and chance creation. Rusue's 76 assists are among the highest totals in the club table, alongside 46 goals. Barça describes Xavi as a homegrown midfielder and an example of the club's football values.",
+ "Anakin":"Suárez comparison: relentless movement and high-volume finishing. Anakin has 103 goals and won the UEL Season 2 Ballon d'Or, MVP and Golden Boot. Suárez scored 198 official goals for Barça.",
+ "Gencay":"Recorded role: striker. Raphinha comparison: direct attacking threat and decisive forward play. Gencay has 61 goals and 13 assists and was named Barça Best Player during the third-place Nexus campaign.",
+ "TheRin":"Maradona comparison: an early-era talisman whose influence helped establish the club. The archive records 53 goals and the first Brazilian Pro League Ballon d'Or, Golden Boot and Best Player awards. Maradona is recognised by Barça among football's historic greats.",
+ "fenomas":"Pedri comparison: a midfielder who contributes across the game. fenomas has 20 goals and 21 assists and won the Elite League Playmaker award. Pedri is listed by Barça as a first-team midfielder.",
+ "Genius":"Yamal comparison: a young, high-output attacking profile. Genius recorded 32 goals and 8 assists and won the Elite League Ballon d'Or and Golden Boot. Lamine Yamal is listed by Barça as a first-team forward.",
+ "Real Z":"Neymar comparison: creativity, one-versus-one threat and attacking combinations. Real Z has 33 goals and 17 assists and won the Brazilian Cup Playmaker award. Neymar joined Barça in 2013 and formed part of the famous MSN attack.",
+ "Xiv":"Deco comparison: tactical intelligence and a winning mentality. Xiv has 24 goals and 4 assists. Barça describes Deco as a player with a winning spirit and strong tactical intelligence.",
+ "Messi":"Bojan comparison: a reference to a young Barça attacking prospect, not a claim that their careers are identical. Messi's current club record is 14 goals and 15 assists.",
+ "Dragonovedtv":"Pep Guardiola comparison: building a winning structure as manager. Dragonovedtv has 24 goals and 11 assists as a player. Guardiola's Barça won 14 trophies from 2008 to 2012, including the 2008/09 treble and the 2009 six-trophy calendar year.",
+ "Bunny":"David Villa comparison: a direct, efficient goalscoring forward. Bunny has 60 goals and 13 assists and won the Nexus Golden Boot. Barça describes Villa as an experienced striker among Spain's leading forwards.",
+ "Aiku":"Puyol comparison: defensive commitment and reliability. Aiku's recorded contribution includes 24 saves, 16 assists and 7 goals, and he featured in the early Brazilian Cup-winning squad. Barça identifies Puyol as one of the most important players in its history.",
+ "Hyper":"Goalkeeper. Hyper leads the current club save table with 264 saves and won Golden Gloves in the undefeated USL Season 1 campaign. Ter Stegen is the modern Barça goalkeeper reference.",
+ "Tuna":"Goalkeeper. Tuna has 195 saves and won World Cup Golden Gloves after stepping in as an emergency keeper during the title run. Víctor Valdés was Barça's first-choice goalkeeper for 12 seasons.",
+ "Sarox":"Goalkeeper. Sarox has 121 saves and was part of the four-player UECL runners-up squad. Claudio Bravo made 75 Barça appearances and shared goalkeeping duties during a trophy-rich period.",
+ "arian":"Goalkeeper. arian has 121 saves and is remembered for the 50-plus-save El Clásico performance during the Elite League title run. Zubizarreta is one of the most celebrated goalkeepers in Barça and Spanish football history.",
+ "Nobilus":"Busquets comparison: positional discipline and connecting defence with attack. Nobilus has 12 goals and 46 assists and appeared in multiple title-winning squads. Busquets was part of Guardiola's sextuple-winning Barça side.",
+ "Cold Prince":"Busquets comparison: balance, reading play and supporting the team's structure. Cold Prince has 19 goals and 17 assists and was part of the Neo Champions Circuit rebuild and Elite League title squad.",
+ "Taski":"Gavi comparison: energy and intensity in midfield. Taski has 17 goals and 20 assists and featured in the UEL Season 2 and Egoist Cup Season 2 title squads. Barça lists Gavi as a first-team midfielder.",
+ "RndmX":"Goalkeeper. RndmX has 111 saves and won Golden Gloves during the Neo Champions Circuit runners-up campaign. Víctor Valdés is the Barça reference for a long-serving first-choice keeper.",
+ "Andrew":"Goalkeeper. Andrew has 119 saves. The Claudio Bravo comparison reflects a goalkeeper known for reliability and strong performances in a trophy-winning Barça period.",
+ "Noob":"Bojan comparison: a young attacking player in Barça's system. Noob has 15 goals and 1 assist and won the Playmaker award in the first Brazilian Pro League campaign."
+};
 
 /* =========================================================
    OFFICIAL SEASON ROSTERS
@@ -1511,6 +1578,7 @@ function renderCabinet(){
           ${ach.featured ? `<div class="world-tag">🌍 World Title</div>` : ""}
           <h3><a class="season-open" href="#season/${ach.n}" aria-label="Open ${escapeHtml(ach.title)} season details">${escapeHtml(ach.title)}</a></h3>
           ${ach.note ? `<div class="ach-note">${escapeHtml(ach.note)}</div>` : ""}
+          <div class="ach-detail">${escapeHtml(ACHIEVEMENT_STORIES[ach.n] || "Campaign details are being archived.")}</div>
           ${chips ? `<div class="awards">${chips}</div>` : `<div class="ach-note">No individual awards recorded.</div>`}
         </article>
       </div>
@@ -1702,6 +1770,9 @@ function openPlayer(slug){
   const media = playerMedia(profileName);
   const parallel = PLAYER_PARALLELS[profileName];
   const profileNote = PLAYER_PROFILE_NOTES[profileName] || (p && p.s > 0 ? "Goalkeeper contribution recorded in the club stats" : "Club contributor · profile inspired by playing style and recorded stats");
+  const parallelDetail = PLAYER_PARALLEL_DETAILS[profileName] || "No one-to-one Barça legend comparison has been assigned. This profile is based on recorded club contribution and archived squad appearances.";
+  const roleLabel = ROLE_LABELS[profileName] || (p && p.s >= 100 ? "Goalkeeper · save-led profile" : "Outfield / role not formally recorded");
+  const contributionLabel = p ? `${p.g + p.a} goal contributions · ${p.s} saves` : "Archived profile · historical totals unavailable";
   modalContent.innerHTML = `
     <div class="player-hero">
       <img src="${media[0]}" alt="${escapeHtml(media[1])}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif'">
@@ -1716,6 +1787,7 @@ function openPlayer(slug){
       <h3>${escapeHtml(profileName)}</h3>
     </div>
     ${statsBlock}
+    <div class="profile-report"><div class="report-top"><span class="role-pill">${escapeHtml(roleLabel)}</span><span class="contrib-pill">${escapeHtml(contributionLabel)}</span></div><p><b>Scouting report:</b> ${escapeHtml(parallelDetail)}</p><span class="reference">Football reference: <a href="https://www.fcbarcelona.com/en/club/history/legendary-players" target="_blank" rel="noopener">FC Barcelona legendary players</a> · <a href="https://www.fcbarcelona.com/en/football/first-team/honours" target="_blank" rel="noopener">Club honours archive</a></span></div>
     <h4 class="p-sec">Seasons Played <span class="count">${seasonsPlayed.length}</span></h4>
     ${seasonsBlock}
     ${countChips ? `<div class="awards" style="margin-top:18px">${countChips}</div>` : ""}
@@ -1775,6 +1847,7 @@ function openSeason(seasonNumber){
       ${ach.featured ? " · 🌍 World Title" : ""}
       ${ach.note ? `<div style="margin-top:5px">${escapeHtml(ach.note)}</div>` : ""}
     </div>
+    <div class="profile-report"><div class="report-top"><span class="role-pill">Campaign archive</span></div><p>${escapeHtml(ACHIEVEMENT_STORIES[ach.n] || "Campaign details are being archived.")}</p></div>
     <h4 class="p-sec">Season Awards <span class="count">${Object.keys(ach.awards).length}</span></h4>
     ${awardRows ? `<div class="pa-list">${awardRows}</div>` : `<p class="muted">No individual awards recorded for this season.</p>`}
     <h4 class="p-sec">Season Squad <span class="count">${roster.length} players</span></h4>
@@ -1898,6 +1971,24 @@ function linkifyPlayerNames(root){
 }
 
 /* =========================================================
+   CLUB RECORDS
+   ========================================================= */
+function renderClubRecords(){
+ const target=document.getElementById("history-records"); if(!target)return;
+ const top=k=>[...players].sort((a,b)=>b[k]-a[k]||a.name.localeCompare(b.name))[0];
+ const g=top("g"),a=top("a"),sv=top("s"),pt=top("pts");
+ const records=[
+  ["All-time points leader",pt.pts.toFixed(2),pt.name,`${pt.g} goals · ${pt.a} assists · ${pt.s} saves`],
+  ["Top goalscorer",g.g,g.name,"Most goals in the current player-stat table"],
+  ["Top playmaker",a.a,a.name,"Most assists in the current player-stat table"],
+  ["Most goalkeeper saves",sv.s,sv.name,"Highest save total in the current player-stat table"],
+  ["Goal contributions",g.g+g.a,g.name,"Top scorer's goals plus assists"],
+  ["Major achievements",ACHIEVEMENTS.length,"Barça UEFC",`${countTitles()} titles · ${ACHIEVEMENTS.filter(x=>x.tag==="runner").length} runner-up finishes · ${ACHIEVEMENTS.filter(x=>x.tag==="third").length} third places`]
+ ];
+ target.innerHTML=records.map(([k,v,n,d])=>`<article class="record-card"><div class="record-k">${escapeHtml(k)}</div><div class="record-v">${escapeHtml(String(v))}</div><div class="record-name">${escapeHtml(n)}</div><div class="record-sub">${escapeHtml(d)}</div></article>`).join("");
+}
+
+/* =========================================================
    INIT
    ========================================================= */
 
@@ -1907,6 +1998,7 @@ renderSquad();
 bindSorting();
 renderCabinet();
 renderHonours();
+renderClubRecords();
 route();
 
 linkifyPlayerNames(document.querySelector("main"));

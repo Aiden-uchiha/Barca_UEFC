@@ -955,7 +955,7 @@
 
         <div class="era-block">
           <h4>UECL Silver</h4>
-          <p>Directly following the Nexus campaign, Barça made a deep run in the <b>UECL (Unmatched Ego Champions League)</b>, finishing as runners-up in <b>2nd place</b>, with <span class="pl">Shikai</span> claiming the <b>Golden Boot</b>.</p>
+          <p>Directly following the Nexus campaign, Barça made a deep run in the <b>UECL (Unmatched Ego Champions League)</b>, finishing as runners-up in <b>2nd place</b>. The four-player squad was <span class="pl">Dragonovedtv</span>, <span class="pl">Sarox</span>, <span class="pl">Shikai</span> and <span class="pl">Yuzarf</span>. <span class="pl">Shikai</span> won both the <b>Golden Boot</b> and Barça's <b>Best Player</b> award, while <span class="pl">Yuzarf</span> claimed the <b>Playmaker Award</b>.</p>
         </div>
 
         <div class="era-block">
@@ -1097,26 +1097,29 @@ const ACHIEVEMENTS = [
     awards:{ bestPlayer:"Genius", ballonDor:"Genius", goldenBoot:"Genius", playmaker:"fenomas", goldenGloves:"arian" } },
   { n:7, title:"Nexus", placement:"3rd Place", tag:"third",
     awards:{ bestPlayer:"Gencay", playmaker:"Shikai" } },
-  { n:8, title:"Unmatched Ego World Cup", placement:"Champions", tag:"champion",
+  { n:8, title:"Unmatched Ego Champions League (UECL)", placement:"2nd Place", tag:"runner",
+    note:"Runners-up · Barça squad: Dragonovedtv, Sarox, Shikai and Yuzarf",
+    awards:{ bestPlayer:"Shikai", goldenBoot:"Shikai", playmaker:"Yuzarf" } },
+  { n:9, title:"Unmatched Ego World Cup", placement:"Champions", tag:"champion",
     note:"With Japan (Barça) · Global title", featured:true,
     awards:{ bestPlayer:"Yuzarf", ballonDor:"Yuzarf", mvp:"Shikai", goldenBoot:"Yuzarf", goldenGloves:"Tuna" } },
-  { n:9, title:"Uzbekistan Super League — S1", placement:"1st Place", tag:"champion",
+  { n:10, title:"Uzbekistan Super League — S1", placement:"1st Place", tag:"champion",
     note:"Season 1 champions · undefeated",
     awards:{ bestPlayer:"Yuzarf", mvp:"Yuzarf", ballonDor:"Yuzarf", goldenBoot:"Yuzarf", goldenGloves:"Hyper", playmaker:"Shikai", bestDuo:"Shikai & Yuzarf", puskas:"Shikai", bestManager:"Dragonovedtv" } },
-  { n:10, title:"Unmatched Egoist League — S1", placement:"1st Place", tag:"champion",
+  { n:11, title:"Unmatched Egoist League — S1", placement:"1st Place", tag:"champion",
     note:"Season 1 champions",
     awards:{ bestPlayer:"Yuzarf", ballonDor:"Yuzarf", mvp:"Anakin", goldenBoot:"Anakin", bestManager:"Dragonovedtv" } },
-  { n:11, title:"Unmatched Egoist Cup — S1", placement:"Champions", tag:"champion",
+  { n:12, title:"Unmatched Egoist Cup — S1", placement:"Champions", tag:"champion",
     note:"Cup winners · individual results not recorded",
     awards:{ bestPlayer:"Yuzarf" } },
-  { n:12, title:"Uzbekistan Super League — S2", placement:"2nd Place", tag:"runner",
+  { n:13, title:"Uzbekistan Super League — S2", placement:"2nd Place", tag:"runner",
     awards:{ bestPlayer:"Shikai", playmaker:"Rusue", goldenGloves:"Hyper", bestDuo:"Shikai & Rusue" } },
-  { n:13, title:"Unmatched Egoist League — S2", placement:"1st Place", tag:"champion",
+  { n:14, title:"Unmatched Egoist League — S2", placement:"1st Place", tag:"champion",
     note:"Season 2 champions",
     awards:{ bestPlayer:"Anakin", ballonDor:"Anakin", mvp:"Anakin", goldenBoot:"Anakin", goldenGloves:"Hyper", bestManager:"Shikai" } },
-  { n:14, title:"Uzbekistan Super Cup", placement:"Champions", tag:"champion",
+  { n:15, title:"Uzbekistan Super Cup", placement:"Champions", tag:"champion",
     awards:{ mvp:"Anakin", ballonDor:"Anakin", goldenBoot:"Anakin", playmaker:"Shikai", bestDuo:"Shikai & Yuzarf", bestManager:"Dragonovedtv" } },
-  { n:15, title:"Unmatched Egoist Cup — S2", placement:"Champions", tag:"champion",
+  { n:16, title:"Unmatched Egoist Cup — S2", placement:"Champions", tag:"champion",
     note:"Cup winners · individual results not recorded",
     awards:{ bestPlayer:"Anakin" } }
 ];
@@ -1133,14 +1136,15 @@ const ROSTERS = {
   "5": ["Cold Prince","Rusue","RndmX","Dragonovedtv"],
   "6": ["Genius","fenomas","arian","Cold Prince","Dragonovedtv","Aiku"],
   "7": ["Gencay","Shikai","Sarox","Yuzarf","Dragonovedtv"],
-  "8": ["Yuzarf","Shikai","Dragonovedtv","Gencay","Tuna","Legit","Sarox"],
-  "9": ["Yuzarf","Hyper","Shikai","Legit","Dragonovedtv"],
-  "10": ["Yuzarf","Anakin","Shikai","Dragonovedtv","Hyper","Nobilus"],
-  "11": ["Yuzarf","Shikai","Hyper","Anakin","Dragonovedtv"],
-  "12": ["Shikai","Rusue","Hyper","Yuzarf","Dragonovedtv"],
-  "13": ["Anakin","Hyper","Shikai","Taski","Dragonovedtv","Akashi"],
-  "14": ["Anakin","Shikai","Yuzarf","Dragonovedtv","Hyper","Nobilus","Rusue","Real Z"],
-  "15": ["Anakin","Shikai","Taski","Akashi","Hyper","Nobilus","Lostzin","Dragonovedtv"]
+  "8": ["Dragonovedtv","Sarox","Shikai","Yuzarf"],
+  "9": ["Yuzarf","Shikai","Dragonovedtv","Gencay","Tuna","Legit","Sarox"],
+  "10": ["Yuzarf","Hyper","Shikai","Legit","Dragonovedtv"],
+  "11": ["Yuzarf","Anakin","Shikai","Dragonovedtv","Hyper","Nobilus"],
+  "12": ["Yuzarf","Shikai","Hyper","Anakin","Dragonovedtv"],
+  "13": ["Shikai","Rusue","Hyper","Yuzarf","Dragonovedtv"],
+  "14": ["Anakin","Hyper","Shikai","Taski","Dragonovedtv","Akashi"],
+  "15": ["Anakin","Shikai","Yuzarf","Dragonovedtv","Hyper","Nobilus","Rusue","Real Z"],
+  "16": ["Anakin","Shikai","Taski","Akashi","Hyper","Nobilus","Lostzin","Dragonovedtv"]
 };
 
 /* =========================================================

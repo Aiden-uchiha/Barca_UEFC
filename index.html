@@ -1664,28 +1664,22 @@ function awardsFor(playerName){
 }
 
 const PLAYER_MEDIA = {
-  "Shikai": "https://tenor.com/raAqBUlyqLi.gif",
-  "Yuzarf": "https://share.google/nhCMX28FnxaL04tqr",
-  "Legit": "https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200",
-  "Rusue": "https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif",
-  "Anakin": "https://media3.giphy.com/media/l2QE4TXbK1EuFy1Ms/giphy.gif",
-  "Gencay": "https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif",
-  "TheRin": "https://share.google/7mf3K1GHqakeZOaLi",
-  "Genius": "https://image.hkstandard.com.hk/f/1024p0/0x0/100/none/99bd51418ebfe710af03145db871c878/images/2025-02/50099057indexPhoto.jpg",
-  "Real Z": "https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/blt04377e48ce46ad17/6988c33ba988ca681d6bbc92/time-100-2017-neymar.jpg?auto=webp&branch=production&crop=3%3A2&quality=75&width=1920",
-  "Xiv": "https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif",
-  "Messi": "https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif",
-  "Dragonovedtv": "https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif",
-  "Bunny": "https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif",
-  "Aiku": "https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif",
-  "Hyper": "https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif",
-  "Tuna": "https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif",
-  "Sarox": "https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif",
-  "arian": "https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif",
-  "fenomas": "https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif",
-  "Noob": "https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif",
-  "Nobilus": "https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif",
-  "Taski": "https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"
+  "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif",fallback:"https://i.guim.co.uk/img/media/b2fc66255cff270c899d5db227bb23e1f37bf62c/182_264_3414_2049/master/3414.jpg?auto=format&fit=crop&height=900&quality=85&s=4c319e3e8ae132c1b377cb178de623f3&width=1200"},
+  "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr",fallback:"https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif"},
+  "Legit": {src:"https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200"},
+  "Rusue": {src:"https://klipy.com/gifs/xavi-mirando",fallback:"https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif"},
+  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallback:"https://media3.giphy.com/media/l2QE4TXbK1EuFy1Ms/giphy.gif"},
+  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallback:"https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif"},
+  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallback:"https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif"},
+  "Real Isagi": {src:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2009/07/10/19/213427.jpg"},
+  "Genius": {src:"https://image.hkstandard.com.hk/f/1024p0/0x0/100/none/99bd51418ebfe710af03145db871c878/images/2025-02/50099057indexPhoto.jpg"},
+  "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53",fallback:"https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/blt04377e48ce46ad17/6988c33ba988ca681d6bbc92/time-100-2017-neymar.jpg?auto=webp&branch=production&crop=3%3A2&quality=75&width=1920"},
+  "Dragonovedtv": {src:"https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif"},
+  "Bunny": {src:"https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif"},
+  "Aiku": {src:"https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif"},
+  "Hyper": {src:"https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif"},
+  "Tuna": {src:"https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif"},
+  "fenomas": {src:"https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"}
 };
 const PLAYER_PARALLELS = {
   "Shikai":"Andrés Iniesta",
@@ -1780,7 +1774,7 @@ function openPlayer(slug){
 
   const media = playerMedia(profileName);
   modalContent.innerHTML = `
-    ${media ? `<div class="player-hero"><img src="${media}" alt="" loading="eager" decoding="async" onerror="this.classList.add('image-failed')"></div>` : ""}
+    ${media ? `<div class="player-hero"><img src="${media.src}" data-fallback="${media.fallback || ""}" alt="" loading="eager" decoding="async" onerror="this.onerror=null;this.src=this.dataset.fallback || """></div>` : ""}
     <div class="p-head">
       <div class="p-rank">${p ? "#" + rank : "ARCHIVE"}</div>
       <h3>${escapeHtml(profileName)}</h3>

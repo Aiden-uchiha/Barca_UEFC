@@ -1293,7 +1293,7 @@ function playerProfileCopy(name,p){
 function renderDuoMedals(name){
   const duos=PLAYER_DUOS.filter(d=>d.a===name||d.b===name);
   if(!duos.length)return "";
-  return `<h4 class="p-sec">Partnerships</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;return `<div class="duo-row ${d.tier}"><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
+  return `<h4 class="p-sec">Main Duos</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;return `<div class="duo-row ${d.tier}"><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
 }
 
 function openPlayer(slug){

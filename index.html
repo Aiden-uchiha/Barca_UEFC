@@ -633,6 +633,7 @@
   .player-hero{display:grid;grid-template-columns:116px minmax(0,1fr);align-items:center;gap:15px;margin:0 0 18px;padding:11px;background:linear-gradient(110deg,rgba(20,50,110,.25),rgba(120,20,45,.18));border:1px solid var(--line-2);border-radius:15px}
   .player-hero img{display:block;width:116px;height:116px;object-fit:cover;object-position:center;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:#10101a}
   .player-hero img.image-failed{display:none}
+  .player-hero.no-image{grid-template-columns:minmax(0,1fr)}
   .player-hero-copy{min-width:0}
   .player-hero-copy .role{display:inline-flex;padding:3px 8px;border:1px solid rgba(240,180,41,.28);border-radius:999px;color:#f2d38a;font-size:.64rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
   .player-hero-copy .summary{display:block;color:#d7d7e5;font-size:.78rem;line-height:1.5;margin-top:7px}
@@ -1637,13 +1638,13 @@ function awardsFor(playerName){
 const PLAYER_MEDIA = {
   "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif",fallbacks:["https://share.google/nhCMX28FnxaL04tqr","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
   "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr",fallbacks:["https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif","https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/03/07/19/lionelmessi070320a.jpg"]},
-  "Legit": {src:"https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200"},
+  "Legit": {src:"https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200",fallbacks:["https://www.fcbarcelona.com/photo-resources/2026/05/16/b84b8907-e0b2-412c-8c31-a2893a20eb31/3200x2000_lewy.jpg?height=750&width=1200"]},
   "Rusue": {src:"https://klipy.com/gifs/xavi-mirando",fallbacks:["https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
-  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallbacks:["https://www.fcbarcelonanoticias.com/uploads/s1/12/09/86/2/luis-suarez-pase.jpeg"]},
-  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallbacks:["https://s2-ge.glbimg.com/VOEmMmVvX85ZFi4Wspdm5dM2s7k%3D/4211x0/filters%3Aformat%28jpeg%29/https%3A/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2024/D/M/6DTsH8Q4m7djsz71NGIA/2024-05-13t192622z-498861181-up1ek5d1hzw0r-rtrmadp-3-soccer-spain-fcb-soc-report.jpg"]},
+  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallbacks:["https://media1.tenor.com/m/OenOlHq4-hgAAAAd/luis-suarez-soccer.gif"]},
+  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallbacks:["https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif","https://s2-ge.glbimg.com/VOEmMmVvX85ZFi4Wspdm5dM2s7k%3D/4211x0/filters%3Aformat%28jpeg%29/https%3A/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2024/D/M/6DTsH8Q4m7djsz71NGIA/2024-05-13t192622z-498861181-up1ek5d1hzw0r-rtrmadp-3-soccer-spain-fcb-soc-report.jpg","https://www.fcbarcelona.com/photo-resources/2026/07/21/52cf522f-f115-4e64-8b22-6979d3687fae/11-Raphinha-RED.jpg?height=750&width=1200"]},
   "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallbacks:["https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"]},
-  "Real Isagi": {src:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2009/07/10/19/213427.jpg"},
-  "Genius": {src:"https://player.hu/uploads/2025/01/yamal_GettyImages-2196087649-1024x667.jpg"},
+  "Real Isagi": {src:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2009/07/10/19/213427.jpg",fallbacks:["https://www.fcbarcelona.com/photo-resources/fcbarcelona/photo/2018/03/19/2630a7bd-fcd7-4907-9861-4e9ca7e2aa2e/4665030.jpg?height=750&width=1200"]},
+  "Genius": {src:"https://img.asmedia.epimg.net/resizer/v2/CLVV4CCHTRA3RLROCMP4XK4RGA.jpg?auth=38741217201346ce52dbe35180d95a4691c5dbc332e7efe55f3a64f542d17658&height=1200&smart=true&width=1200",fallbacks:["https://www.fcbarcelona.com/photo-resources/2026/07/21/323ae443-f58c-4e3d-bad5-e026d3175e81/10-Lamine-BLUE.jpg?height=750&width=1200"]},
   "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53",fallbacks:["https://imagenes.elpais.com/resizer/v2/QXQKWDZO34XGSJZEI7MMDZL3AU.jpg?auth=64eb053003e5d38100ddeae8ae09754443af9398372d63565325c4f9361d38ea&width=1960"]},
   "Dragonovedtv": {src:"https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif"},
   "Bunny": {src:"https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif"},
@@ -1717,7 +1718,9 @@ function handlePlayerImageError(img){
     img.src = next;
   } else {
     img.onerror = null;
-    img.classList.add("image-failed");
+    const card = img.closest(".player-hero");
+    img.remove();
+    if (card) card.classList.add("no-image");
   }
 }
 function playerProfileCopy(name,p){

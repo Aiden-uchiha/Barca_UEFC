@@ -211,6 +211,19 @@ header{animation:nav-enter .65s ease-out both}
 .record-card .record-v{font-family:'Oswald',sans-serif;font-size:1.45rem;color:var(--gold);margin-top:3px}
 .record-card .record-name{font-size:.82rem;color:#fff;font-weight:700}
 .record-card .record-sub{font-size:.7rem;color:var(--muted-2);margin-top:3px}
+.memory-archive{max-width:1040px;margin:22px auto 0;text-align:left;border:1px solid var(--line-2);border-radius:14px;background:rgba(16,16,24,.88);overflow:hidden}
+.memory-archive summary{cursor:pointer;list-style:none;padding:14px 18px;color:#ffe6a8;font-weight:700;letter-spacing:.3px}
+.memory-archive summary::-webkit-details-marker{display:none}
+.memory-archive summary::after{content:"＋";float:right;color:var(--gold)}
+.memory-archive[open] summary::after{content:"−"}
+.memory-archive-inner{padding:4px 20px 20px;color:#c8c8dc;font-size:.86rem;line-height:1.7}
+.memory-archive-inner h3{margin:20px 0 7px;color:#fff;font-family:'Oswald',sans-serif;letter-spacing:.5px}
+.memory-archive-inner ul,.memory-archive-inner ol{padding-left:22px;margin:7px 0}
+.memory-archive-inner li{margin:5px 0}
+.memory-archive-inner a{color:#ffe6a8;text-decoration:underline;text-underline-offset:3px}
+.memory-intro,.memory-note{color:var(--muted);font-size:.8rem}
+.memory-note{border-top:1px solid var(--line);padding-top:12px;margin-top:16px}
+@media(max-width:640px){.memory-archive{margin:18px 0 0}.memory-archive-inner{padding:4px 14px 16px;font-size:.82rem}}
 footer{position:relative;z-index:1;border-top:1px solid #1e1e2e;padding:34px 20px;text-align:center;color:var(--muted-2);font-size:.82rem}
 footer .f-logo{width:36px;height:36px;object-fit:contain;margin-bottom:10px;opacity:.85;animation:float 7s ease-in-out infinite}
 footer b{color:#d8d8e8}
@@ -600,7 +613,61 @@ footer b{color:#d8d8e8}
 <footer>
   <img class="f-logo" src="https://cdn.discordapp.com/emojis/1439732162365493288.png" alt="">
   <div><b>BARÇA UEFC</b> · Formerly Rubypool</div>
-  <div style="margin-top:4px">The Greatest Club in UE1 History · Manager: Dragonovedtv · Assistant: Shikai</div>
+  <div style="margin-top:4px">The Greatest Club in UE1 History · Manager: <a href="#player/dragonovedtv">Dragonovedtv</a> · Assistant: <a href="#player/shikai">Shikai</a></div>
+  <details class="memory-archive">
+    <summary>Recovered Club Archive · Saved Memories &amp; Old DMs</summary>
+    <div class="memory-archive-inner">
+      <p class="memory-intro">A preservation record of Barça UEFC's history as Rubypool and after the rebrand. This section gathers the historical details recovered from saved conversations; it does not invent missing match logs or scores.</p>
+
+      <h3>Club identity &amp; leadership</h3>
+      <ul>
+        <li><b>Former name:</b> Rubypool. The rebrand to Barça UEFC happened after achievement #2.</li>
+        <li><b>Manager and founder:</b> <a href="#player/dragonovedtv">Dragonovedtv</a>.</li>
+        <li><b>Assistant manager:</b> <a href="#player/shikai">Shikai</a>.</li>
+        <li><b>Club identity:</b> a competitive Unmatched Ego club built around team roles, trust, motivation, tactics and player development.</li>
+      </ul>
+
+      <h3>Recovered match memories &amp; records</h3>
+      <ul>
+        <li><b>El Clásico record:</b> Barça never lost an El Clásico against Re AL. One recorded highlight was a <b>10–0 demolition of Re AL</b> during the later Nexus campaign.</li>
+        <li><b>Longest winning streak:</b> <b>25 consecutive wins</b>.</li>
+        <li><b>Longest unbeaten streak:</b> <b>31 matches</b> (wins and draws, no defeats). World Cup matches are included in both streak records.</li>
+        <li><b>Yuzarf's comeback:</b> a memorable five-goal comeback, remembered as one of the defining moments of his era. The saved record available here does not preserve the opponent or final score.</li>
+        <li><b>UECL campaign:</b> immediately before the Unmatched Ego World Cup. The four-player Barça squad was Dragonovedtv, Sarox, Shikai and Yuzarf. Shikai won Golden Boot and Barça Best Player; Yuzarf won Playmaker.</li>
+      </ul>
+
+      <h3>Recovered competition timeline</h3>
+      <ol>
+        <li><b>#1 Brazilian Pro League:</b> champions. TheRin won Best Player, Ballon d'Or and Golden Boot; Noob won Playmaker; Dragonovedtv was Best Manager.</li>
+        <li><b>#2 Nexus:</b> runners-up, the final achievement under the Rubypool name. Legit was Best Player and Bunny won Golden Boot. Real Isagi was part of the squad.</li>
+        <li><b>#3 Brazilian Cup:</b> champions. Legit won Best Player and Golden Boot; Real Z won Playmaker.</li>
+        <li><b>#4 Velterra Cup:</b> runners-up. Legit was Best Player and Isagi demon king won Golden Boot.</li>
+        <li><b>#5 Neo Champions Circuit:</b> runners-up. Rusue won MVP and Best Player; RndmX won Golden Gloves.</li>
+        <li><b>#6 Elite League:</b> champions. Genius won Best Player, Ballon d'Or and Golden Boot; fenomas won Playmaker; arian won Golden Gloves.</li>
+        <li><b>#7 Nexus:</b> third place. Gencay was Best Player and Shikai won Playmaker.</li>
+        <li><b>#8 UECL:</b> runners-up. Shikai won Golden Boot and Best Player; Yuzarf won Playmaker.</li>
+        <li><b>#9 Unmatched Ego World Cup:</b> champions with Japan (Barça). Yuzarf won Best Player, Ballon d'Or and Golden Boot; Shikai won MVP; Tuna won Golden Gloves.</li>
+        <li><b>#10 Uzbekistan Super League S1:</b> champions and undefeated. Yuzarf won Best Player, MVP, Ballon d'Or and Golden Boot; Hyper won Golden Gloves; Shikai won Playmaker and Puskás; Shikai &amp; Yuzarf won Best Duo; Dragonovedtv was Best Manager.</li>
+        <li><b>#11 Unmatched Egoist League S1:</b> champions. Yuzarf won Best Player and Ballon d'Or; Anakin won MVP and Golden Boot; Dragonovedtv was Best Manager. Tuna was also part of the title-winning squad.</li>
+        <li><b>#12 Unmatched Egoist Cup S1:</b> champions; no individual cup awards were preserved.</li>
+        <li><b>#13 Uzbekistan Super League S2:</b> runners-up. Shikai was Best Player; Rusue won Playmaker; Hyper won Golden Gloves; Shikai &amp; Rusue won Best Duo.</li>
+        <li><b>#14 Unmatched Egoist League S2:</b> champions. Anakin won Best Player, Ballon d'Or, MVP and Golden Boot; Hyper won Golden Gloves; Shikai was Best Manager. Real Isagi was part of the squad.</li>
+        <li><b>#15 Uzbekistan Super Cup:</b> champions. Anakin won MVP, Ballon d'Or and Golden Boot; Shikai won Playmaker; Shikai &amp; Yuzarf won Best Duo; Dragonovedtv was Best Manager.</li>
+        <li><b>#16 Unmatched Egoist Cup S2:</b> champions. Anakin was Best Player; individual cup records were otherwise not preserved. Real Isagi was part of the squad.</li>
+      </ol>
+
+      <h3>Partnership honours</h3>
+      <ul>
+        <li><b>Gold glow:</b> Shikai &amp; Yuzarf, recognised as the best duo in UE1 history.</li>
+        <li><b>Silver glow:</b> TheRin &amp; Noob; Bunny &amp; Legit; Genius &amp; fenomas; Anakin &amp; Yuzarf; Shikai &amp; Rusue; Shikai &amp; Anakin; Anakin &amp; Nobilus.</li>
+        <li><b>Bronze glow:</b> Isagi demon king &amp; Real Z; Bunny &amp; Aiku; Bunny &amp; Messi; Legit &amp; Real Z; Rusue &amp; Dragonovedtv; Gencay &amp; Yuzarf; Real Isagi &amp; Yuzarf.</li>
+      </ul>
+
+      <h3>Where the preserved data lives</h3>
+      <p><a href="#squad">Player statistics &amp; profiles</a> · <a href="#cabinet">Trophy cabinet</a> · <a href="#honours">Individual honours</a> · <a href="#history">Club history &amp; calculated records</a>.</p>
+      <p class="memory-note">The saved conversations preserve club achievements, selected match highlights, streaks, player biographies, partnerships and the published goals/assists/saves table. A complete match-by-match database, including every lineup, score and individual match contribution, was not present in the recovered records, so no missing results have been fabricated.</p>
+    </div>
+  </details>
 </footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Club and player details">

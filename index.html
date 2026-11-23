@@ -242,6 +242,13 @@
   .player-link{color:var(--text);text-decoration:none;border-bottom:1px dashed transparent;transition:color .15s,border-color .15s}
   .player-link:hover{color:var(--gold);border-bottom-color:var(--gold)}
   .sort-hint{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-size:.78rem;color:var(--muted-2)}
+  .squad-searchbar{display:grid;grid-template-columns:130px minmax(0,1fr) auto;align-items:center;gap:12px;margin:0 0 14px;padding:11px 13px;background:linear-gradient(180deg,#14141f,#0f0f17);border:1px solid var(--line);border-radius:13px}
+  .squad-searchbar label{font-size:.66rem;font-weight:800;letter-spacing:1.1px;color:var(--muted);white-space:nowrap}
+  .squad-searchbar input{width:100%;min-width:0;padding:10px 12px;background:#090910;border:1px solid #303047;border-radius:9px;color:var(--text);font:inherit;font-size:.84rem;outline:none}
+  .squad-searchbar input:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(240,180,41,.1)}
+  .squad-searchbar input::placeholder{color:#707087}
+  .squad-searchbar span{font-size:.7rem;color:var(--muted-2);white-space:nowrap}
+  @media(max-width:560px){.squad-searchbar{grid-template-columns:1fr;gap:7px}.squad-searchbar span{white-space:normal}}
   .sort-hint .pill{background:#13131d;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:#c8c8dc;transition:.2s}
   .sort-hint .pill b{color:var(--gold)}
   .footnote{color:var(--muted-2);font-size:.78rem;margin-top:12px}
@@ -623,9 +630,15 @@
     transition:.2s;display:flex;align-items:center;justify-content:center;
   }
   .modal-close:hover{background:#2a2a3e;color:#fff;transform:rotate(90deg)}
-  .player-hero{display:block;width:100%;margin:0 0 20px;padding:0;overflow:hidden;background:#090910;border:1px solid var(--line-2);border-radius:16px}
-  .player-hero img{display:block;width:100%;height:auto;max-height:min(58vh,520px);object-fit:contain;object-position:center;background:#090910;border:0;border-radius:15px}
+  .player-hero{display:grid;grid-template-columns:116px minmax(0,1fr);align-items:center;gap:15px;margin:0 0 18px;padding:11px;background:linear-gradient(110deg,rgba(20,50,110,.25),rgba(120,20,45,.18));border:1px solid var(--line-2);border-radius:15px}
+  .player-hero img{display:block;width:116px;height:116px;object-fit:cover;object-position:center;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:#10101a}
   .player-hero img.image-failed{display:none}
+  .player-hero-copy{min-width:0}
+  .player-hero-copy .role{display:inline-flex;padding:3px 8px;border:1px solid rgba(240,180,41,.28);border-radius:999px;color:#f2d38a;font-size:.64rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
+  .player-hero-copy .summary{display:block;color:#d7d7e5;font-size:.78rem;line-height:1.5;margin-top:7px}
+  .player-hero-copy .comparison{display:block;color:#aebbd3;font-size:.72rem;line-height:1.45;margin-top:6px}
+  .player-hero-copy .comparison b{color:#ffe6a8}
+  @media(max-width:480px){.player-hero{grid-template-columns:92px minmax(0,1fr);gap:11px;padding:9px}.player-hero img{width:92px;height:92px}.player-hero-copy .summary{font-size:.72rem}}
 
   .ach-detail{color:#b8b8cc;font-size:.76rem;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #242438}
   .profile-report{margin-top:18px;padding:15px 16px;background:linear-gradient(120deg,rgba(20,50,110,.22),rgba(120,20,45,.16));border:1px solid var(--line-2);border-radius:13px}
@@ -772,6 +785,11 @@
       <span class="note">1 Goal = 1 pt · 1 Assist = 1 pt · 4 Saves = 1 pt</span>
     </div>
     <div class="mini-cards reveal-item" id="mini-cards"></div>
+    <div class="squad-searchbar">
+      <label for="squad-search">SEARCH PLAYERS</label>
+      <input id="squad-search" type="search" inputmode="search" autocomplete="off" placeholder="Type a player name..." aria-label="Search players by name">
+      <span id="squad-results-count">Showing all players</span>
+    </div>
     <div class="sort-hint">
       <span>Tap a column to rank by it:</span>
       <span class="pill" id="sort-pill">Sorted by <b>Points</b> ↓</span>
@@ -834,48 +852,7 @@
     </div>
 
     <!-- CLUB GIF MOMENTS: images are intentionally non-clickable -->
-    <div class="gif-strip">
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif" alt="Barcelona players lifting Pep Guardiola" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">The manager gets the trophy lift</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif" alt="Messi, Suárez and Neymar together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">MSN era</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/j6HgGht4aoYAAAAd/champions-league-barcelona.gif" alt="Barcelona with Champions League trophies" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">The six-trophy legacy</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/qmGeXE3XlFMAAAAd/ronaldinho-y-messi-barca.gif" alt="Ronaldinho and Messi at Barcelona" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">Two generations of magic</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/jNTwJYtUzT8AAAAd/messi-miami-inter-miami-messi.gif" alt="Messi in Inter Miami colours" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">A return to his old home</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/rAnOhr5xiUgAAAAd/messi-world-cup.gif" alt="Messi and Argentina with the World Cup" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">World Cup memories</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/lBVQTXmB518AAAAd/msn-messi-neymar-suarez.gif" alt="MSN celebrating together" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">The attacking trio</div>
-      </div>
-      <div class="gif-card reveal-item">
-        <img src="https://media1.tenor.com/m/TWPO8SZWdS0AAAAd/fc-barcelona-ucl-final-2015.gif" alt="Barcelona celebrating the 2015 Champions League" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('gif-failed')">
-        <div class="gif-fallback">🔵🔴</div>
-        <div class="gif-label">MSN's European crown</div>
-      </div>
-    </div>
+    
 
 
 
@@ -896,12 +873,8 @@
           <h4>The Brazilian Pro League &amp; TheRin</h4>
           <p>The club's earliest competitive foundation was built in the <b>Brazilian Pro League</b>, anchored by <span class="pl">TheRin</span>. When family obligations forced TheRin to step back and retire from regular play, the club faced its first major transition.</p>
         </div>
-        <div class="era-media">
-          <figure><img src="https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif" alt="Maradona highlight" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>TheRin · Maradona inspiration</figcaption></figure>
-          <figure><img src="https://media1.tenor.com/m/qmGeXE3XlFMAAAAd/ronaldinho-y-messi-barca.gif" alt="Ronaldinho and Messi" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>The legends who shaped Barça</figcaption></figure>
-        </div>
 
-        <div class="era-block">
+<div class="era-block">
           <h4>The Nexus &amp; Second Brazilian Cup Dynasty</h4>
           <p>Stepping onto a massive stage in <b>Nexus</b>, Barça attracted a wave of elite talent — <span class="pl">Legit</span>, <span class="pl">Bunny</span>, <span class="pl">Real Z</span>, <span class="pl">Isagi demon king</span>, <span class="pl">Aiku</span>, <span class="pl">Error</span>, <span class="pl">Water</span>, <span class="pl">lorenzo.kx</span>, <span class="pl">Carla</span> and <span class="pl">Void</span>. Managing a stacked roster of world-class stars required careful lineup rotation, which paid off immediately as Barça secured a <b>2nd-place finish in the Nexus League</b> — their final achievement under the Rubypool banner before rebranding to <b>Barça UEFC</b>.</p>
         </div>
@@ -1013,21 +986,13 @@
           <h4>UECL Silver</h4>
           <p>Directly following the Nexus campaign, Barça made a deep run in the <b>UECL (Unmatched Ego Champions League)</b>, finishing as runners-up in <b>2nd place</b>. The four-player squad was <span class="pl">Dragonovedtv</span>, <span class="pl">Sarox</span>, <span class="pl">Shikai</span> and <span class="pl">Yuzarf</span>. <span class="pl">Shikai</span> won both the <b>Golden Boot</b> and Barça's <b>Best Player</b> award, while <span class="pl">Yuzarf</span> claimed the <b>Playmaker Award</b>.</p>
         </div>
-        <div class="era-media">
-          <figure><img src="https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif" alt="Messi in the Champions League" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>Yuzarf · Messi inspiration</figcaption></figure>
-          <figure><img src="https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif" alt="MSN Barcelona trio" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>The golden attacking era</figcaption></figure>
-        </div>
 
-        <div class="era-block">
+<div class="era-block">
           <h4>World Cup Conquest</h4>
           <p>Taking the Barça core onto the international stage with <b>Japan (Barça)</b>, the squad dismantled the group stage with routine <b>10–0 victories</b>. In a clash against the Nexus League champions — without their starting keeper — emergency signing <span class="pl">Tuna</span> delivered a masterclass in goal to upset the tournament favorites. Everyone was shocked, because they thought it was impossible to beat them — until Japan (Barça) humiliated them <b>10–4</b>.</p>
         </div>
-        <div class="era-media">
-          <figure><img src="https://media1.tenor.com/m/rAnOhr5xiUgAAAAd/messi-world-cup.gif" alt="Messi and Argentina lifting the World Cup" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>World Cup champions</figcaption></figure>
-          <figure><img src="https://media1.tenor.com/m/Oboy6FFZh6kAAAAd/pep-pep-guardiola.gif" alt="Pep Guardiola shocked reaction" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>Dragonovedtv's reaction to Yuzarf's five goals in three minutes</figcaption></figure>
-        </div>
 
-        <div class="moment">
+<div class="moment">
           <span class="ico">⚡</span>
           <div class="m-body"><b>The Semifinal Miracle vs France:</b> Trailing <b>5–1</b> after the first leg with Yuzarf absent, Barça faced near-certain elimination. Arriving late for the second leg, <span class="pl">Yuzarf scored 5 goals in 3 minutes</span> to stun France in a legendary comeback — before Barça swept all four legs of the Finals to claim the World Cup.</div>
         </div>
@@ -1054,21 +1019,13 @@
           <h4>USL Season 1 Perfection</h4>
           <p>Entering the inaugural <b>Uzbekistan Super League (USL)</b> without Gencay, Barça achieved total perfection — going <b>undefeated</b>, setting the all-time USL record for <b>highest Goal Difference</b>, averaging <b>10 goals a game</b>, and <b>never conceding more than four</b>, with <span class="pl">Hyper</span> anchoring the net.</p>
         </div>
-        <div class="era-media">
-          <figure><img src="https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif" alt="Lewandowski with a trophy" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>Legit · Lewandowski inspiration</figcaption></figure>
-          <figure><img src="https://static2.klipy.com/ii/4e7bea9f7a3371424e6c16ebc93252fe/85/f5/qEajrmpoEv00RJnenxy.gif" alt="Lamine Yamal lifting a trophy" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>Genius · Yamal inspiration</figcaption></figure>
-        </div>
 
-        <div class="era-block">
+<div class="era-block">
           <h4>UEL &amp; Cup Lower-Bracket Runs</h4>
           <p>In both <b>Unmatched Egoist League (UEL) Season 1</b> and <b>Unmatched Egoist Cup Season 1</b>, Barça suffered rare early knockout setbacks when key players missed matches — only to storm through the lower brackets, defeat the teams that knocked them out, and claim both trophies to complete a <b>historic Treble</b>.</p>
         </div>
-        <div class="era-media">
-          <figure><img src="https://media1.tenor.com/m/j6HgGht4aoYAAAAd/champions-league-barcelona.gif" alt="Barcelona Champions League trophy celebration" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>The six-trophy standard</figcaption></figure>
-          <figure><img src="https://media1.tenor.com/m/fg-F8L_umgoAAAAd/la-liga-champion.gif" alt="Barcelona league trophy celebration" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"><figcaption>Domestic dominance</figcaption></figure>
-        </div>
 
-        <div class="era-block">
+<div class="era-block">
           <h4>USL Season 2 &amp; The Anakin Era</h4>
           <p>After a hard-fought <b>2nd-place finish</b> in a grueling USL Season 2 (hampered by device issues and Yuzarf's absence in the final), Yuzarf departed for a rival club. Barça reloaded by signing European star <span class="pl">Anakin</span> alongside <span class="pl">Hyper</span> (both playing in Asia alongside Asian star <span class="pl">Taski</span>). Operating as a relentless goal machine, Anakin joined forces with <span class="pl">Shikai</span> to sweep <b>UEL Season 2</b>, the <b>Uzbekistan Super Cup</b> and <b>Unmatched Egoist Cup Season 2</b> without dropping a beat.</p>
         </div>
@@ -1478,9 +1435,12 @@ const SORT_LABELS = { g:"Goals", a:"Assists", s:"Saves", pts:"Points" };
 let sortKey = "pts";
 let sortDir = "desc";
 
+let squadSearchQuery = "";
 function renderSquad(){
   const body = document.getElementById("squad-body");
-  const sorted = [...players].sort((x,y) => {
+  const query = squadSearchQuery.trim().toLowerCase();
+  const matching = players.filter(p => !query || p.name.toLowerCase().includes(query));
+  const sorted = [...matching].sort((x,y) => {
     let d = x[sortKey] - y[sortKey];
     if (d === 0) d = x.pts - y.pts;
     if (d === 0) d = y.g - x.g;
@@ -1493,7 +1453,7 @@ function renderSquad(){
     s: Math.max(...players.map(p => p.s)),
     pts: Math.max(...players.map(p => p.pts))
   };
-  body.innerHTML = sorted.map(p => {
+  body.innerHTML = sorted.length ? sorted.map(p => {
     const rank = players.indexOf(p) + 1;
     const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "";
     const cls = key => p[key] === leaders[key] ? ' class="cell-top"' : "";
@@ -1507,7 +1467,7 @@ function renderSquad(){
         <td class="pts">${p.pts}</td>
       </tr>
     `;
-  }).join("");
+  }).join("") : '<tr><td colspan="6" style="text-align:center;padding:24px;color:#9a9ab4">No players match that search.</td></tr>';
 
   document.querySelectorAll("#squad th.sortable").forEach(th => {
     const active = th.dataset.key === sortKey;
@@ -1518,6 +1478,17 @@ function renderSquad(){
 
   document.getElementById("sort-pill").innerHTML =
     `Sorted by <b>${SORT_LABELS[sortKey]}</b> ${sortDir === "asc" ? "↑" : "↓"}`;
+  const count = document.getElementById("squad-results-count");
+  if (count) count.textContent = query ? `Showing ${matching.length} of ${players.length} players` : `Showing all ${players.length} players`;
+}
+
+function bindPlayerSearch(){
+  const input = document.getElementById("squad-search");
+  if (!input) return;
+  input.addEventListener("input", () => {
+    squadSearchQuery = input.value;
+    renderSquad();
+  });
 }
 
 function bindSorting(){
@@ -1664,48 +1635,60 @@ function awardsFor(playerName){
 }
 
 const PLAYER_MEDIA = {
-  "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif",fallback:"https://i.guim.co.uk/img/media/b2fc66255cff270c899d5db227bb23e1f37bf62c/182_264_3414_2049/master/3414.jpg?auto=format&fit=crop&height=900&quality=85&s=4c319e3e8ae132c1b377cb178de623f3&width=1200"},
-  "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr",fallback:"https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif"},
+  "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif",fallbacks:["https://share.google/nhCMX28FnxaL04tqr","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
+  "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr",fallbacks:["https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif","https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/03/07/19/lionelmessi070320a.jpg"]},
   "Legit": {src:"https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200"},
-  "Rusue": {src:"https://klipy.com/gifs/xavi-mirando",fallback:"https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif"},
-  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallback:"https://media3.giphy.com/media/l2QE4TXbK1EuFy1Ms/giphy.gif"},
-  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallback:"https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif"},
-  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallback:"https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif"},
+  "Rusue": {src:"https://klipy.com/gifs/xavi-mirando",fallbacks:["https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
+  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallbacks:["https://www.fcbarcelonanoticias.com/uploads/s1/12/09/86/2/luis-suarez-pase.jpeg"]},
+  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallbacks:["https://s2-ge.glbimg.com/VOEmMmVvX85ZFi4Wspdm5dM2s7k%3D/4211x0/filters%3Aformat%28jpeg%29/https%3A/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2024/D/M/6DTsH8Q4m7djsz71NGIA/2024-05-13t192622z-498861181-up1ek5d1hzw0r-rtrmadp-3-soccer-spain-fcb-soc-report.jpg"]},
+  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallbacks:["https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"]},
   "Real Isagi": {src:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2009/07/10/19/213427.jpg"},
-  "Genius": {src:"https://image.hkstandard.com.hk/f/1024p0/0x0/100/none/99bd51418ebfe710af03145db871c878/images/2025-02/50099057indexPhoto.jpg"},
-  "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53",fallback:"https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/blt04377e48ce46ad17/6988c33ba988ca681d6bbc92/time-100-2017-neymar.jpg?auto=webp&branch=production&crop=3%3A2&quality=75&width=1920"},
+  "Genius": {src:"https://player.hu/uploads/2025/01/yamal_GettyImages-2196087649-1024x667.jpg"},
+  "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53",fallbacks:["https://imagenes.elpais.com/resizer/v2/QXQKWDZO34XGSJZEI7MMDZL3AU.jpg?auth=64eb053003e5d38100ddeae8ae09754443af9398372d63565325c4f9361d38ea&width=1960"]},
   "Dragonovedtv": {src:"https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif"},
   "Bunny": {src:"https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif"},
   "Aiku": {src:"https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif"},
-  "Hyper": {src:"https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif"},
+  "Hyper": {src:"https://imagenes.elpais.com/resizer/v2/JZPCXM23XTZESKXU2GMBBWQXTI.jpg?auth=f02e6c1a9f96e5c86ff2c68c8e78a216e2b5305c68d20c8979c73176c6aa6314&width=1200"},
   "Tuna": {src:"https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif"},
   "fenomas": {src:"https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"}
 };
 const PLAYER_PARALLELS = {
-  "Shikai":"Andrés Iniesta",
-  "Yuzarf":"Lionel Messi",
-  "Legit":"Robert Lewandowski",
-  "Rusue":"Xavi Hernández",
-  "Anakin":"Luis Suárez",
-  "Gencay":"Raphinha",
-  "TheRin":"Diego Maradona",
-  "Real Isagi":"Samuel Eto'o",
-  "Real Z":"Neymar Jr.",
-  "fenomas":"Pedri",
-  "Genius":"Lamine Yamal",
-  "Xiv":"Deco",
-  "Messi":"Pedro Rodríguez",
-  "Dragonovedtv":"Pep Guardiola",
-  "Bunny":"David Villa",
-  "Aiku":"Carles Puyol",
-  "Hyper":"Marc-André ter Stegen",
-  "Tuna":"Víctor Valdés",
-  "Sarox":"Claudio Bravo",
-  "arian":"Andoni Zubizarreta",
-  "Nobilus":"Sergio Busquets",
-  "Cold Prince":"Javier Mascherano",
-  "Taski":"Gavi",
-  "Noob":"Bojan Krkić"
+  "Shikai":"Andrés Iniesta","Yuzarf":"Lionel Messi","Legit":"Robert Lewandowski","Rusue":"Xavi Hernández",
+  "Anakin":"Luis Suárez","Gencay":"Raphinha","TheRin":"Diego Maradona","Real Isagi":"Samuel Eto'o",
+  "Real Z":"Neymar Jr.","fenomas":"Pedri","Genius":"Lamine Yamal","Xiv":"Deco",
+  "Messi":"Pedro Rodríguez","Dragonovedtv":"Pep Guardiola","Bunny":"David Villa","Aiku":"Carles Puyol",
+  "Hyper":"Marc-André ter Stegen","Tuna":"Víctor Valdés","Sarox":"Claudio Bravo","arian":"Andoni Zubizarreta",
+  "Nobilus":"Sergio Busquets","Cold Prince":"Javier Mascherano","Taski":"Gavi","Noob":"Bojan Krkić"
+};
+const PLAYER_ROLES = {
+  "Hyper":"Goalkeeper","Tuna":"Goalkeeper","Sarox":"Goalkeeper","arian":"Goalkeeper",
+  "RndmX":"Goalkeeper","Andrew":"Goalkeeper","Gencay":"Striker","Dragonovedtv":"Manager / player"
+};
+const PLAYER_COMPARISON_NOTES = {
+  "Shikai":"The Iniesta comparison is about composure, close control and choosing the right moment for the final pass.",
+  "Yuzarf":"The Messi comparison reflects elite goal output, chance creation and the ability to change a match.",
+  "Legit":"The Lewandowski comparison focuses on penalty-box finishing and consistent attacking output.",
+  "Rusue":"The Xavi comparison reflects tempo control, distribution and creating chances from midfield.",
+  "Anakin":"The Suárez comparison is about relentless movement, pressing and clinical finishing.",
+  "Gencay":"The Raphinha comparison reflects direct wide attacking and decisive goal contributions.",
+  "TheRin":"The Maradona comparison recognises an early-era talisman whose influence helped establish the club.",
+  "Real Isagi":"The Eto'o comparison is based on a high-output forward who can score and combine with a star partner. Real Isagi's table records 42 goals and 25 assists.",
+  "Real Z":"The Neymar comparison reflects creativity, one-versus-one threat and combination play in attack.",
+  "Genius":"The Yamal comparison is about a young attacking profile with direct goal threat.",
+  "fenomas":"The Pedri comparison reflects an all-round midfielder who contributes to build-up and chance creation.",
+  "Xiv":"The Deco comparison reflects technical quality and tactical intelligence in midfield.",
+  "Messi":"The Pedro comparison reflects intelligent movement and supporting the main attacking threat.",
+  "Dragonovedtv":"The Guardiola comparison reflects the manager's role in building a consistent team structure.",
+  "Bunny":"The Villa comparison is based on direct movement and efficient finishing.",
+  "Aiku":"The Puyol comparison reflects defensive commitment and willingness to do the difficult work for the team.",
+  "Hyper":"The ter Stegen comparison is a goalkeeper reference, supported by Hyper's 264 recorded saves.",
+  "Tuna":"The Valdés comparison is a goalkeeper reference; Tuna's archive records 195 saves.",
+  "Sarox":"The Bravo comparison is a goalkeeper reference; Sarox's archive records 121 saves.",
+  "arian":"The Zubizarreta comparison is a goalkeeper reference; arian's archive records 121 saves.",
+  "Nobilus":"The Busquets comparison reflects positional discipline and connecting defence with attack.",
+  "Cold Prince":"The Mascherano comparison reflects defensive work and covering space for teammates.",
+  "Taski":"The Gavi comparison reflects energy and intensity in midfield.",
+  "Noob":"The Bojan comparison is a reference to a young attacking player in Barça's system."
 };
 const PLAYER_PROFILE_NOTES = {
   "Shikai":"Creative midfield control and decisive final passes",
@@ -1724,6 +1707,33 @@ const PLAYER_PROFILE_NOTES = {
 };
 function playerMedia(name){
   return PLAYER_MEDIA[name] || null;
+}
+function handlePlayerImageError(img){
+  const remaining = (img.dataset.fallbacks || "").split("|").filter(Boolean);
+  const next = remaining.shift();
+  img.dataset.fallbacks = remaining.join("|");
+  if (next) {
+    img.onerror = () => handlePlayerImageError(img);
+    img.src = next;
+  } else {
+    img.onerror = null;
+    img.classList.add("image-failed");
+  }
+}
+function playerProfileCopy(name,p){
+  const role = PLAYER_ROLES[name] || (p && p.s >= 100 ? "Goalkeeper by recorded stats" : "Role not formally recorded");
+  const summary = PLAYER_PROFILE_NOTES[name] || (p
+    ? (p.s >= 100
+      ? `Goalkeeper contribution: ${p.s} recorded saves.`
+      : p.g >= p.a
+        ? `Attacking contribution: ${p.g} goals and ${p.a} assists in the current club table.`
+        : `Creative contribution: ${p.a} assists and ${p.g} goals in the current club table.`)
+    : "Archived squad member. Individual career totals are not included in the current player table.");
+  const comparison = PLAYER_PARALLELS[name];
+  const explanation = PLAYER_COMPARISON_NOTES[name] || (comparison
+    ? `A broad playing-style reference to ${comparison}, not a claim of identical careers.`
+    : "No one-to-one football comparison is assigned.");
+  return {role,summary,comparison,explanation};
 }
 
 function openPlayer(slug){
@@ -1773,8 +1783,9 @@ function openPlayer(slug){
   `;
 
   const media = playerMedia(profileName);
+  const copy = playerProfileCopy(profileName,p);
   modalContent.innerHTML = `
-    ${media ? `<div class="player-hero"><img src="${media.src}" data-fallback="${media.fallback || ""}" alt="" loading="eager" decoding="async" onerror="this.onerror=null;this.src=this.dataset.fallback || """></div>` : ""}
+    ${media ? `<div class="player-hero"><img src="${media.src}" data-fallbacks="${(media.fallbacks || []).join("|")}" alt="" loading="eager" decoding="async" onerror="handlePlayerImageError(this)"><div class="player-hero-copy"><span class="role">${escapeHtml(copy.role)}</span><span class="summary">${escapeHtml(copy.summary)}</span><span class="comparison"><b>Barça comparison: ${escapeHtml(copy.comparison || "Not assigned")}</b><br>${escapeHtml(copy.explanation)}</span></div></div>` : `<div class="profile-report"><b>${escapeHtml(copy.role)}</b><p>${escapeHtml(copy.summary)}</p><p>${escapeHtml(copy.explanation)}</p></div>`}
     <div class="p-head">
       <div class="p-rank">${p ? "#" + rank : "ARCHIVE"}</div>
       <h3>${escapeHtml(profileName)}</h3>
@@ -1988,6 +1999,7 @@ renderHeroChips();
 renderMiniCards();
 renderSquad();
 bindSorting();
+bindPlayerSearch();
 renderCabinet();
 renderHonours();
 renderClubRecords();

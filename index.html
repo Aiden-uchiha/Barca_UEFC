@@ -637,8 +637,8 @@
     transition:.2s;display:flex;align-items:center;justify-content:center;
   }
   .modal-close:hover{background:#2a2a3e;color:#fff;transform:rotate(90deg)}
-  .player-hero{display:grid;grid-template-columns:116px minmax(0,1fr);align-items:center;gap:15px;margin:0 0 18px;padding:11px;background:linear-gradient(110deg,rgba(20,50,110,.25),rgba(120,20,45,.18));border:1px solid var(--line-2);border-radius:15px}
-  .player-hero img{display:block;width:116px;height:116px;object-fit:cover;object-position:center;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:#10101a}
+  .player-hero{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:12px;margin:0 0 18px;padding:11px;background:linear-gradient(110deg,rgba(20,50,110,.25),rgba(120,20,45,.18));border:1px solid var(--line-2);border-radius:15px}
+  .player-hero img{display:block;width:100%;height:auto;max-height:420px;object-fit:contain;object-position:center;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:#10101a}
   .player-hero img.image-failed{display:none}
   .player-hero.no-image{grid-template-columns:minmax(0,1fr)}
   .player-hero-copy{min-width:0}
@@ -1648,46 +1648,14 @@ function awardsFor(playerName){
 }
 
 const PLAYER_MEDIA = {
-  "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif",fallbacks:["https://share.google/nhCMX28FnxaL04tqr","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
-  "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr",fallbacks:["https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif","https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/03/07/19/lionelmessi070320a.jpg"]},
-  "Legit": {src:"https://klipy.com/gifs/lewandowski-16",fallbacks:["https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif","https://www.fcbarcelona.com/photo-resources/2026/05/16/b84b8907-e0b2-412c-8c31-a2893a20eb31/3200x2000_lewy.jpg?height=750&width=1200"]},
-  "Rusue": {src:"https://klipy.com/gifs/xavi-mirando",fallbacks:["https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif","https://upload.wikimedia.org/wikipedia/commons/6/65/IniestaXaviFCB2011%28cropped%29.jpg"]},
-  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7",fallbacks:["https://media1.tenor.com/m/OenOlHq4-hgAAAAd/luis-suarez-soccer.gif"]},
-  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona",fallbacks:["https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif","https://s2-ge.glbimg.com/VOEmMmVvX85ZFi4Wspdm5dM2s7k%3D/4211x0/filters%3Aformat%28jpeg%29/https%3A/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2024/D/M/6DTsH8Q4m7djsz71NGIA/2024-05-13t192622z-498861181-up1ek5d1hzw0r-rtrmadp-3-soccer-spain-fcb-soc-report.jpg","https://www.fcbarcelona.com/photo-resources/2026/07/21/52cf522f-f115-4e64-8b22-6979d3687fae/11-Raphinha-RED.jpg?height=750&width=1200"]},
-  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi",fallbacks:["https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif","https://www.fcbarcelona.com/photo-resources/2020/11/25/6eb05954-7c1e-4a39-a5f8-0b62222bd9fa/mini_MARADONA0011.jpg?height=750&width=1200"]},
-  "Real Isagi": {src:"https://www.fcbarcelona.com/photo-resources/fcbarcelona/photo/2018/03/19/2630a7bd-fcd7-4907-9861-4e9ca7e2aa2e/4665030.jpg?height=750&width=1200",fallbacks:["https://commons.wikimedia.org/wiki/Special:Redirect/file/Samuel-Etoo-7-5-2006.jpg"]},
-  "Genius": {src:"https://img.asmedia.epimg.net/resizer/v2/CLVV4CCHTRA3RLROCMP4XK4RGA.jpg?auth=38741217201346ce52dbe35180d95a4691c5dbc332e7efe55f3a64f542d17658&height=1200&smart=true&width=1200",fallbacks:["https://www.fcbarcelona.com/photo-resources/2026/07/21/323ae443-f58c-4e3d-bad5-e026d3175e81/10-Lamine-BLUE.jpg?height=750&width=1200"]},
-  "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53",fallbacks:["https://imagenes.elpais.com/resizer/v2/QXQKWDZO34XGSJZEI7MMDZL3AU.jpg?auth=64eb053003e5d38100ddeae8ae09754443af9398372d63565325c4f9361d38ea&width=1960"]},
-  "Dragonovedtv": {src:"https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif"},
-  "Bunny": {src:"https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif"},
-  "Aiku": {src:"https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif"},
-  "Hyper": {src:"https://imagenes.elpais.com/resizer/v2/JZPCXM23XTZESKXU2GMBBWQXTI.jpg?auth=f02e6c1a9f96e5c86ff2c68c8e78a216e2b5305c68d20c8979c73176c6aa6314&width=1200"},
-  "Tuna": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/2012_2013_-_01_Victor_Vald%C3%A9s.jpg",fallbacks:["https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif"]},
-  "fenomas": {src:"https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"},
-  "Xiv": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Deco_21dec2006.jpg"},
-  "Messi": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Pedro_rodriguez_1.JPG",fallbacks:["https://commons.wikimedia.org/wiki/Special:Redirect/file/Pedro_Rodriguez.jpg"]},
-  "Nobilus": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sergio_Busquets.jpg"},
-  "Cold Prince": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Barcelona_FC_(51100844503)_(cropped).jpg"},
-  "Taski": {src:"https://www.sofoot.com/convert/aHR0cHM6Ly9zb2Zvb3QuczMuZXUtY2VudHJhbC0xLmFtYXpvbmF3cy5jb20vbGVnYWN5L0lNRy9zb2Zvb3RfYXJ0aWNsZXMvbG9nb181MjAzMDEuanBn/image/gavi-remporte-le-trophee-kopa-ballon-dor.jpg"},
-  "Sarox": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bar%C3%A7a_-_Napoli_-_20140806_-_Claudio_Bravo.jpg"},
-  "arian": {src:"https://estaticos-cdn.prensaiberica.es/clip/0b8d860a-4ddc-47dc-a07b-054edff62f37_mobile-sp-libre-aspect-ratio_default_0.jpg"},
-  "Noob": {src:"https://img.allfootballapp.com/www/M00/40/CF/720x-/-/-/CgAGVWRdGBCALo5rAAER0eCN-Nw867.jpg"},
-  "Isagi demon king": {src:"https://media1.tenor.com/m/rAnOhr5xiUgAAAAd/messi-world-cup.gif"},
-  "Error": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Javier_Mascherano_2018.jpg"},
-  "Lostzin": {src:"https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif"},
-  "Shadow": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/David_Villa_2010.jpg"},
-  "Water": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Jose_Manuel_Pinto_2012.jpg"},
-  "Luca": {src:"https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif"},
-  "Mikey | 303": {src:"https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif"},
-  "lorenzo.kx": {src:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Dani_Alves_2011.jpg"},
-  
-  "Rin": {src:"https://media1.tenor.com/m/tNqk2UbVa14AAAAd/raphinha-barcelona.gif"},
-  
-  "Carla": {src:"https://media1.tenor.com/m/lBVQTXmB518AAAAd/msn-messi-neymar-suarez.gif"},
-  "Void": {src:"https://media1.tenor.com/m/jNTwJYtUzT8AAAAd/messi-miami-inter-miami-messi.gif"},
-  
-  "Destroyer": {src:"https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif"},
-  "@nagi05321": {src:"https://media1.tenor.com/m/5tkvAwzoa4UAAAAd/lamine-yamal-lamine.gif"}
+  "Shikai": {src:"https://tenor.com/raAqBUlyqLi.gif"},
+  "Yuzarf": {src:"https://share.google/nhCMX28FnxaL04tqr"},
+  "Legit": {src:"https://klipy.com/gifs/lewandowski-16"},
+  "Rusue": {src:"https://klipy.com/gifs/xavi-mirando"},
+  "Anakin": {src:"https://klipy.com/gifs/luis-suarez-7"},
+  "Gencay": {src:"https://klipy.com/gifs/raphinha-raphinha-barcelona"},
+  "TheRin": {src:"https://share.google/7mf3K1GHqakeZOaLi"},
+  "Real Z": {src:"https://klipy.com/gifs/neymar-neymar-jr-53"}
 };
 const PLAYER_PARALLELS = {
   "Shikai":"Andrés Iniesta","Yuzarf":"Lionel Messi","Legit":"Robert Lewandowski","Rusue":"Xavi Hernández",
@@ -1872,7 +1840,7 @@ function openPlayer(slug){
   const media = playerMedia(profileName);
   const copy = playerProfileCopy(profileName,p);
   modalContent.innerHTML = `
-    ${media ? `<div class="player-hero"><img src="${media.src}" data-fallbacks="${(media.fallbacks || []).join("|")}" alt="" loading="eager" decoding="async" onerror="handlePlayerImageError(this)"><div class="player-hero-copy"><span class="role">${escapeHtml(copy.role)}</span><span class="summary">${escapeHtml(copy.summary)}</span><span class="comparison"><b>Barça comparison: ${escapeHtml(copy.comparison || "Not assigned")}</b><br>${escapeHtml(copy.explanation)}</span></div></div>` : `<div class="profile-report"><b>${escapeHtml(copy.role)}</b><p>${escapeHtml(copy.summary)}</p><p>${escapeHtml(copy.explanation)}</p></div>`}
+    ${media ? `<div class="player-hero"><img src="${media.src}" data-fallbacks="${(media.fallbacks || []).join("|")}" alt="" loading="eager" decoding="async" onerror="handlePlayerImageError(this)"><div class="player-hero-copy"><span class="role">${escapeHtml(copy.role)}</span><span class="summary">${escapeHtml(copy.summary)}</span></div></div>` : `<div class="profile-report"><b>${escapeHtml(copy.role)}</b><p>${escapeHtml(copy.summary)}</p><p>${escapeHtml(copy.explanation)}</p></div>`}
     <div class="p-head">
       <div class="p-rank">${p ? "#" + rank : "ARCHIVE"}</div>
       <h3>${escapeHtml(profileName)}</h3>

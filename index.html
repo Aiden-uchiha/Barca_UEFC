@@ -623,12 +623,9 @@
     transition:.2s;display:flex;align-items:center;justify-content:center;
   }
   .modal-close:hover{background:#2a2a3e;color:#fff;transform:rotate(90deg)}
-  .player-hero{display:grid;grid-template-columns:112px 1fr;gap:16px;align-items:center;margin:0 0 18px;padding:10px;background:linear-gradient(110deg,rgba(20,50,110,.34),rgba(120,20,45,.22));border:1px solid var(--line-2);border-radius:16px}
-  .player-hero img{display:block;width:112px;height:104px;object-fit:cover;border-radius:11px;background:#10101a;border:1px solid rgba(255,255,255,.12)}
-  .player-hero-copy{min-width:0}
-  .player-hero-copy b{display:block;font-family:'Oswald',sans-serif;font-size:1.05rem;letter-spacing:.6px;color:#fff}
-  .player-hero-copy small{display:block;color:var(--muted-2);font-size:.74rem;line-height:1.45;margin-top:5px}
-  .player-hero-copy .parallel{display:inline-flex;margin-top:7px;padding:4px 9px;border:1px solid rgba(240,180,41,.28);border-radius:999px;background:rgba(240,180,41,.08);color:#f2d38a;font-size:.68rem;font-weight:700}
+  .player-hero{display:block;width:100%;margin:0 0 20px;padding:0;overflow:hidden;background:#090910;border:1px solid var(--line-2);border-radius:16px}
+  .player-hero img{display:block;width:100%;height:auto;max-height:min(58vh,520px);object-fit:contain;object-position:center;background:#090910;border:0;border-radius:15px}
+  .player-hero img.image-failed{display:none}
 
   .ach-detail{color:#b8b8cc;font-size:.76rem;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #242438}
   .profile-report{margin-top:18px;padding:15px 16px;background:linear-gradient(120deg,rgba(20,50,110,.22),rgba(120,20,45,.16));border:1px solid var(--line-2);border-radius:13px}
@@ -1212,7 +1209,7 @@ const ACHIEVEMENT_STORIES = {
   7:"The return to Nexus ended in third place. Gencay was selected as Barça Best Player and Shikai earned the Playmaker award.",
   8:"Barça reached the UECL final with a four-player squad. Shikai won Golden Boot and Barça Best Player; Yuzarf was named Playmaker.",
   9:"Japan (Barça) won the Unmatched Ego World Cup. Yuzarf swept the Ballon d'Or and Golden Boot, Shikai earned tournament MVP, and Tuna took Golden Gloves.",
-  10:"The inaugural USL campaign was an undefeated title run. The archive records a all-time USL goal-difference record and a ten-goal-per-game average, alongside a full set of individual honours.",
+  10:"The inaugural USL campaign was an undefeated title run. The archive records an all-time USL goal-difference record and a ten-goal-per-game average, alongside a full set of individual honours.",
   11:"Barça won UEL Season 1. Anakin collected MVP and Golden Boot, while Yuzarf was named Ballon d'Or winner and Barça Best Player.",
   12:"The first Unmatched Egoist Cup title added another trophy to the cabinet. The archive records the team championship but no individual cup awards.",
   13:"USL Season 2 ended as runners-up. Shikai earned Barça Best Player, Rusue won Playmaker, and Hyper led the goalkeeper honours.",
@@ -1667,40 +1664,54 @@ function awardsFor(playerName){
 }
 
 const PLAYER_MEDIA = {
-  "Shikai": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Xavi and Iniesta at Barcelona"],
-  "Yuzarf": ["https://media1.tenor.com/m/KRR4JTnXrP4AAAAd/messi-barcelona.gif","Lionel Messi in the Champions League"],
-  "Legit": ["https://media1.tenor.com/m/FqZp6MOQS_cAAAAd/lewandowski-lewandowski-barcelona.gif","Robert Lewandowski at Barcelona"],
-  "Rusue": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Xavi and Iniesta at Barcelona"],
-  "Anakin": ["https://media1.tenor.com/m/OenOlHq4-hgAAAAd/luis-suarez-soccer.gif","Luis Suárez at Barcelona"],
-  "Gencay": ["https://media1.tenor.com/m/tNqk2UbVa14AAAAd/raphinha-barcelona.gif","Raphinha at Barcelona"],
-  "TheRin": ["https://media1.tenor.com/m/V6vs_1PatwAAAAAd/maradona.gif","Diego Maradona"],
-  "fenomas": ["https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif","Pedri at Barcelona"],
-  "Genius": ["https://static2.klipy.com/ii/4e7bea9f7a3371424e6c16ebc93252fe/85/f5/qEajrmpoEv00RJnenxy.gif","Lamine Yamal lifting a trophy"],
-  "Real Z": ["https://media1.tenor.com/m/rsWtgHo1mMUAAAAd/messi-neymar.gif","MSN Barcelona trio"],
-  "Xiv": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Barcelona midfield legends"],
-  "Messi": ["https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif","Bojan Krkić at Barcelona"],
-  "Dragonovedtv": ["https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif","Pep Guardiola lifted by Barcelona players"],
-  "Bunny": ["https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif","David Villa at Barcelona"],
-  "Aiku": ["https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif","Carles Puyol at Barcelona"],
-  "Hyper": ["https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif","Marc-André ter Stegen"],
-  "Tuna": ["https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif","Víctor Valdés at Barcelona"],
-  "Sarox": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · goalkeeper profile"],
-  "arian": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · goalkeeper profile"],
-  "Noob": ["https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif","Bojan Krkić at Barcelona"],
-  "Nobilus": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Barcelona midfield legends"],
-  "Cold Prince": ["https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif","Barcelona midfield legends"],
-  "Taski": ["https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif","Pedri at Barcelona"],
-  "RndmX": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · squad profile"],
-  "Andrew": ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest · squad profile"]
+  "Shikai": "https://tenor.com/raAqBUlyqLi.gif",
+  "Yuzarf": "https://share.google/nhCMX28FnxaL04tqr",
+  "Legit": "https://www.fcbarcelona.com/photo-resources/2024/03/08/20b77568-68c2-4dbc-ac74-0dee22fdc14d/mini_FCB_Mallorca-123.jpg?height=2000&width=3200",
+  "Rusue": "https://media1.tenor.com/m/IIgAulUJWoIAAAAd/xavi-mirando.gif",
+  "Anakin": "https://media3.giphy.com/media/l2QE4TXbK1EuFy1Ms/giphy.gif",
+  "Gencay": "https://media1.tenor.com/m/Vk2gjZ3i5zYAAAAd/raphinha-raphinha-barcelona.gif",
+  "TheRin": "https://share.google/7mf3K1GHqakeZOaLi",
+  "Genius": "https://image.hkstandard.com.hk/f/1024p0/0x0/100/none/99bd51418ebfe710af03145db871c878/images/2025-02/50099057indexPhoto.jpg",
+  "Real Z": "https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/blt04377e48ce46ad17/6988c33ba988ca681d6bbc92/time-100-2017-neymar.jpg?auto=webp&branch=production&crop=3%3A2&quality=75&width=1920",
+  "Xiv": "https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif",
+  "Messi": "https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif",
+  "Dragonovedtv": "https://media1.tenor.com/m/NheXOzl5xK4AAAAd/pep-guardiola.gif",
+  "Bunny": "https://media1.tenor.com/m/sLSc7yohPgoAAAAd/david-villa.gif",
+  "Aiku": "https://media1.tenor.com/m/DDJNMFYOViMAAAAd/puyol-carles.gif",
+  "Hyper": "https://media1.tenor.com/m/xddYPZTPL2wAAAAd/ter-stegen-handsome.gif",
+  "Tuna": "https://media1.tenor.com/m/aTGTgyB1lMcAAAAd/valdes-victor-valdes.gif",
+  "Sarox": "https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif",
+  "arian": "https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif",
+  "fenomas": "https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif",
+  "Noob": "https://media1.tenor.com/m/8QEcHirf1DQAAAAd/bojan-krkic-krkic.gif",
+  "Nobilus": "https://media1.tenor.com/m/qLWY9cAKfiwAAAAd/barcelona-xavi.gif",
+  "Taski": "https://media1.tenor.com/m/2g3fCke9myAAAAAd/pedri-fc-barcelona.gif"
 };
 const PLAYER_PARALLELS = {
-  "Shikai":"Andrés Iniesta","Yuzarf":"Lionel Messi","Legit":"Robert Lewandowski","Rusue":"Xavi Hernández",
-  "Anakin":"Luis Suárez","Gencay":"Raphinha","TheRin":"Diego Maradona","fenomas":"Pedri",
-  "Genius":"Lamine Yamal","Real Z":"Neymar Jr.","Xiv":"Deco","Messi":"Bojan Krkić",
-  "Dragonovedtv":"Pep Guardiola","Bunny":"David Villa","Aiku":"Carles Puyol",
-  "Hyper":"Marc-André ter Stegen","Tuna":"Víctor Valdés","Sarox":"Claudio Bravo","arian":"Andoni Zubizarreta",
-  "Nobilus":"Sergio Busquets","Cold Prince":"Sergio Busquets","Taski":"Gavi",
-  "RndmX":"Víctor Valdés","Andrew":"Claudio Bravo","Noob":"Bojan Krkić"
+  "Shikai":"Andrés Iniesta",
+  "Yuzarf":"Lionel Messi",
+  "Legit":"Robert Lewandowski",
+  "Rusue":"Xavi Hernández",
+  "Anakin":"Luis Suárez",
+  "Gencay":"Raphinha",
+  "TheRin":"Diego Maradona",
+  "Real Isagi":"Samuel Eto'o",
+  "Real Z":"Neymar Jr.",
+  "fenomas":"Pedri",
+  "Genius":"Lamine Yamal",
+  "Xiv":"Deco",
+  "Messi":"Pedro Rodríguez",
+  "Dragonovedtv":"Pep Guardiola",
+  "Bunny":"David Villa",
+  "Aiku":"Carles Puyol",
+  "Hyper":"Marc-André ter Stegen",
+  "Tuna":"Víctor Valdés",
+  "Sarox":"Claudio Bravo",
+  "arian":"Andoni Zubizarreta",
+  "Nobilus":"Sergio Busquets",
+  "Cold Prince":"Javier Mascherano",
+  "Taski":"Gavi",
+  "Noob":"Bojan Krkić"
 };
 const PLAYER_PROFILE_NOTES = {
   "Shikai":"Creative midfield control and decisive final passes",
@@ -1718,7 +1729,7 @@ const PLAYER_PROFILE_NOTES = {
   "arian":"Fourth in the club's recorded goalkeeper ranking"
 };
 function playerMedia(name){
-  return PLAYER_MEDIA[name] || ["https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif","Barça club crest"];
+  return PLAYER_MEDIA[name] || null;
 }
 
 function openPlayer(slug){
@@ -1768,26 +1779,13 @@ function openPlayer(slug){
   `;
 
   const media = playerMedia(profileName);
-  const parallel = PLAYER_PARALLELS[profileName];
-  const profileNote = PLAYER_PROFILE_NOTES[profileName] || (p && p.s > 0 ? "Goalkeeper contribution recorded in the club stats" : "Club contributor · profile inspired by playing style and recorded stats");
-  const parallelDetail = PLAYER_PARALLEL_DETAILS[profileName] || "No one-to-one Barça legend comparison has been assigned. This profile is based on recorded club contribution and archived squad appearances.";
-  const roleLabel = ROLE_LABELS[profileName] || (p && p.s >= 100 ? "Goalkeeper · save-led profile" : "Outfield / role not formally recorded");
-  const contributionLabel = p ? `${p.g + p.a} goal contributions · ${p.s} saves` : "Archived profile · historical totals unavailable";
   modalContent.innerHTML = `
-    <div class="player-hero">
-      <img src="${media[0]}" alt="${escapeHtml(media[1])}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='https://media1.tenor.com/m/eNTpwVeDrlwAAAAd/fc-barcelona.gif'">
-      <div class="player-hero-copy">
-        <b>${escapeHtml(media[1])}</b>
-        <small>${escapeHtml(profileNote)}</small>
-        ${parallel ? `<span class="parallel">Barça parallel: ${escapeHtml(parallel)}</span>` : ""}
-      </div>
-    </div>
+    ${media ? `<div class="player-hero"><img src="${media}" alt="" loading="eager" decoding="async" onerror="this.classList.add('image-failed')"></div>` : ""}
     <div class="p-head">
       <div class="p-rank">${p ? "#" + rank : "ARCHIVE"}</div>
       <h3>${escapeHtml(profileName)}</h3>
     </div>
     ${statsBlock}
-    <div class="profile-report"><div class="report-top"><span class="role-pill">${escapeHtml(roleLabel)}</span><span class="contrib-pill">${escapeHtml(contributionLabel)}</span></div><p><b>Scouting report:</b> ${escapeHtml(parallelDetail)}</p><span class="reference">Football reference: <a href="https://www.fcbarcelona.com/en/club/history/legendary-players" target="_blank" rel="noopener">FC Barcelona legendary players</a> · <a href="https://www.fcbarcelona.com/en/football/first-team/honours" target="_blank" rel="noopener">Club honours archive</a></span></div>
     <h4 class="p-sec">Seasons Played <span class="count">${seasonsPlayed.length}</span></h4>
     ${seasonsBlock}
     ${countChips ? `<div class="awards" style="margin-top:18px">${countChips}</div>` : ""}

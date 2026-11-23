@@ -260,8 +260,13 @@ footer b{color:#d8d8e8}
 .pa-ctx{font-size:.74rem;color:var(--muted-2);margin-top:1px}
 .muted{color:var(--muted-2);font-size:.88rem}
 .duo-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin:8px 0 16px}
-.duo-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:#11111b;border:1px solid var(--line);border-radius:10px;font-size:.82rem}
-.duo-medal{font-size:1.1rem;line-height:1}
+.duo-row{display:flex;align-items:center;gap:9px;padding:9px 11px;background:#11111b;border:1px solid var(--line);border-radius:10px;font-size:.82rem;transition:box-shadow .2s,border-color .2s}
+.duo-row.gold{border-color:rgba(240,180,41,.7);box-shadow:inset 0 0 16px rgba(240,180,41,.12),0 0 12px rgba(240,180,41,.18)}
+.duo-row.silver{border-color:rgba(205,215,230,.65);box-shadow:inset 0 0 16px rgba(205,215,230,.1),0 0 12px rgba(205,215,230,.15)}
+.duo-row.bronze{border-color:rgba(205,127,50,.7);box-shadow:inset 0 0 16px rgba(205,127,50,.12),0 0 12px rgba(205,127,50,.18)}
+.duo-row.gold:hover{box-shadow:inset 0 0 20px rgba(240,180,41,.18),0 0 18px rgba(240,180,41,.28)}
+.duo-row.silver:hover{box-shadow:inset 0 0 20px rgba(205,215,230,.16),0 0 18px rgba(205,215,230,.24)}
+.duo-row.bronze:hover{box-shadow:inset 0 0 20px rgba(205,127,50,.18),0 0 18px rgba(205,127,50,.28)}
 .player-roster-seasons{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
 .season-pill{background:#171722;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.72rem;color:#c8c8dc}
 .season-pill.champion{border-color:rgba(240,180,41,.35);color:#ffe6a8}
@@ -907,20 +912,21 @@ const PLAYER_PROFILE_NOTES = {
 };
 
 const PLAYER_DUOS=[
- {a:"TheRin",b:"Noob",medal:"silver"},
- {a:"Isagi demon king",b:"Real Z",medal:"bronze"},
- {a:"Bunny",b:"Aiku",medal:"bronze"},
- {a:"Bunny",b:"Messi",medal:"bronze"},
- {a:"Legit",b:"Real Z",medal:"bronze"},
- {a:"Bunny",b:"Legit",medal:"silver"},
- {a:"Rusue",b:"Dragonovedtv",medal:"bronze"},
- {a:"Genius",b:"fenomas",medal:"silver"},
- {a:"Gencay",b:"Yuzarf",medal:"bronze"},
- {a:"Shikai",b:"Yuzarf",medal:"gold"},
- {a:"Anakin",b:"Yuzarf",medal:"silver"},
- {a:"Shikai",b:"Rusue",medal:"silver"},
- {a:"Shikai",b:"Anakin",medal:"silver"},
- {a:"Anakin",b:"Nobilus",medal:"silver"}
+ {a:"TheRin",b:"Noob",tier:"silver"},
+ {a:"Isagi demon king",b:"Real Z",tier:"bronze"},
+ {a:"Real Isagi",b:"Yuzarf",tier:"bronze"},
+ {a:"Bunny",b:"Aiku",tier:"bronze"},
+ {a:"Bunny",b:"Messi",tier:"bronze"},
+ {a:"Legit",b:"Real Z",tier:"bronze"},
+ {a:"Bunny",b:"Legit",tier:"silver"},
+ {a:"Rusue",b:"Dragonovedtv",tier:"bronze"},
+ {a:"Genius",b:"fenomas",tier:"silver"},
+ {a:"Gencay",b:"Yuzarf",tier:"bronze"},
+ {a:"Shikai",b:"Yuzarf",tier:"gold"},
+ {a:"Anakin",b:"Yuzarf",tier:"silver"},
+ {a:"Shikai",b:"Rusue",tier:"silver"},
+ {a:"Shikai",b:"Anakin",tier:"silver"},
+ {a:"Anakin",b:"Nobilus",tier:"silver"}
 ];
 
 function slugify(name){ return name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
@@ -1287,7 +1293,7 @@ function playerProfileCopy(name,p){
 function renderDuoMedals(name){
   const duos=PLAYER_DUOS.filter(d=>d.a===name||d.b===name);
   if(!duos.length)return "";
-  return `<h4 class="p-sec">Partnerships</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;const icon=d.medal==="gold"?"🥇":d.medal==="silver"?"🥈":"🥉";return `<div class="duo-row"><span class="duo-medal ${d.medal}">${icon}</span><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
+  return `<h4 class="p-sec">Partnerships</h4><div class="duo-list">${duos.map(d=>{const partner=d.a===name?d.b:d.a;return `<div class="duo-row ${d.tier}"><span>${playerLink(partner)}</span></div>`;}).join("")}</div>`;
 }
 
 function openPlayer(slug){

@@ -431,6 +431,7 @@
     display:flex;align-items:center;justify-content:center;
     transition:border-color .3s, transform .3s, box-shadow .3s;
   }
+  .gif-card{transition:transform .35s cubic-bezier(.2,.75,.25,1),border-color .3s,box-shadow .3s}
   .gif-card:hover{
     border-color:rgba(240,180,41,.5);
     transform:translateY(-3px);
@@ -458,41 +459,59 @@
   }
   .gif-label small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;color:#c8c8dc;letter-spacing:.2px;margin-top:1px}
 
-  /* ================= SIDE-SLIDE SCROLL REVEALS ================= */
-  .timeline{display:flex;flex-direction:column;gap:clamp(18px,3vw,28px)}
-  .slide-in{
+  /* ================= CINEMATIC REVEAL MOTION ================= */
+  .reveal-item{
+    opacity:1;
+    transform:none;
+    filter:none;
+  }
+  .motion-ready .reveal-item{
     opacity:0;
-    transform:translate3d(var(--slide-x,-140px),0,0) rotate(var(--slide-r,-6deg)) scale(.86);
-    transition:opacity .75s cubic-bezier(.22,1,.36,1),
-               transform .85s cubic-bezier(.22,1,.36,1);
-    will-change:transform,opacity;
+    transform:translate3d(0,28px,0) scale(.985);
+    filter:blur(7px);
+    transition:
+      opacity .72s cubic-bezier(.2,.75,.25,1),
+      transform .82s cubic-bezier(.2,.75,.25,1),
+      filter .82s cubic-bezier(.2,.75,.25,1);
+    transition-delay:var(--reveal-delay,0ms);
+    will-change:opacity,transform,filter;
   }
-  .slide-in.from-right{--slide-x:140px;--slide-r:6deg}
-  .slide-in.in-view{opacity:1;transform:translate3d(0,0,0) rotate(0deg) scale(1)}
-  @keyframes slide-from-left{
-    from{opacity:0;transform:translateX(-140px) rotate(-6deg) scale(.86)}
-    to{opacity:1;transform:translateX(0) rotate(0deg) scale(1)}
+  .motion-ready .reveal-item.is-visible{
+    opacity:1;
+    transform:translate3d(0,0,0) scale(1);
+    filter:blur(0);
   }
-  @keyframes slide-from-right{
-    from{opacity:0;transform:translateX(140px) rotate(6deg) scale(.86)}
-    to{opacity:1;transform:translateX(0) rotate(0deg) scale(1)}
+  .hero .hero-logo-wrap,
+  .hero .sub,
+  .hero h1,
+  .hero .tag,
+  .hero .old-name,
+  .hero .chips,
+  .hero .world-banner{
+    opacity:0;
+    animation:hero-enter .85s cubic-bezier(.2,.75,.25,1) forwards;
   }
-  @supports (animation-timeline:view()){
-    .slide-in{
-      transition:none;
-      animation-duration:1s;
-      animation-timing-function:linear;
-      animation-fill-mode:both;
-      animation-timeline:view();
-      animation-range:entry 10% entry 65%;
-    }
-    .slide-in.from-left{animation-name:slide-from-left}
-    .slide-in.from-right{animation-name:slide-from-right}
+  .hero .hero-logo-wrap{animation-delay:.08s}
+  .hero .sub{animation-delay:.18s}
+  .hero h1{animation-delay:.28s}
+  .hero .tag{animation-delay:.4s}
+  .hero .old-name{animation-delay:.5s}
+  .hero .chips{animation-delay:.62s}
+  .hero .world-banner{animation-delay:.74s}
+  @keyframes hero-enter{
+    from{opacity:0;transform:translate3d(0,24px,0) scale(.985);filter:blur(8px)}
+    to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
   }
-  .era.slide-in{width:min(940px,100%)}
-  .era.slide-in.from-left{margin-right:auto}
-  .era.slide-in.from-right{margin-left:auto}
-  .history-intro.slide-in{max-width:940px}
+  header{animation:nav-enter .65s ease-out both}
+  @keyframes nav-enter{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+  .reveal-item[data-reveal-group]{
+    transition-delay:calc(var(--reveal-delay,0ms) + var(--group-delay,0ms));
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero .hero-logo-wrap,.hero .sub,.hero h1,.hero .tag,.hero .old-name,
+    .hero .chips,.hero .world-banner,header{opacity:1;animation:none;filter:none;transform:none}
+    .motion-ready .reveal-item{opacity:1;transform:none;filter:none;transition:none}
+  }
   .era{
     position:relative;
     background:linear-gradient(180deg,#12121c,#0d0d15);
@@ -677,7 +696,6 @@
     html{scroll-behavior:auto}
     .particles,.aurora::before,.aurora::after{display:none}
     .reveal{opacity:1;transform:none}
-    .slide-in,.slide-in.from-left,.slide-in.from-right{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}
   }
 </style>
 </head>
@@ -720,17 +738,17 @@
   </section>
 
   <section id="squad" class="reveal-target">
-    <div class="sec-head">
+    <div class="sec-head reveal-item">
       <h2>Squad &amp; Player Stats</h2>
       <div class="line"></div>
       <span class="note">1 Goal = 1 pt · 1 Assist = 1 pt · 4 Saves = 1 pt</span>
     </div>
-    <div class="mini-cards" id="mini-cards"></div>
+    <div class="mini-cards reveal-item" id="mini-cards"></div>
     <div class="sort-hint">
       <span>Tap a column to rank by it:</span>
       <span class="pill" id="sort-pill">Sorted by <b>Points</b> ↓</span>
     </div>
-    <div class="table-wrap">
+    <div class="table-wrap reveal-item">
       <div class="table-scroll">
         <table>
           <thead>
@@ -756,11 +774,11 @@
   </section>
 
   <section id="cabinet" class="reveal-target">
-    <div class="sec-head">
+    <div class="sec-head reveal-item">
       <h2>Trophy Cabinet</h2>
       <div class="line"></div>
     </div>
-    <div class="cab-stats" id="cab-stats"></div>
+    <div class="cab-stats reveal-item" id="cab-stats"></div>
     <div class="cabinet" id="cabinet-grid"></div>
     <p class="cab-note">
       <b>Note:</b> "Best Player of the Season" refers to the best player of that season <b>who played for Barça</b>. It is an internal club award and is <b>not included</b> in the official individual honours total.
@@ -768,7 +786,7 @@
   </section>
 
   <section id="honours" class="reveal-target">
-    <div class="sec-head">
+    <div class="sec-head reveal-item">
       <h2>Individual Honours</h2>
       <div class="line"></div>
       <span class="note" id="honours-note">All-time award leaderboards</span>
@@ -777,31 +795,31 @@
   </section>
 
   <section id="history" class="reveal-target">
-    <div class="sec-head">
+    <div class="sec-head reveal-item">
       <h2>The Official Club History</h2>
       <div class="line"></div>
       <span class="note">Five Eras</span>
     </div>
 
-    <div class="history-intro slide-in from-left">
+    <div class="history-intro reveal-item">
       <p>Barça UEFC's legacy spans <b>five distinct competitive eras</b> — marked by dynasty-building, heartbreaking collapses, miracle rebuilds, and unmatched global dominance.</p>
     </div>
 
     <!-- GIF MOMENTS -->
     <div class="gif-strip">
-      <div class="gif-card slide-in from-left">
+      <div class="gif-card reveal-item">
         <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Goal celebration" loading="lazy"
              onerror="this.parentElement.classList.add('gif-failed')">
         <div class="gif-fallback">⚽</div>
         <div class="gif-label">5 Goals in 3 Minutes<small>Yuzarf vs France · World Cup Semi</small></div>
       </div>
-      <div class="gif-card slide-in from-right">
+      <div class="gif-card reveal-item">
         <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Trophy lift" loading="lazy"
              onerror="this.parentElement.classList.add('gif-failed')">
         <div class="gif-fallback">🏆</div>
         <div class="gif-label">The Treble<small>USL S1 · UEL S1 · Egoist Cup S1</small></div>
       </div>
-      <div class="gif-card slide-in from-left">
+      <div class="gif-card reveal-item">
         <img src="https://media.giphy.com/media/26tPplGWjN0xLybiU/giphy.gif" alt="Fireworks" loading="lazy"
              onerror="this.parentElement.classList.add('gif-failed')">
         <div class="gif-fallback">🧤</div>
@@ -812,7 +830,7 @@
     <div class="timeline" id="history-timeline" aria-label="Five eras of Barça UEFC history">
 
       <!-- ================= ERA I ================= -->
-      <article class="era slide-in from-left" style="--era-accent:#4a7fc9;--era-glow:rgba(74,127,201,.35)">
+      <article class="era reveal-item" style="--era-accent:#4a7fc9;--era-glow:rgba(74,127,201,.35)">
         <div class="era-head">
           <div class="era-node">I</div>
           <div class="era-titles">
@@ -845,7 +863,7 @@
       </article>
 
       <!-- ================= ERA II ================= -->
-      <article class="era slide-in from-right" style="--era-accent:#b9b9cc;--era-glow:rgba(185,185,204,.28)">
+      <article class="era reveal-item" style="--era-accent:#b9b9cc;--era-glow:rgba(185,185,204,.28)">
         <div class="era-head">
           <div class="era-node">II</div>
           <div class="era-titles">
@@ -877,7 +895,7 @@
       </article>
 
       <!-- ================= ERA III ================= -->
-      <article class="era slide-in from-left" style="--era-accent:#a06ad4;--era-glow:rgba(160,106,212,.30)">
+      <article class="era reveal-item" style="--era-accent:#a06ad4;--era-glow:rgba(160,106,212,.30)">
         <div class="era-head">
           <div class="era-node">III</div>
           <div class="era-titles">
@@ -910,7 +928,7 @@
       </article>
 
       <!-- ================= ERA IV ================= -->
-      <article class="era slide-in from-right" style="--era-accent:#f0b429;--era-glow:rgba(240,180,41,.35)">
+      <article class="era reveal-item" style="--era-accent:#f0b429;--era-glow:rgba(240,180,41,.35)">
         <div class="era-head">
           <div class="era-node">IV</div>
           <div class="era-titles">
@@ -958,7 +976,7 @@
       </article>
 
       <!-- ================= ERA V ================= -->
-      <article class="era slide-in from-left" style="--era-accent:#3ecf8e;--era-glow:rgba(62,207,142,.30)">
+      <article class="era reveal-item" style="--era-accent:#3ecf8e;--era-glow:rgba(62,207,142,.30)">
         <div class="era-head">
           <div class="era-node">V</div>
           <div class="era-titles">
@@ -1321,9 +1339,9 @@ function renderMiniCards(){
 
   el.innerHTML = items.map(([label,p,key,dec,icon], i) => {
     const value = dec ? Number(p[key]).toFixed(dec) : p[key].toLocaleString();
-    const direction = i % 2 === 0 ? "from-left" : "from-right";
+    const direction = i % 2 === 0 ? "" : "";
     return `
-      <div class="mini slide-in ${direction}">
+      <div class="mini reveal-item">
         <span class="mini-k">${icon ? `<img class="mini-icon" src="${icon}" alt="">` : ""}${label}</span>
         <span class="mini-v"><a class="player-link" href="#player/${p.slug}">${escapeHtml(p.name)}</a> · <span>${value}</span></span>
       </div>
@@ -1422,7 +1440,7 @@ function renderCabinet(){
       .map(k => awardChip(k, ach.awards[k]))
       .join("");
     return `
-      <div class="slide-in ${i % 2 === 0 ? "from-left" : "from-right"}">
+      <div class="reveal-item" data-reveal-group>
         <article class="ach ${ach.tag}${ach.featured ? " featured" : ""}" data-tilt>
           <div class="ach-top">
             <span class="ach-num">#${ach.n}</span>
@@ -1438,6 +1456,9 @@ function renderCabinet(){
   }).join("");
 
   grid.querySelectorAll("[data-tilt]").forEach(el => attachTilt(el, 6));
+  grid.querySelectorAll("[data-reveal-group]").forEach((el,i) => {
+    el.style.setProperty("--reveal-delay", Math.min(i % 3,2) * 90 + "ms");
+  });
 }
 
 /* =========================================================
@@ -1485,8 +1506,11 @@ function renderHonours(){
   ];
   const grid = document.getElementById("honours-grid");
   grid.innerHTML = order.map((k,i) =>
-    `<div class="slide-in ${i % 2 === 0 ? "from-left" : "from-right"}">${honourCard(k)}</div>`
+    `<div class="reveal-item" data-reveal-group>${honourCard(k)}</div>`
   ).join("");
+  grid.querySelectorAll("[data-reveal-group]").forEach((el,i) => {
+    el.style.setProperty("--reveal-delay", Math.min(i % 3,2) * 90 + "ms");
+  });
   document.getElementById("honours-note").innerHTML =
     `<b style="color:#fff">${countHonours(false)}</b> honours · club Best Player excluded`;
 }
@@ -1657,37 +1681,32 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal()
 window.addEventListener("hashchange", route);
 
 /* =========================================================
-   SIDE-SLIDE REVEALS + PLAYER NAME LINKS
+   CINEMATIC SCROLL REVEALS
    ========================================================= */
 
-function initSlideIns(root = document){
-  const elements = Array.from(root.querySelectorAll(".slide-in"));
-  if (!elements.length) return;
-
+function initRevealMotion(root = document){
+  const elements = Array.from(root.querySelectorAll(".reveal-item"));
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const nativeScrollDriven = window.CSS && CSS.supports &&
-    CSS.supports("animation-timeline: view()");
-
-  if (reducedMotion){
-    elements.forEach(el => el.classList.add("in-view"));
-    return;
-  }
-  if (nativeScrollDriven) return;
-
-  if (!("IntersectionObserver" in window)){
-    elements.forEach(el => el.classList.add("in-view"));
+  if (reducedMotion || !("IntersectionObserver" in window)){
+    elements.forEach(el => el.classList.add("is-visible"));
     return;
   }
 
+  document.documentElement.classList.add("motion-ready");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add("in-view");
+      entry.target.classList.add("is-visible");
       observer.unobserve(entry.target);
     });
-  }, { threshold:0.18, rootMargin:"0px 0px -8% 0px" });
+  }, { threshold:0.12, rootMargin:"0px 0px -6% 0px" });
 
-  elements.forEach(el => observer.observe(el));
+  elements.forEach((el,i) => {
+    if (el.hasAttribute("data-reveal-group") && !el.style.getPropertyValue("--reveal-delay")){
+      el.style.setProperty("--reveal-delay", Math.min(i % 3,2) * 80 + "ms");
+    }
+    observer.observe(el);
+  });
 }
 
 function linkifyPlayerNames(root){
@@ -1764,7 +1783,7 @@ route();
 
 linkifyPlayerNames(document.querySelector("main"));
 linkifyPlayerNames(document.querySelector("footer"));
-initSlideIns();
+initRevealMotion();
 document.querySelectorAll(".reveal-target").forEach(registerReveal);
 
 </script>
